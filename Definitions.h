@@ -126,8 +126,6 @@ enum BoardEnum {
 //   A8 = 91, B8, C8, D8, E8, F8, G8, H8, No_Sq // No_Sq means off board
 // };
 
-#define get_120_square_version(file, rank) ( 21 + file + rank * 10)
-
-
+#define get_120_square_version(file, rank) ( (21 + file) + (rank * 10))
 
 #endif

@@ -14,7 +14,8 @@ TEST_FILES = $(wildcard *cpp)
 
 # Exclude tester.cpp
 TEST_FILES := $(filter-out $(TEST_DIR)/tester.cpp, $(TEST_FILES))
-HEADER_FILES = $(wildcard $(INC_DIR)/*.h)
+# HEADER_FILES = $(wildcard $(INC_DIR)/*.h)
+HEADER_FILES = $(wildcard *.h)
 
 # run: $(EXE)
 # 	valgrind --leak-check=full --show-leak-kinds=all  ./$(EXE) plugboards/I.pb reflectors/I.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/I.pos < input.txt > output.txt
