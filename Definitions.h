@@ -2,11 +2,6 @@
 #define DEFINITION_H
 
 #include <cstdint>
-// A bitboard is a 64-bit representation of the board
-// C++11 int64_t is exactly 64bit
-typedef std::int64_t bit_64;
-
-const int BOARD_SQUARE_SIZE = 120;
 
 enum PieceEnum {
   empty,
