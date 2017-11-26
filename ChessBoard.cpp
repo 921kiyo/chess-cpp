@@ -106,8 +106,8 @@ void ChessBoard::printBitBoard(bit_64 bit_board){
   int sq_64 = 0;
   bit_64 shift = 1ULL; // unsigned long long
   cout << endl;
-  for(int rank = rank_8; rank >= rank_1; rank--){
-    for(int file = file_a; file <= file_h; file++){
+  for(int rank = rank_8; rank >= rank_1; --rank){
+    for(int file = file_a; file <= file_h; ++file){
       square_120 = get_120_square_version(file, rank);
       sq_64 = square_64[square_120];
       // If bit_board is non-zero
@@ -125,4 +125,8 @@ void ChessBoard::printBitBoard(bit_64 bit_board){
     cout << endl;
   }
   cout << endl;
+}
+
+int ChessBoard::get_square_64(int sq){
+  return square_64[sq];
 }

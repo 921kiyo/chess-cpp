@@ -47,7 +47,7 @@ public:
   int get_120_square_version(int file, int rank);
   void printBoard();
   void printBitBoard(bit_64 bit_board);
-
+  int get_square_64(int sq);
   // void first_move();
 
   // is_checkmate();
