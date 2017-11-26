@@ -4,50 +4,48 @@
 #include <cstdint>
 
 enum PieceEnum {
-  empty,
-  white_pawn,
-  white_knight,
-  white_bishop,
-  white_rook,
-  white_queen,
-  white_king,
-  black_pawn,
-  black_knight,
-  black_bishop,
-  black_rook,
-  black_queen,
-  black_king
+  EMPTY,
+  W_pawn,
+  W_rook,
+  W_knight,
+  W_bishop,
+  W_queen,
+  W_king,
+  B_pawn,
+  B_rook,
+  B_knight,
+  B_bishop,
+  B_queen,
+  B_king
 };
 
 enum FileEnum {
-  file_a,
-  file_b,
-  file_c,
-  file_d,
-  file_e,
-  file_f,
-  file_g,
-  file_h,
-  file_none
+  FILE_A,
+  FILE_B,
+  FILE_C,
+  FILE_D,
+  FILE_E,
+  FILE_F,
+  FILE_G,
+  FILE_H,
+  FILE_NONE
 };
 
 enum RankEnum {
-  rank_1,
-  rank_2,
-  rank_3,
-  rank_4,
-  rank_5,
-  rank_6,
-  rank_7,
-  rank_8,
-  rank_none
+  RANK_1,
+  RANK_2,
+  RANK_3,
+  RANK_4,
+  RANK_5,
+  RANK_6,
+  RANK_7,
+  RANK_8,
+  RANK_NONE
 };
 
 enum ColorEnum{
-  white,
-  black,
-  // Do I need this?
-  both
+  WHITE,
+  BLACK
 };
 
 enum BoardEnum {

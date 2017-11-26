@@ -8,25 +8,24 @@ using namespace std;
 
 int main() {
 
-    cout << "===========================" << endl;
-    cout << "Testing the Chess Engine" << endl;
-    cout << "===========================" << endl;
-    cout << endl;
-
+    // cout << "===========================" << endl;
+    // cout << "Testing the Chess Engine" << endl;
+    // cout << "===========================" << endl;
+    // cout << endl;
+    //
     ChessBoard cb;
-
-
-    cb.submitMove("D7", "D6");
-    cout << endl;
-
-    cb.submitMove("D4", "H6");
-    cout << endl;
-
-    cb.submitMove("D2", "D4");
-    cout << endl;
-
-    cb.submitMove("F8", "B4");
-    cout << endl;
+    //
+    // cb.submitMove("D7", "D6");
+    // cout << endl;
+    //
+    // cb.submitMove("D4", "H6");
+    // cout << endl;
+    //
+    // cb.submitMove("D2", "D4");
+    // cout << endl;
+    //
+    // cb.submitMove("F8", "B4");
+    // cout << endl;
 
     cout << "===========================" << endl;
     cout << "Alekhine vs. Vasic (1931)" << endl;
