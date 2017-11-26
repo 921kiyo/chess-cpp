@@ -3,6 +3,8 @@
 using namespace std;
 
 #include "ChessBoard.h"
+// TODO Delete this
+#include "Definitions.h"
 
 int main() {
 
@@ -13,7 +15,11 @@ int main() {
 
     ChessBoard cb;
 
+    // TODO Delete this
     cb.printBoard();
+    bit_64 a = 0ULL;
+    a |= (1ULL << bit_64(D2));
+    cb.printBitBoard(a);
     cout << endl;
 
     cb.submitMove("D7", "D6");

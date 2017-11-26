@@ -52,6 +52,7 @@ public:
   bool isWhiteTurn();
   void resetBoard();
   void printBoard();
+  void printBitBoard(bit_64 bit_board);
 
   // void first_move();
 
