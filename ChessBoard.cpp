@@ -32,6 +32,9 @@ ChessBoard::ChessBoard(){
   // piece_map_[B_bishop] = new Bishop();
   // piece_map_[B_queen] = new Queen();
   // piece_map_[B_king] = new King();
+
+  // TODO Don't forget to delete them!!
+
   is_white_turn_ = true;
   resetBoard();
   printCurrentBoard();
@@ -77,11 +80,15 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
     return;
   }
 
+  int piece = getPieceFromBoard(source_square);
   // Dynamic
 
   // Check the piece and check the restriction for the piece
 
   // Check if the move destroys an opponent piece
+  cout << "piece " << piece << endl;
+  // ?????
+  // Piece p* = piece_map_[piece];
 
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
@@ -89,6 +96,12 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   make_move(source_square, destination_square);
 
   // Display the message
+}
+
+int ChessBoard::getPieceFromBoard(const char* source_square){
+  int rank = source_square[1] - '1';
+  int file = source_square[0] - 'A';
+  return board_[rank][file];
 }
 
 // Getter for is_white_turn

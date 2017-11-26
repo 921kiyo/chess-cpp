@@ -10,6 +10,6 @@ bool Pawn::isValidMove(){
   return true;
 }
 
-void Pawn::calculatePossibleMove(int rank, int file, int board){
-
-}
+// void Pawn::calculatePossibleMove(int rank, int file, int board){
+//
+// }
