@@ -34,6 +34,6 @@ $(EXE): $(SRC_FILES) $(HEADER_FILES)
 # 	$(CC) -o tester $(TEST_FILES) tester.o $(SRC_FILES) $(CFLAGS)
 
 clean:
-	rm -f $(EXE) tester tester.o
+	rm -f $(EXE) $(wildcard *.o) tester tester.o
 
 .PHONY: clean test

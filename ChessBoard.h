@@ -16,13 +16,6 @@
 
 #include "Definitions.h"
 
-// A bitboard is a 64-bit representation of the board
-
-
-// const int square_120[BOARD_SQUARE_SIZE];
-// const int square_64[64];
-
-
 class ChessBoard {
 private:
   bool is_white_turn;
@@ -51,6 +44,7 @@ public:
   void submitMove(const char* source_square, const char* destination_square);
   bool isWhiteTurn();
   void resetBoard();
+  int get_120_square_version(int file, int rank);
   void printBoard();
   void printBitBoard(bit_64 bit_board);
 

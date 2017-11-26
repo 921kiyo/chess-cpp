@@ -1,11 +1,12 @@
 #ifndef DEFINITION_H
 #define DEFINITION_H
 
-// unsigned long long is needed, otherwise it would interpret it as 32 bit
-typedef unsigned long long bit_64;
+#include <cstdint>
+// A bitboard is a 64-bit representation of the board
+// C++11 int64_t is exactly 64bit
+typedef std::int64_t bit_64;
 
 const int BOARD_SQUARE_SIZE = 120;
-// const long long U64;
 
 enum PieceEnum {
   empty,
@@ -125,7 +126,5 @@ enum BoardEnum {
 //   A7 = 81, B7, C7, D7, E7, F7, G7, H7,
 //   A8 = 91, B8, C8, D8, E8, F8, G8, H8, No_Sq // No_Sq means off board
 // };
-
-#define get_120_square_version(file, rank) ( (21 + file) + (rank * 10))
 
 #endif

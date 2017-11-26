@@ -8,7 +8,6 @@
 using namespace std;
 
 ChessBoard::ChessBoard(){
-
   resetBoard();
 }
 
@@ -33,7 +32,6 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   }
 
   // Check the piece in the square (exist? and match with current turn?)
-// cout
 
   // Check which turn, (white or black?)
 
@@ -56,8 +54,7 @@ bool ChessBoard::isWhiteTurn(){
 }
 
 void ChessBoard::resetBoard(){
-  cout << "resetBoard" << endl;
-  int square = A1;
+  int square = A1; // Starting from A1, 21
   int counter = 0;
 
   for(int i = 0; i < BOARD_SQUARE_SIZE; i++){
@@ -66,18 +63,22 @@ void ChessBoard::resetBoard(){
 
   for(int i = 0; i < 64; i++){
     square_64[i] = 120;
-    // square_64[i] = 12cl0;
   }
 
   for(int rank = rank_1; rank < rank_none; rank++){
     for(int file = file_a; file < file_none; file++){
+      // Square generates from 21 to 98
       square = get_120_square_version(file, rank);
+      // counter is from 0 to 63
       square_120[square] = counter;
       square_64[counter] = square;
       counter++;
     }
   }
+}
 
+int ChessBoard::get_120_square_version(int file, int rank){
+  return ( (21 + file) + (rank * 10));
 }
 
 // TODO Delete this later
@@ -111,6 +112,10 @@ void ChessBoard::printBitBoard(bit_64 bit_board){
       sq_64 = square_64[square_120];
       // If bit_board is non-zero
       // & (not &&) does bitwise and operation
+      // << here is bitshift operator, not stream insertion
+      // shift << sq_64 operator shifts the value of shift left by sq_64 bits
+      // TODO check why sq_64 value is not stable.
+      // cout << "sq_64 " << sq_64 << endl;
       if((shift << sq_64 & bit_board)){
         cout << "x ";
       }else{
