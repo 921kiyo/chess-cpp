@@ -1,4 +1,11 @@
 #include "ChessBoard.h"
+#include "Pawn.h"
+// #include "Queen.h"
+// #include "King.h"
+// #include "Rook.h"
+// #include "Bishop.h"
+// #include "Knight.h"
+
 #include "Definitions.h"
 
 #include <iostream>
@@ -9,6 +16,23 @@
 using namespace std;
 
 ChessBoard::ChessBoard(){
+  // This is not starting from 0 (is this okay??)
+
+  // Should I store object, or pointer??
+  piece_map_[W_pawn] = new Pawn();
+  // piece_map_[W_rook] = new Rook();
+  // piece_map_[W_knight] = new Knight();
+  // piece_map_[W_bishop] = new Bishop();
+  // piece_map_[W_queen] = new Queen();
+  // piece_map_[W_king] = new King();
+
+  piece_map_[B_pawn] = new Pawn();
+  // piece_map_[B_rook] = new Rook();
+  // piece_map_[B_knight] = new Knight();
+  // piece_map_[B_bishop] = new Bishop();
+  // piece_map_[B_queen] = new Queen();
+  // piece_map_[B_king] = new King();
+  is_white_turn_ = true;
   resetBoard();
   printCurrentBoard();
 }
@@ -37,9 +61,25 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // Check which turn, (white or black?)
 
   // Check the destination square is valid
-  // int destination_input_length = strlen(destination_square);
-  // Check the piece and check the restriction for the piece
+  int destination_input_length = strlen(destination_square);
+  if(destination_input_length != 2){
+    cerr << "destination input is not valid" << endl;
+    return;
+  }
 
+  if(destination_square[0] < 'A' || destination_square[0] > 'H'){
+    cerr << "not a valid file" << endl;
+    return;
+  }
+
+  if(destination_square[1] < '1' || destination_square[1] > '8'){
+    cerr << "not a valid rank" << endl;
+    return;
+  }
+
+  // Dynamic
+
+  // Check the piece and check the restriction for the piece
 
   // Check if the move destroys an opponent piece
 

@@ -3,10 +3,11 @@
 
 class Piece{
 protected:
+  
 public:
   Piece();
   // Can jump
-  // is_valid_mode();
+  virtual bool isValidMove() = 0;
 };
 
 #endif

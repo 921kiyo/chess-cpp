@@ -13,18 +13,24 @@
 //   exit(1);
 // }
 // #endif
+#include "Definitions.h"
+#include "Piece.h"
 
 #include <string>
+#include <map>
 
 using namespace std;
 
-#include "Definitions.h"
+
 
 class ChessBoard {
 private:
   bool is_white_turn_;
   // int board_[FILE_none+2][RANK_none+4];
   int board_[FILE_NONE][RANK_NONE];
+  // Should this be static?
+  map<int, Piece*> piece_map_; 
+
 public:
   ChessBoard();
   void submitMove(const char* source_square, const char* destination_square);
