@@ -8,6 +8,8 @@ Queen::Queen(){
 
 }
 
+Queen::~Queen(){}
+
 bool Queen::isValidMove(){
 
 }

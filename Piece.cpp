@@ -8,6 +8,8 @@ Piece::Piece(){
 
 }
 
+Piece::~Piece(){}
+
 bool Piece::isValidMove(){
 
 }

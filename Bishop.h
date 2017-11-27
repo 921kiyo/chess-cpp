@@ -9,6 +9,7 @@ protected:
 public:
   Bishop();
   // Can jump
+  virtual ~Bishop();
   virtual bool isValidMove();
 };
 

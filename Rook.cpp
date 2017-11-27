@@ -8,6 +8,8 @@ Rook::Rook(){
 
 }
 
+Rook::~Rook(){}
+
 bool Rook::isValidMove(){
 
 }

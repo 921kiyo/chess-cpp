@@ -8,6 +8,7 @@ protected:
 public:
   Queen();
   // Can jump
+  virtual ~Queen();
   virtual bool isValidMove();
 };
 

@@ -7,6 +7,7 @@ protected:
 public:
   Piece();
   // Can jump
+  virtual ~Piece();
   virtual bool isValidMove() = 0;
 };
 

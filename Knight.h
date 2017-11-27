@@ -11,5 +11,6 @@ public:
 virtual bool isValidMove();
 
 };
+// virtual ~Knight();
 
 #endif

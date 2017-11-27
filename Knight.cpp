@@ -6,6 +6,8 @@
 
 using namespace std;
 
+// Knight::~Knight(){}
+
 bool Knight::isValidMove(){
   return true;
 }

@@ -8,6 +8,7 @@ protected:
 
 public:
   Rook();
+  virtual ~Rook();
   // Can jump
   virtual bool isValidMove();
 };

@@ -5,9 +5,9 @@
 
 using namespace std;
 
-// King::King(){
-//
-// }
+King::King(){}
+
+King::~King(){}
 
 bool King::isValidMove(){
   return true;

@@ -8,6 +8,8 @@ class King: public Piece{
 private:
 
 public:
+King();
+virtual ~King();
 virtual bool isValidMove();
 
 // castling();
