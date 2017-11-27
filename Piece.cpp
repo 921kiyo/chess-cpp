@@ -5,5 +5,9 @@
 using namespace std;
 
 Piece::Piece(){
-  
+
+}
+
+bool Piece::isValidMove(){
+
 }

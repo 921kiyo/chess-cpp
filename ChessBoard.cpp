@@ -1,15 +1,16 @@
 #include "ChessBoard.h"
 #include "Pawn.h"
-// #include "Queen.h"
-// #include "King.h"
-// #include "Rook.h"
-// #include "Bishop.h"
-// #include "Knight.h"
+#include "Queen.h"
+#include "King.h"
+#include "Rook.h"
+#include "Bishop.h"
+#include "Knight.h"
 
 #include "Definitions.h"
 
 #include <iostream>
 #include <string>
+#include <map>
 #include <cstring>
 #include <iomanip>
 
@@ -20,24 +21,30 @@ ChessBoard::ChessBoard(){
 
   // Should I store object, or pointer??
   piece_map_[W_pawn] = new Pawn();
-  // piece_map_[W_rook] = new Rook();
-  // piece_map_[W_knight] = new Knight();
-  // piece_map_[W_bishop] = new Bishop();
-  // piece_map_[W_queen] = new Queen();
-  // piece_map_[W_king] = new King();
+  piece_map_[W_rook] = new Rook();
+  piece_map_[W_knight] = new Knight();
+  piece_map_[W_bishop] = new Bishop();
+  piece_map_[W_queen] = new Queen();
+  piece_map_[W_king] = new King();
 
   piece_map_[B_pawn] = new Pawn();
-  // piece_map_[B_rook] = new Rook();
-  // piece_map_[B_knight] = new Knight();
-  // piece_map_[B_bishop] = new Bishop();
-  // piece_map_[B_queen] = new Queen();
-  // piece_map_[B_king] = new King();
-
-  // TODO Don't forget to delete them!!
+  piece_map_[B_rook] = new Rook();
+  piece_map_[B_knight] = new Knight();
+  piece_map_[B_bishop] = new Bishop();
+  piece_map_[B_queen] = new Queen();
+  piece_map_[B_king] = new King();
 
   is_white_turn_ = true;
   resetBoard();
   printCurrentBoard();
+}
+
+ChessBoard::~ChessBoard(){
+  // TODO Double check memory leak
+  for(int i = W_pawn; i <= B_king; i++){
+    delete piece_map_[i];
+  }
+
 }
 
 void ChessBoard::submitMove(const char* source_square, const char* destination_square){
@@ -88,12 +95,13 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // Check if the move destroys an opponent piece
   cout << "piece " << piece << endl;
   // ?????
-  // Piece p* = piece_map_[piece];
+
+  // piece_map_[piece]->is_valid_move();
 
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
-
-  make_move(source_square, destination_square);
+  // CamelCase
+  makeMove(source_square, destination_square);
 
   // Display the message
 }
@@ -109,7 +117,7 @@ bool ChessBoard::isWhiteTurn(){
   return is_white_turn_;
 }
 
-void ChessBoard::make_move(const char* source_square, const char* destination_square){
+void ChessBoard::makeMove(const char* source_square, const char* destination_square){
   int source_file = source_square[0] - 'A';
   int source_rank = source_square[1] - '1';
   int source_piece = board_[source_rank][source_file];

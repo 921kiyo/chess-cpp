@@ -3,7 +3,7 @@
 
 class Piece{
 protected:
-  
+
 public:
   Piece();
   // Can jump
