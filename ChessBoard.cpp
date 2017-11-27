@@ -18,8 +18,6 @@ using namespace std;
 
 ChessBoard::ChessBoard(){
   // This is not starting from 0 (is this okay??)
-
-  // Should I store object, or pointer??
   piece_map_[W_pawn] = new Pawn();
   piece_map_[W_rook] = new Rook();
   piece_map_[W_knight] = new Knight();
@@ -48,7 +46,6 @@ ChessBoard::~ChessBoard(){
 }
 
 void ChessBoard::submitMove(const char* source_square, const char* destination_square){
-
   // Check if the source square (A-H and 1-8) is valid or not
   int source_input_length = strlen(source_square);
   if(source_input_length != 2){
@@ -100,7 +97,7 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
 
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
-  // CamelCase
+  
   makeMove(source_square, destination_square);
 
   // Display the message
