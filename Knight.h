@@ -9,8 +9,10 @@ private:
 
 public:
 virtual bool isValidMove();
+void calculatePossibleMove(int rank, int file, int board);
 
 };
 // virtual ~Knight();
+
 
 #endif
