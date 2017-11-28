@@ -27,6 +27,10 @@ int main() {
     // cb.submitMove("F8", "B4");
     // cout << endl;
 
+    char king_position[3];
+    cb.getKingPosition(B_king, king_position);
+    cout << "W_king is at " << king_position << endl;
+
     cout << "===========================" << endl;
     cout << "Alekhine vs. Vasic (1931)" << endl;
     cout << "===========================" << endl;

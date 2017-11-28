@@ -11,7 +11,8 @@ public:
 King();
 virtual ~King();
 virtual bool isValidMove();
-
+void calculatePossibleMove(int rank, int file, int board);
+bool isKingSafe();
 // castling();
 };
 

@@ -10,6 +10,7 @@ public:
   // Can jump
   virtual ~Queen();
   virtual bool isValidMove();
+  void calculatePossibleMove(int rank, int file, int board);
 };
 
 #endif

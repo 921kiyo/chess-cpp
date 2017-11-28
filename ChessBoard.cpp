@@ -97,7 +97,7 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
 
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
-  
+
   makeMove(source_square, destination_square);
 
   // Display the message
@@ -107,6 +107,20 @@ int ChessBoard::getPieceFromBoard(const char* source_square){
   int rank = source_square[1] - '1';
   int file = source_square[0] - 'A';
   return board_[rank][file];
+}
+
+// Actually, this can also work for other pieces
+void ChessBoard::getKingPosition(const int king_enum, char* king_position){
+  for(int rank = RANK_1; rank <  RANK_NONE; rank++){
+    for(int file = FILE_A; file < FILE_NONE; file++){
+      if(board_[rank][file] == king_enum){
+        king_position[0] = file + 'A';
+        king_position[1] = rank + '1';
+        king_position[2] = '\0';
+      }
+    }
+  }
+  // return -1;
 }
 
 // Getter for is_white_turn

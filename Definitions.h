@@ -77,6 +77,8 @@ enum BoardEnum {
 //   black_queen,
 //   black_king
 // };
+
+
 //
 // enum class FileEnum {
 //   file_a,
