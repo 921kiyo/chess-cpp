@@ -141,9 +141,12 @@ void ChessBoard::makeMove(const char* source_square, const char* destination_squ
 }
 
 void ChessBoard::resetBoard(){
+
   for(int file = FILE_A; file < FILE_NONE; file++){
     board_[RANK_7][file] = B_pawn;
     board_[RANK_2][file] = W_pawn;
+    // board_[RANK_7][file] = new Pawn("black");
+    // board_[RANK_2][file] = new Pawn("white");
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
     for(int file = FILE_A; file < FILE_NONE; file++){
@@ -151,23 +154,41 @@ void ChessBoard::resetBoard(){
     }
   }
 
-  board_[RANK_8][FILE_A] = B_rook;
-  board_[RANK_8][FILE_B] = B_knight;
-  board_[RANK_8][FILE_C] = B_bishop;
-  board_[RANK_8][FILE_D] = B_queen;
-  board_[RANK_8][FILE_E] = B_king;
-  board_[RANK_8][FILE_F] = B_bishop;
-  board_[RANK_8][FILE_G] = B_knight;
-  board_[RANK_8][FILE_H] = B_rook;
+  // board_[RANK_8][FILE_A] = B_rook;
+  // board_[RANK_8][FILE_B] = B_knight;
+  // board_[RANK_8][FILE_C] = B_bishop;
+  // board_[RANK_8][FILE_D] = B_queen;
+  // board_[RANK_8][FILE_E] = B_king;
+  // board_[RANK_8][FILE_F] = B_bishop;
+  // board_[RANK_8][FILE_G] = B_knight;
+  // board_[RANK_8][FILE_H] = B_rook;
+  //
+  // board_[RANK_1][FILE_A] = W_rook;
+  // board_[RANK_1][FILE_B] = W_knight;
+  // board_[RANK_1][FILE_C] = W_bishop;
+  // board_[RANK_1][FILE_D] = W_queen;
+  // board_[RANK_1][FILE_E] = W_king;
+  // board_[RANK_1][FILE_F] = W_bishop;
+  // board_[RANK_1][FILE_G] = W_knight;
+  // board_[RANK_1][FILE_H] = W_rook;
+  // board_[RANK_8][FILE_A] = new Rook("black");
+  // board_[RANK_8][FILE_B] = new Knight("black");
+  // board_[RANK_8][FILE_C] = new Bishop("black");
+  // board_[RANK_8][FILE_D] = new Queen("black");
+  // board_[RANK_8][FILE_E] = new King("black");
+  // board_[RANK_8][FILE_F] = new Bishop("black");
+  // board_[RANK_8][FILE_G] = new Knight("black");
+  // board_[RANK_8][FILE_H] = new Rook("black");
+  //
+  // board_[RANK_1][FILE_A] = new Rook("white");
+  // board_[RANK_1][FILE_B] = new Knight("white");
+  // board_[RANK_1][FILE_C] = new Bishop("white");
+  // board_[RANK_1][FILE_D] = new Queen("white");
+  // board_[RANK_1][FILE_E] = new King("white");
+  // board_[RANK_1][FILE_F] = new Bishop("white");
+  // board_[RANK_1][FILE_G] = new Knight("white");
+  // board_[RANK_1][FILE_H] = new Rook("white");
 
-  board_[RANK_1][FILE_A] = W_rook;
-  board_[RANK_1][FILE_B] = W_knight;
-  board_[RANK_1][FILE_C] = W_bishop;
-  board_[RANK_1][FILE_D] = W_queen;
-  board_[RANK_1][FILE_E] = W_king;
-  board_[RANK_1][FILE_F] = W_bishop;
-  board_[RANK_1][FILE_G] = W_knight;
-  board_[RANK_1][FILE_H] = W_rook;
 }
 
 void ChessBoard::printCurrentBoard(){
