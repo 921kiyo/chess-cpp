@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+// Delete this
 enum PieceEnum {
   EMPTY,
   W_pawn,
@@ -42,11 +43,5 @@ enum RankEnum {
   RANK_8,
   RANK_NONE
 };
-
-enum ColorEnum{
-  WHITE,
-  BLACK
-};
-
 
 #endif
