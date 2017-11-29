@@ -30,3 +30,7 @@ void Queen::calculatePossibleMove(int rank, int file, int board){
     // If the king is at a corner, you cannot go beoynd the board
   }
 }
+
+bool Queen::isKingSafe(){
+  return true;
+}

@@ -11,6 +11,8 @@ public:
   virtual ~Queen();
   virtual bool isValidMove();
   void calculatePossibleMove(int rank, int file, int board);
+  bool isKingSafe();
+
 };
 
 #endif

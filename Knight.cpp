@@ -12,6 +12,6 @@ bool Knight::isValidMove(){
   return true;
 }
 
-// void Knight::calculatePossibleMove(int rank, int file, int board){
-//
-// }
+void Knight::calculatePossibleMove(int rank, int file, int board){
+
+}
