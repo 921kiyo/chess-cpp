@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+// Delete this
 enum PieceEnum {
   EMPTY,
   W_pawn,
@@ -48,6 +49,7 @@ enum ColorEnum{
   BLACK
 };
 
+// Delete this
 enum BoardEnum {
   A1 = 21, B1, C1, D1, E1, F1, G1, H1,
   A2 = 31, B2, C2, D2, E2, F2, G2, H2,
