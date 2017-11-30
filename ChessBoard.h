@@ -25,6 +25,7 @@ class ChessBoard {
 private:
   bool is_white_turn_;
   Piece* board_[FILE_NONE][RANK_NONE];
+  // Piece* alive_pieces;
 
   // TODO Should this be static?
   map<int, Piece*> piece_map_;

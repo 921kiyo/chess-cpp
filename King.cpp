@@ -36,15 +36,32 @@ string King::getSimbol(){
 void King::calculatePossibleMove(const char* source_square, Piece* board[8][8], vector<const char*>& possible_moves){
   int rank = source_square[1] - '1';
   int file = source_square[0] - 'A';
-  cout << "rank " << rank << endl;
-  cout << "file " << file << endl;
-
-  for(int i = 0; i < 9; i++){
-    // if not in the current position
-    // if it is a blank space
-    // or if another piece of the same color is not present.
-    // If the king is at a corner, you cannot go beoynd the board
+  char square[3];
+  for(int f = file-1; f <= file+1; f++){
+    for(int r = rank-1; r <= rank+1; r++){
+      // not the same as source_square
+      if(f != file || r != rank){
+        if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
+          square[0] = r + '1';
+          square[1] = f + 'A';
+          possible_moves.push_back(square);
+          // possible_moves->push_back(square);
+          square[2] = '\0';
+          cout << "square " << square << endl;
+            // cout << "===========" << endl;
+            // cout << "file " << f << endl;
+            // cout << "rank " << r << endl;
+        }
+      }
+    }
   }
+  cout << "after loop" << possible_moves[0] << endl;
+  // for(int i = 0; i < 9; i++){
+  //   // if not in the current position
+  //   // if it is a blank space
+  //   // or if another piece of the same color is not present.
+  //   // If the king is at a corner, you cannot go beoynd the board
+  // }
 }
 
 // bool King::isKingSafe(){

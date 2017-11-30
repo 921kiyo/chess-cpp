@@ -117,7 +117,7 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
     return;
   }
 
-  // Piece* piece = getPieceFromBoard(source_square);
+  Piece* piece = getPieceFromBoard(source_square);
   // cout << "current piece " << piece->getSimbol() << endl;
 
   // Check the piece and check the restriction for the piece
@@ -127,9 +127,9 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
 
-  // if(piece->isValidMove(source_square, destination_square, board_)){
-  //   makeMove(source_square, destination_square);
-  // }
+  if(piece->isValidMove(source_square, destination_square, board_)){
+    makeMove(source_square, destination_square);
+  }
   // Display the message
 }
 
