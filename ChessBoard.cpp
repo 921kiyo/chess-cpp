@@ -107,7 +107,7 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
 
-  // makeMove(source_square, destination_square);
+  makeMove(source_square, destination_square);
 
   // Display the message
 }
@@ -140,12 +140,11 @@ bool ChessBoard::isWhiteTurn(){
 void ChessBoard::makeMove(const char* source_square, const char* destination_square){
   int source_file = source_square[0] - 'A';
   int source_rank = source_square[1] - '1';
-  // int source_piece = board_[source_rank][source_file];
-  // board_[source_rank][source_file] = EMPTY;
-
+  Piece* source_piece = board_[source_rank][source_file];
   int dest_file = destination_square[0] - 'A';
   int dest_rank = destination_square[1] - '1';
-  // board_[dest_rank][dest_file] = source_piece;
+  board_[dest_rank][dest_file] = source_piece;
+  board_[source_rank][source_file] = NULL;
   printCurrentBoard();
 }
 
