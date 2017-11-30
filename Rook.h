@@ -7,7 +7,7 @@ class Rook:  public Piece{
 protected:
 
 public:
-  Rook();
+  Rook(bool white);
   virtual ~Rook();
   // Can jump
   virtual bool isValidMove();

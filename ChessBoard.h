@@ -24,9 +24,8 @@ using namespace std;
 class ChessBoard {
 private:
   bool is_white_turn_;
-  // int board_[FILE_none+2][RANK_none+4];
-  int board_[FILE_NONE][RANK_NONE];
-  Piece* board_2[FILE_NONE][RANK_NONE];
+  // int board_[FILE_NONE][RANK_NONE];
+  Piece* board_[FILE_NONE][RANK_NONE];
 
   // TODO Should this be static?
   map<int, Piece*> piece_map_;
@@ -38,9 +37,8 @@ public:
   bool isWhiteTurn();
   void resetBoard();
   void printCurrentBoard();
-  string convertIntToPiece(int& num);
   void makeMove(const char* source_square, const char* destination_square);
-  int getPieceFromBoard(const char* source_square);
+  // int getPieceFromBoard(const char* source_square);
   void getKingPosition(const int king_enum, char* king_position);
 };
 

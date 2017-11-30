@@ -7,7 +7,7 @@ class Bishop: public Piece{
 protected:
 
 public:
-  Bishop();
+  Bishop(bool white);
   // Can jump
   virtual ~Bishop();
   virtual bool isValidMove();

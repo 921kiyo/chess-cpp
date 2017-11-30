@@ -8,6 +8,7 @@ class Knight: public Piece{
 private:
 
 public:
+Knight(bool white);
 virtual bool isValidMove();
 void calculatePossibleMove(int rank, int file, int board);
 

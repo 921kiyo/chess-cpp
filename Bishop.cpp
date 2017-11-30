@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Bishop::Bishop(){
+Bishop::Bishop(bool white):Piece(white){
 
 }
 Bishop::~Bishop(){}

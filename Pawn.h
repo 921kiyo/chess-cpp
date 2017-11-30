@@ -8,6 +8,7 @@ class Pawn: public Piece{
 private:
 
 public:
+Pawn(bool white);
 virtual bool isValidMove();
 
 // castling();

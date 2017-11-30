@@ -8,11 +8,11 @@ class King: public Piece{
 private:
 
 public:
-King();
+King(bool white);
 virtual ~King();
 virtual bool isValidMove();
-void calculatePossibleMove(int rank, int file, int board);
-bool isKingSafe();
+// void calculatePossibleMove(int rank, int file, int board);
+// bool isKingSafe();
 // castling();
 };
 

@@ -4,21 +4,21 @@
 #include <cstdint>
 
 // Delete this
-enum PieceEnum {
-  EMPTY,
-  W_pawn,
-  W_rook,
-  W_knight,
-  W_bishop,
-  W_queen,
-  W_king,
-  B_pawn,
-  B_rook,
-  B_knight,
-  B_bishop,
-  B_queen,
-  B_king
-};
+// enum PieceEnum {
+//   EMPTY,
+//   W_pawn,
+//   W_rook,
+//   W_knight,
+//   W_bishop,
+//   W_queen,
+//   W_king,
+//   B_pawn,
+//   B_rook,
+//   B_knight,
+//   B_bishop,
+//   B_queen,
+//   B_king
+// };
 
 enum FileEnum {
   FILE_A,

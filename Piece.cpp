@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Piece::Piece(){
-
+Piece::Piece(bool white){
+  is_white_ = white;
 }
 
 Piece::~Piece(){}

@@ -1,11 +1,10 @@
 #include "Queen.h"
-
+#include "Piece.h"
 #include <iostream>
 
 using namespace std;
 
-Queen::Queen(){
-
+Queen::Queen(bool white): Piece(white){
 }
 
 Queen::~Queen(){}

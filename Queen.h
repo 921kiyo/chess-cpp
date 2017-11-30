@@ -6,7 +6,7 @@ class Queen: public Piece{
 protected:
 
 public:
-  Queen();
+  Queen(bool white);
   // Can jump
   virtual ~Queen();
   virtual bool isValidMove();

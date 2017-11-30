@@ -18,31 +18,30 @@ using namespace std;
 
 ChessBoard::ChessBoard(){
   // This is not starting from 0 (is this okay??)
-  piece_map_[W_pawn] = new Pawn();
-  piece_map_[W_rook] = new Rook();
-  piece_map_[W_knight] = new Knight();
-  piece_map_[W_bishop] = new Bishop();
-  piece_map_[W_queen] = new Queen();
-  piece_map_[W_king] = new King();
-
-  piece_map_[B_pawn] = new Pawn();
-  piece_map_[B_rook] = new Rook();
-  piece_map_[B_knight] = new Knight();
-  piece_map_[B_bishop] = new Bishop();
-  piece_map_[B_queen] = new Queen();
-  piece_map_[B_king] = new King();
+  // piece_map_[W_pawn] = new Pawn();
+  // piece_map_[W_rook] = new Rook();
+  // piece_map_[W_knight] = new Knight();
+  // piece_map_[W_bishop] = new Bishop();
+  // piece_map_[W_queen] = new Queen();
+  // piece_map_[W_king] = new King();
+  //
+  // piece_map_[B_pawn] = new Pawn();
+  // piece_map_[B_rook] = new Rook();
+  // piece_map_[B_knight] = new Knight();
+  // piece_map_[B_bishop] = new Bishop();
+  // piece_map_[B_queen] = new Queen();
+  // piece_map_[B_king] = new King();
 
   is_white_turn_ = true;
   resetBoard();
-  printCurrentBoard();
+  // printCurrentBoard();
 }
 
 ChessBoard::~ChessBoard(){
   // TODO Double check memory leak
-  for(int i = W_pawn; i <= B_king; i++){
-    delete piece_map_[i];
-  }
-
+  // for(int i = W_pawn; i <= B_king; i++){
+  //   delete piece_map_[i];
+  // }
 }
 
 void ChessBoard::submitMove(const char* source_square, const char* destination_square){
@@ -84,7 +83,8 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
     return;
   }
 
-  int piece = getPieceFromBoard(source_square);
+  // int piece = getPieceFromBoard(source_square);
+  int piece = 1;
   // Dynamic
 
   // Check the piece and check the restriction for the piece
@@ -98,28 +98,28 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
 
-  makeMove(source_square, destination_square);
+  // makeMove(source_square, destination_square);
 
   // Display the message
 }
 
-int ChessBoard::getPieceFromBoard(const char* source_square){
-  int rank = source_square[1] - '1';
-  int file = source_square[0] - 'A';
-  return board_[rank][file];
-}
+// int ChessBoard::getPieceFromBoard(const char* source_square){
+//   int rank = source_square[1] - '1';
+//   int file = source_square[0] - 'A';
+//   return board_[rank][file];
+// }
 
 // Actually, this can also work for other pieces
 void ChessBoard::getKingPosition(const int king_enum, char* king_position){
-  for(int rank = RANK_1; rank <  RANK_NONE; rank++){
-    for(int file = FILE_A; file < FILE_NONE; file++){
-      if(board_[rank][file] == king_enum){
-        king_position[0] = file + 'A';
-        king_position[1] = rank + '1';
-        king_position[2] = '\0';
-      }
-    }
-  }
+  // for(int rank = RANK_1; rank <  RANK_NONE; rank++){
+  //   for(int file = FILE_A; file < FILE_NONE; file++){
+  //     if(board_[rank][file] == king_enum){
+  //       king_position[0] = file + 'A';
+  //       king_position[1] = rank + '1';
+  //       king_position[2] = '\0';
+  //     }
+  //   }
+  // }
   // return -1;
 }
 
@@ -131,63 +131,44 @@ bool ChessBoard::isWhiteTurn(){
 void ChessBoard::makeMove(const char* source_square, const char* destination_square){
   int source_file = source_square[0] - 'A';
   int source_rank = source_square[1] - '1';
-  int source_piece = board_[source_rank][source_file];
-  board_[source_rank][source_file] = EMPTY;
+  // int source_piece = board_[source_rank][source_file];
+  // board_[source_rank][source_file] = EMPTY;
 
   int dest_file = destination_square[0] - 'A';
   int dest_rank = destination_square[1] - '1';
-  board_[dest_rank][dest_file] = source_piece;
+  // board_[dest_rank][dest_file] = source_piece;
   printCurrentBoard();
 }
 
 void ChessBoard::resetBoard(){
 
   for(int file = FILE_A; file < FILE_NONE; file++){
-    board_[RANK_7][file] = B_pawn;
-    board_[RANK_2][file] = W_pawn;
-    // board_[RANK_7][file] = new Pawn("black");
-    // board_[RANK_2][file] = new Pawn("white");
+    board_[RANK_7][file] = new Pawn(false);
+    board_[RANK_2][file] = new Pawn(true);
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
     for(int file = FILE_A; file < FILE_NONE; file++){
-      board_[rank][file] = EMPTY;
+      board_[rank][file] = NULL;
     }
   }
 
-  // board_[RANK_8][FILE_A] = B_rook;
-  // board_[RANK_8][FILE_B] = B_knight;
-  // board_[RANK_8][FILE_C] = B_bishop;
-  // board_[RANK_8][FILE_D] = B_queen;
-  // board_[RANK_8][FILE_E] = B_king;
-  // board_[RANK_8][FILE_F] = B_bishop;
-  // board_[RANK_8][FILE_G] = B_knight;
-  // board_[RANK_8][FILE_H] = B_rook;
-  //
-  // board_[RANK_1][FILE_A] = W_rook;
-  // board_[RANK_1][FILE_B] = W_knight;
-  // board_[RANK_1][FILE_C] = W_bishop;
-  // board_[RANK_1][FILE_D] = W_queen;
-  // board_[RANK_1][FILE_E] = W_king;
-  // board_[RANK_1][FILE_F] = W_bishop;
-  // board_[RANK_1][FILE_G] = W_knight;
-  // board_[RANK_1][FILE_H] = W_rook;
-  // board_[RANK_8][FILE_A] = new Rook("black");
-  // board_[RANK_8][FILE_B] = new Knight("black");
-  // board_[RANK_8][FILE_C] = new Bishop("black");
-  // board_[RANK_8][FILE_D] = new Queen("black");
-  // board_[RANK_8][FILE_E] = new King("black");
-  // board_[RANK_8][FILE_F] = new Bishop("black");
-  // board_[RANK_8][FILE_G] = new Knight("black");
-  // board_[RANK_8][FILE_H] = new Rook("black");
-  //
-  // board_[RANK_1][FILE_A] = new Rook("white");
-  // board_[RANK_1][FILE_B] = new Knight("white");
-  // board_[RANK_1][FILE_C] = new Bishop("white");
-  // board_[RANK_1][FILE_D] = new Queen("white");
-  // board_[RANK_1][FILE_E] = new King("white");
-  // board_[RANK_1][FILE_F] = new Bishop("white");
-  // board_[RANK_1][FILE_G] = new Knight("white");
-  // board_[RANK_1][FILE_H] = new Rook("white");
+  board_[RANK_8][FILE_A] = new Rook(false);
+  board_[RANK_8][FILE_B] = new Knight(false);
+  board_[RANK_8][FILE_C] = new Bishop(false);
+  board_[RANK_8][FILE_D] = new Queen(false);
+  board_[RANK_8][FILE_E] = new King(false);
+  board_[RANK_8][FILE_F] = new Bishop(false);
+  board_[RANK_8][FILE_G] = new Knight(false);
+  board_[RANK_8][FILE_H] = new Rook(false);
+
+  board_[RANK_1][FILE_A] = new Rook(true);
+  board_[RANK_1][FILE_B] = new Knight(true);
+  board_[RANK_1][FILE_C] = new Bishop(true);
+  board_[RANK_1][FILE_D] = new Queen(true);
+  board_[RANK_1][FILE_E] = new King(true);
+  board_[RANK_1][FILE_F] = new Bishop(true);
+  board_[RANK_1][FILE_G] = new Knight(true);
+  board_[RANK_1][FILE_H] = new Rook(true);
 
 }
 
@@ -196,28 +177,9 @@ void ChessBoard::printCurrentBoard(){
     for(int rank = RANK_8; rank >= RANK_1; rank--){
       cout << endl;
       for(int file = FILE_A; file < FILE_NONE; file++){
-        cout << convertIntToPiece(board_[rank][file]) << " ";
+        // cout << convertIntToPiece(board_[rank][file]) << " ";
       }
     }
     cout << endl;
     cout << "========================" << endl;
-}
-
-string ChessBoard::convertIntToPiece(int& num){
-  switch(num){
-    case(EMPTY): return "--"; break;
-    case(W_pawn): return "WP"; break;
-    case(W_rook): return "WR"; break;
-    case(W_knight): return "WN"; break;
-    case(W_bishop): return "WB"; break;
-    case(W_queen): return "WQ"; break;
-    case(W_king): return "WK"; break;
-    case(B_pawn): return "BP"; break;
-    case(B_rook): return "BR"; break;
-    case(B_knight): return "BN"; break;
-    case(B_bishop): return "BB"; break;
-    case(B_queen): return "BQ"; break;
-    case(B_king): return "BK"; break;
-  }
-  // TODO default value
 }

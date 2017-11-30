@@ -3,9 +3,9 @@
 
 class Piece{
 protected:
-
+  bool is_white_;
 public:
-  Piece();
+  Piece(bool white);
   // Can jump
   virtual ~Piece();
   virtual bool isValidMove() = 0;
