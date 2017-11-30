@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 Rook::Rook(bool white): Piece(white){
@@ -10,7 +11,10 @@ Rook::Rook(bool white): Piece(white){
 
 Rook::~Rook(){}
 
-bool Rook::isValidMove(){
+// bool Rook::isValidMove(){
+//
+// }
+void Rook::calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves){
 
 }
 

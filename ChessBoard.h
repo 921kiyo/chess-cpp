@@ -26,7 +26,7 @@ private:
   bool is_white_turn_;
   // int board_[FILE_NONE][RANK_NONE];
   Piece* board_[FILE_NONE][RANK_NONE];
-
+  // int board_[FILE_NONE][RANK_NONE];
   // TODO Should this be static?
   map<int, Piece*> piece_map_;
 

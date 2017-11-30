@@ -9,14 +9,13 @@ using namespace std;
 // Knight::~Knight(){}
 
 Knight::Knight(bool white):Piece(white){}
-bool Knight::isValidMove(){
-  return true;
+// bool Knight::isValidMove(){
+//   return true;
+// }
+
+void Knight::calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves){
+
 }
-
-void Knight::calculatePossibleMove(int rank, int file, int board){
-
-}
-
 string Knight::getSimbol(){
   if(is_white_){
     return "WN";

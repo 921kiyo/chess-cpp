@@ -3,6 +3,7 @@
 
 #include "Piece.h"
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -13,7 +14,8 @@ public:
   Rook(bool white);
   virtual ~Rook();
   // Can jump
-  virtual bool isValidMove();
+  // virtual bool isValidMove();
+  virtual void calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves);
   virtual string getSimbol();
 };
 

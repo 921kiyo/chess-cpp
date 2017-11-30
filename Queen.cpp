@@ -2,6 +2,8 @@
 #include "Piece.h"
 #include <iostream>
 #include <string>
+#include <vector>
+
 using namespace std;
 
 Queen::Queen(bool white): Piece(white){
@@ -9,11 +11,10 @@ Queen::Queen(bool white): Piece(white){
 
 Queen::~Queen(){}
 
-bool Queen::isValidMove(){
-
-}
-
-void Queen::calculatePossibleMove(int rank, int file, int board){
+// bool Queen::isValidMove(){
+//
+// }
+void Queen::calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves){
   // Check vertical lines
 
   // Check horizontal lines.

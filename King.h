@@ -4,6 +4,7 @@
 #include "Piece.h"
 #include "Definitions.h"
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -13,9 +14,10 @@ private:
 public:
 King(bool white);
 virtual ~King();
-virtual bool isValidMove();
+// virtual bool isValidMove();
 virtual string getSimbol();
-// void calculatePossibleMove(int rank, int file, int board);
+virtual void calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves);
+// void isValidMove(const char* source_square, const char* destination_square, Piece* board);
 // bool isKingSafe();
 // castling();
 };

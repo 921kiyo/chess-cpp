@@ -1,7 +1,7 @@
 #ifndef PIECE_H
 #define PIECE_H
 #include <string>
-
+#include <vector>
 using namespace std;
 
 class Piece{
@@ -11,7 +11,8 @@ public:
   Piece(bool white);
   // Can jump
   virtual ~Piece();
-  virtual bool isValidMove() = 0;
+  bool isValidMove(const char* source_square, const char* destination_square, Piece* board[8][8]);
+  virtual void calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves) = 0;
   virtual string getSimbol() = 0;
 };
 

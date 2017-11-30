@@ -103,12 +103,15 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
 
   // Check if the move destroys an opponent piece
 
-  // piece_map_[piece]->is_valid_move();
-
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
 
-  makeMove(source_square, destination_square);
+  if(piece->isValidMove(source_square, destination_square, board_)){
+    makeMove(source_square, destination_square);
+  }
+
+
+
   // Display the message
 }
 

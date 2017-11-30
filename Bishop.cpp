@@ -10,7 +10,10 @@ Bishop::Bishop(bool white):Piece(white){
 Bishop::~Bishop(){}
 
 
-bool Bishop::isValidMove(){
+// bool Bishop::isValidMove(){
+//
+// }
+void Bishop::calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves){
 
 }
 
