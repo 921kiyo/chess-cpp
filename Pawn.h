@@ -3,6 +3,9 @@
 
 #include "Piece.h"
 #include "Definitions.h"
+#include <string>
+
+using namespace std;
 
 class Pawn: public Piece{
 private:
@@ -10,7 +13,7 @@ private:
 public:
 Pawn(bool white);
 virtual bool isValidMove();
-
+virtual string getSimbol();
 // castling();
 };
 

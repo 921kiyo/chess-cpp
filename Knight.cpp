@@ -3,7 +3,7 @@
 #include "Piece.h"
 #include <iostream>
 #include <vector>
-
+#include <string>
 using namespace std;
 
 // Knight::~Knight(){}
@@ -15,4 +15,13 @@ bool Knight::isValidMove(){
 
 void Knight::calculatePossibleMove(int rank, int file, int board){
 
+}
+
+string Knight::getSimbol(){
+  if(is_white_){
+    return "WN";
+  }
+  else{
+    return "BN";
+  }
 }

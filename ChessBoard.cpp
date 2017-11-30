@@ -17,24 +17,37 @@
 using namespace std;
 
 ChessBoard::ChessBoard(){
-  // This is not starting from 0 (is this okay??)
-  // piece_map_[W_pawn] = new Pawn();
-  // piece_map_[W_rook] = new Rook();
-  // piece_map_[W_knight] = new Knight();
-  // piece_map_[W_bishop] = new Bishop();
-  // piece_map_[W_queen] = new Queen();
-  // piece_map_[W_king] = new King();
-  //
-  // piece_map_[B_pawn] = new Pawn();
-  // piece_map_[B_rook] = new Rook();
-  // piece_map_[B_knight] = new Knight();
-  // piece_map_[B_bishop] = new Bishop();
-  // piece_map_[B_queen] = new Queen();
-  // piece_map_[B_king] = new King();
+
+  for(int file = FILE_A; file < FILE_NONE; file++){
+    board_[RANK_7][file] = new Pawn(false);
+    board_[RANK_2][file] = new Pawn(true);
+  }
+  for(int rank = RANK_3; rank <= RANK_6; rank++){
+    for(int file = FILE_A; file < FILE_NONE; file++){
+      board_[rank][file] = NULL;
+    }
+  }
+
+  board_[RANK_8][FILE_A] = new Rook(false);
+  board_[RANK_8][FILE_B] = new Knight(false);
+  board_[RANK_8][FILE_C] = new Bishop(false);
+  board_[RANK_8][FILE_D] = new Queen(false);
+  board_[RANK_8][FILE_E] = new King(false);
+  board_[RANK_8][FILE_F] = new Bishop(false);
+  board_[RANK_8][FILE_G] = new Knight(false);
+  board_[RANK_8][FILE_H] = new Rook(false);
+
+  board_[RANK_1][FILE_A] = new Rook(true);
+  board_[RANK_1][FILE_B] = new Knight(true);
+  board_[RANK_1][FILE_C] = new Bishop(true);
+  board_[RANK_1][FILE_D] = new Queen(true);
+  board_[RANK_1][FILE_E] = new King(true);
+  board_[RANK_1][FILE_F] = new Bishop(true);
+  board_[RANK_1][FILE_G] = new Knight(true);
+  board_[RANK_1][FILE_H] = new Rook(true);
 
   is_white_turn_ = true;
-  resetBoard();
-  // printCurrentBoard();
+  printCurrentBoard();
 }
 
 ChessBoard::~ChessBoard(){
@@ -84,14 +97,10 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   }
 
   // int piece = getPieceFromBoard(source_square);
-  int piece = 1;
-  // Dynamic
 
   // Check the piece and check the restriction for the piece
 
   // Check if the move destroys an opponent piece
-  cout << "piece " << piece << endl;
-  // ?????
 
   // piece_map_[piece]->is_valid_move();
 
@@ -142,34 +151,6 @@ void ChessBoard::makeMove(const char* source_square, const char* destination_squ
 
 void ChessBoard::resetBoard(){
 
-  for(int file = FILE_A; file < FILE_NONE; file++){
-    board_[RANK_7][file] = new Pawn(false);
-    board_[RANK_2][file] = new Pawn(true);
-  }
-  for(int rank = RANK_3; rank <= RANK_6; rank++){
-    for(int file = FILE_A; file < FILE_NONE; file++){
-      board_[rank][file] = NULL;
-    }
-  }
-
-  board_[RANK_8][FILE_A] = new Rook(false);
-  board_[RANK_8][FILE_B] = new Knight(false);
-  board_[RANK_8][FILE_C] = new Bishop(false);
-  board_[RANK_8][FILE_D] = new Queen(false);
-  board_[RANK_8][FILE_E] = new King(false);
-  board_[RANK_8][FILE_F] = new Bishop(false);
-  board_[RANK_8][FILE_G] = new Knight(false);
-  board_[RANK_8][FILE_H] = new Rook(false);
-
-  board_[RANK_1][FILE_A] = new Rook(true);
-  board_[RANK_1][FILE_B] = new Knight(true);
-  board_[RANK_1][FILE_C] = new Bishop(true);
-  board_[RANK_1][FILE_D] = new Queen(true);
-  board_[RANK_1][FILE_E] = new King(true);
-  board_[RANK_1][FILE_F] = new Bishop(true);
-  board_[RANK_1][FILE_G] = new Knight(true);
-  board_[RANK_1][FILE_H] = new Rook(true);
-
 }
 
 void ChessBoard::printCurrentBoard(){
@@ -177,7 +158,12 @@ void ChessBoard::printCurrentBoard(){
     for(int rank = RANK_8; rank >= RANK_1; rank--){
       cout << endl;
       for(int file = FILE_A; file < FILE_NONE; file++){
-        // cout << convertIntToPiece(board_[rank][file]) << " ";
+        if(board_[rank][file] == NULL){
+          cout << "-- ";
+        }
+        else{
+          cout << board_[rank][file]->getSimbol() << " ";
+        }
       }
     }
     cout << endl;

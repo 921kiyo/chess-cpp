@@ -28,8 +28,8 @@ int main() {
     // cout << endl;
 
     char king_position[3];
-    cb.getKingPosition(B_king, king_position);
-    cout << "W_king is at " << king_position << endl;
+    // cb.getKingPosition(B_king, king_position);
+    // cout << "W_king is at " << king_position << endl;
 
     cout << "===========================" << endl;
     cout << "Alekhine vs. Vasic (1931)" << endl;

@@ -3,6 +3,7 @@
 #include "Piece.h"
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -19,6 +20,15 @@ bool King::isValidMove(){
 
   // Or Castling
   return true;
+}
+
+string King::getSimbol(){
+  if(is_white_){
+    return "WK";
+  }
+  else{
+    return "BK";
+  }
 }
 
 // void King::calculatePossibleMove(int rank, int file, int board){

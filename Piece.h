@@ -1,5 +1,8 @@
 #ifndef PIECE_H
 #define PIECE_H
+#include <string>
+
+using namespace std;
 
 class Piece{
 protected:
@@ -9,6 +12,7 @@ public:
   // Can jump
   virtual ~Piece();
   virtual bool isValidMove() = 0;
+  virtual string getSimbol() = 0;
 };
 
 #endif
