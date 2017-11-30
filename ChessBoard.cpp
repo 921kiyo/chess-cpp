@@ -1,10 +1,11 @@
 #include "ChessBoard.h"
-#include "Pawn.h"
-#include "Queen.h"
+// #include "Pawn.h"
+// #include "Queen.h"
 #include "King.h"
-#include "Rook.h"
-#include "Bishop.h"
-#include "Knight.h"
+#include "Piece.h"
+// #include "Rook.h"
+// #include "Bishop.h"
+// #include "Knight.h"
 
 #include "Definitions.h"
 
@@ -17,10 +18,11 @@
 using namespace std;
 
 ChessBoard::ChessBoard(){
-
   for(int file = FILE_A; file < FILE_NONE; file++){
-    board_[RANK_7][file] = new Pawn(false);
-    board_[RANK_2][file] = new Pawn(true);
+    // board_[RANK_7][file] = new Pawn(false);
+    // board_[RANK_2][file] = new Pawn(true);
+    board_[RANK_7][file] = NULL;
+    board_[RANK_2][file] = NULL;
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
     for(int file = FILE_A; file < FILE_NONE; file++){
@@ -28,23 +30,42 @@ ChessBoard::ChessBoard(){
     }
   }
 
-  board_[RANK_8][FILE_A] = new Rook(false);
-  board_[RANK_8][FILE_B] = new Knight(false);
-  board_[RANK_8][FILE_C] = new Bishop(false);
-  board_[RANK_8][FILE_D] = new Queen(false);
-  board_[RANK_8][FILE_E] = new King(false);
-  board_[RANK_8][FILE_F] = new Bishop(false);
-  board_[RANK_8][FILE_G] = new Knight(false);
-  board_[RANK_8][FILE_H] = new Rook(false);
+  board_[RANK_8][FILE_A] = NULL;
+  board_[RANK_8][FILE_B] = NULL;
+  board_[RANK_8][FILE_C] = NULL;
+  board_[RANK_8][FILE_D] = NULL;
+  board_[RANK_8][FILE_E] = NULL;
+  board_[RANK_8][FILE_F] = NULL;
+  board_[RANK_8][FILE_G] = NULL;
+  board_[RANK_8][FILE_H] = NULL;
 
-  board_[RANK_1][FILE_A] = new Rook(true);
-  board_[RANK_1][FILE_B] = new Knight(true);
-  board_[RANK_1][FILE_C] = new Bishop(true);
-  board_[RANK_1][FILE_D] = new Queen(true);
-  board_[RANK_1][FILE_E] = new King(true);
-  board_[RANK_1][FILE_F] = new Bishop(true);
-  board_[RANK_1][FILE_G] = new Knight(true);
-  board_[RANK_1][FILE_H] = new Rook(true);
+  board_[RANK_1][FILE_A] = NULL;
+  board_[RANK_1][FILE_B] = NULL;
+  board_[RANK_1][FILE_C] = NULL;
+  board_[RANK_1][FILE_D] = NULL;
+  board_[RANK_1][FILE_E] = new King(false);
+  board_[RANK_1][FILE_F] = NULL;
+  board_[RANK_1][FILE_G] = NULL;
+  board_[RANK_1][FILE_H] = NULL;
+
+
+  // board_[RANK_8][FILE_A] = new Rook(false);
+  // board_[RANK_8][FILE_B] = new Knight(false);
+  // board_[RANK_8][FILE_C] = new Bishop(false);
+  // board_[RANK_8][FILE_D] = new Queen(false);
+  // board_[RANK_8][FILE_E] = new King(false);
+  // board_[RANK_8][FILE_F] = new Bishop(false);
+  // board_[RANK_8][FILE_G] = new Knight(false);
+  // board_[RANK_8][FILE_H] = new Rook(false);
+  //
+  // board_[RANK_1][FILE_A] = new Rook(true);
+  // board_[RANK_1][FILE_B] = new Knight(true);
+  // board_[RANK_1][FILE_C] = new Bishop(true);
+  // board_[RANK_1][FILE_D] = new Queen(true);
+  // board_[RANK_1][FILE_E] = new King(true);
+  // board_[RANK_1][FILE_F] = new Bishop(true);
+  // board_[RANK_1][FILE_G] = new Knight(true);
+  // board_[RANK_1][FILE_H] = new Rook(true);
 
   is_white_turn_ = true;
   printCurrentBoard();
@@ -96,7 +117,7 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
     return;
   }
 
-  Piece* piece = getPieceFromBoard(source_square);
+  // Piece* piece = getPieceFromBoard(source_square);
   // cout << "current piece " << piece->getSimbol() << endl;
 
   // Check the piece and check the restriction for the piece
@@ -106,12 +127,9 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // Change turn
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
 
-  if(piece->isValidMove(source_square, destination_square, board_)){
-    makeMove(source_square, destination_square);
-  }
-
-
-
+  // if(piece->isValidMove(source_square, destination_square, board_)){
+  //   makeMove(source_square, destination_square);
+  // }
   // Display the message
 }
 

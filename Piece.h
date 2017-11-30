@@ -12,7 +12,7 @@ public:
   // Can jump
   virtual ~Piece();
   bool isValidMove(const char* source_square, const char* destination_square, Piece* board[8][8]);
-  virtual void calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves) = 0;
+  virtual void calculatePossibleMove(const char* source_square, Piece* board[8][8], vector<const char*>& possible_moves) = 0;
   virtual string getSimbol() = 0;
 };
 

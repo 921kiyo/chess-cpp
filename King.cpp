@@ -33,8 +33,12 @@ string King::getSimbol(){
   }
 }
 
-void King::calculatePossibleMove(const char* source_square, Piece* board, vector<const char*>& possible_moves){
-  // vector<int array[2]>possible_moves;
+void King::calculatePossibleMove(const char* source_square, Piece* board[8][8], vector<const char*>& possible_moves){
+  int rank = source_square[1] - '1';
+  int file = source_square[0] - 'A';
+  cout << "rank " << rank << endl;
+  cout << "file " << file << endl;
+
   for(int i = 0; i < 9; i++){
     // if not in the current position
     // if it is a blank space
