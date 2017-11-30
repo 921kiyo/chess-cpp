@@ -42,12 +42,15 @@ void King::calculatePossibleMove(const char* source_square, Piece* board[8][8], 
       // not the same as source_square
       if(f != file || r != rank){
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
-          square[0] = r + '1';
-          square[1] = f + 'A';
-          possible_moves.push_back(square);
-          // possible_moves->push_back(square);
-          square[2] = '\0';
-          cout << "square " << square << endl;
+            // If the square is empty or piece of different color 
+            if((board[r][f] == NULL) || (board[r][f] != NULL && board[rank][file]->getIsWhite() != board[r][f]->getIsWhite())){
+              square[0] = r + '1';
+              square[1] = f + 'A';
+              square[2] = '\0';
+              possible_moves.push_back(square);
+              // possible_moves->push_back(square);
+              cout << "square " << square << endl;
+            }
             // cout << "===========" << endl;
             // cout << "file " << f << endl;
             // cout << "rank " << r << endl;
@@ -55,13 +58,11 @@ void King::calculatePossibleMove(const char* source_square, Piece* board[8][8], 
       }
     }
   }
-  cout << "after loop" << possible_moves[0] << endl;
-  // for(int i = 0; i < 9; i++){
+
   //   // if not in the current position
   //   // if it is a blank space
   //   // or if another piece of the same color is not present.
   //   // If the king is at a corner, you cannot go beoynd the board
-  // }
 }
 
 // bool King::isKingSafe(){

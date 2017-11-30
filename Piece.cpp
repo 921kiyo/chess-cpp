@@ -24,3 +24,7 @@ bool Piece::isValidMove(const char* source_square, const char* destination_squar
   // Or Castling
   return true;
 }
+
+bool Piece::getIsWhite(){
+  return is_white_;
+}

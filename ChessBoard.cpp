@@ -42,7 +42,7 @@ ChessBoard::ChessBoard(){
   board_[RANK_1][FILE_A] = NULL;
   board_[RANK_1][FILE_B] = NULL;
   board_[RANK_1][FILE_C] = NULL;
-  board_[RANK_1][FILE_D] = NULL;
+  board_[RANK_1][FILE_D] = new King(false);
   board_[RANK_1][FILE_E] = new King(false);
   board_[RANK_1][FILE_F] = NULL;
   board_[RANK_1][FILE_G] = NULL;
