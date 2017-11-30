@@ -38,7 +38,7 @@ public:
   void resetBoard();
   void printCurrentBoard();
   void makeMove(const char* source_square, const char* destination_square);
-  // int getPieceFromBoard(const char* source_square);
+  Piece* getPieceFromBoard(const char* source_square);
   void getKingPosition(const int king_enum, char* king_position);
 };
 

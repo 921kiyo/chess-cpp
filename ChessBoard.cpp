@@ -96,7 +96,8 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
     return;
   }
 
-  // int piece = getPieceFromBoard(source_square);
+  Piece* piece = getPieceFromBoard(source_square);
+  // cout << "current piece " << piece->getSimbol() << endl;
 
   // Check the piece and check the restriction for the piece
 
@@ -108,15 +109,14 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
 
   makeMove(source_square, destination_square);
-
   // Display the message
 }
 
-// int ChessBoard::getPieceFromBoard(const char* source_square){
-//   int rank = source_square[1] - '1';
-//   int file = source_square[0] - 'A';
-//   return board_[rank][file];
-// }
+Piece* ChessBoard::getPieceFromBoard(const char* source_square){
+  int rank = source_square[1] - '1';
+  int file = source_square[0] - 'A';
+  return board_[rank][file];
+}
 
 // Actually, this can also work for other pieces
 void ChessBoard::getKingPosition(const int king_enum, char* king_position){
