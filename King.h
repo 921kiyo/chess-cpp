@@ -16,7 +16,7 @@ King(bool white);
 virtual ~King();
 // virtual bool isValidMove();
 virtual string getSimbol();
-virtual void calculatePossibleMove(const char* source_square, Piece* board[8][8], vector<const char*>& possible_moves);
+virtual void calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
 // void isValidMove(const char* source_square, const char* destination_square, Piece* board);
 // bool isKingSafe();
 // castling();

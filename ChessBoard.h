@@ -33,12 +33,14 @@ private:
 public:
   ChessBoard();
   ~ChessBoard();
-  void submitMove(const char* source_square, const char* destination_square);
+  // void submitMove(const char* source_square, const char* destination_square);
+  void submitMove(const string source_square, const string destination_square);
   bool isWhiteTurn();
   void resetBoard();
   void printCurrentBoard();
   void makeMove(const char* source_square, const char* destination_square);
-  Piece* getPieceFromBoard(const char* source_square);
+  // Piece* getPieceFromBoard(const char* source_square);
+  Piece* getPieceFromBoard(const string source_square);
   void getKingPosition(const int king_enum, char* king_position);
 };
 

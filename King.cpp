@@ -33,21 +33,25 @@ string King::getSimbol(){
   }
 }
 
-void King::calculatePossibleMove(const char* source_square, Piece* board[8][8], vector<const char*>& possible_moves){
-  int rank = source_square[1] - '1';
-  int file = source_square[0] - 'A';
+// void King::calculatePossibleMove(const char* source_square, Piece* board[8][8], vector<const char*>& possible_moves){
+void King::calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
+  int rank = source_square.at(1) - '1';
+  int file = source_square.at(0) - 'A';
   char square[3];
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
       // not the same as source_square
       if(f != file || r != rank){
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
-            // If the square is empty or piece of different color 
+            // If the square is empty or piece of different color
             if((board[r][f] == NULL) || (board[r][f] != NULL && board[rank][file]->getIsWhite() != board[r][f]->getIsWhite())){
               square[0] = r + '1';
               square[1] = f + 'A';
               square[2] = '\0';
-              possible_moves.push_back(square);
+              string sq = square;
+              possible_moves.push_back(sq);
+              cout << "square " << square << endl;
+              cout << "possible_moves 2: " << possible_moves[0] << endl;
               // possible_moves->push_back(square);
               cout << "square " << square << endl;
             }

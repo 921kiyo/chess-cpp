@@ -78,20 +78,21 @@ ChessBoard::~ChessBoard(){
   // }
 }
 
-void ChessBoard::submitMove(const char* source_square, const char* destination_square){
+void ChessBoard::submitMove(const string source_square, const string destination_square){
   // Check if the source square (A-H and 1-8) is valid or not
-  int source_input_length = strlen(source_square);
+
+  int source_input_length = source_square.length();
   if(source_input_length != 2){
     cerr << "source input is not valid" << endl;
     return;
   }
 
-  if(source_square[0] < 'A' || source_square[0] > 'H'){
+  if(source_square.at(0) < 'A' || source_square.at(0) > 'H'){
     cerr << "not a valid file" << endl;
     return;
   }
 
-  if(source_square[1] < '1' || source_square[1] > '8'){
+  if(source_square.at(1) < '1' || source_square.at(1) > '8'){
     cerr << "not a valid rank" << endl;
     return;
   }
@@ -101,18 +102,18 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // Check which turn, (white or black?)
 
   // Check the destination square is valid
-  int destination_input_length = strlen(destination_square);
+  int destination_input_length = destination_square.length();
   if(destination_input_length != 2){
     cerr << "destination input is not valid" << endl;
     return;
   }
 
-  if(destination_square[0] < 'A' || destination_square[0] > 'H'){
+  if(destination_square.at(0) < 'A' || destination_square.at(0) > 'H'){
     cerr << "not a valid file" << endl;
     return;
   }
 
-  if(destination_square[1] < '1' || destination_square[1] > '8'){
+  if(destination_square.at(1) < '1' || destination_square.at(1) > '8'){
     cerr << "not a valid rank" << endl;
     return;
   }
@@ -128,14 +129,69 @@ void ChessBoard::submitMove(const char* source_square, const char* destination_s
   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
 
   if(piece->isValidMove(source_square, destination_square, board_)){
-    makeMove(source_square, destination_square);
+    // makeMove(source_square, destination_square);
   }
   // Display the message
 }
 
-Piece* ChessBoard::getPieceFromBoard(const char* source_square){
-  int rank = source_square[1] - '1';
-  int file = source_square[0] - 'A';
+// void ChessBoard::submitMove(const char* source_square, const char* destination_square){
+//   // Check if the source square (A-H and 1-8) is valid or not
+//   int source_input_length = strlen(source_square);
+//   if(source_input_length != 2){
+//     cerr << "source input is not valid" << endl;
+//     return;
+//   }
+//
+//   if(source_square[0] < 'A' || source_square[0] > 'H'){
+//     cerr << "not a valid file" << endl;
+//     return;
+//   }
+//
+//   if(source_square[1] < '1' || source_square[1] > '8'){
+//     cerr << "not a valid rank" << endl;
+//     return;
+//   }
+//
+//   // Check the piece in the square (exist? and match with current turn?)
+//
+//   // Check which turn, (white or black?)
+//
+//   // Check the destination square is valid
+//   int destination_input_length = strlen(destination_square);
+//   if(destination_input_length != 2){
+//     cerr << "destination input is not valid" << endl;
+//     return;
+//   }
+//
+//   if(destination_square[0] < 'A' || destination_square[0] > 'H'){
+//     cerr << "not a valid file" << endl;
+//     return;
+//   }
+//
+//   if(destination_square[1] < '1' || destination_square[1] > '8'){
+//     cerr << "not a valid rank" << endl;
+//     return;
+//   }
+//
+//   Piece* piece = getPieceFromBoard(source_square);
+//   // cout << "current piece " << piece->getSimbol() << endl;
+//
+//   // Check the piece and check the restriction for the piece
+//
+//   // Check if the move destroys an opponent piece
+//
+//   // Change turn
+//   // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
+//
+//   if(piece->isValidMove(source_square, destination_square, board_)){
+//     makeMove(source_square, destination_square);
+//   }
+//   // Display the message
+// }
+
+Piece* ChessBoard::getPieceFromBoard(const string source_square){
+  int rank = source_square.at(1) - '1';
+  int file = source_square.at(0) - 'A';
   return board_[rank][file];
 }
 
