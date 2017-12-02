@@ -4,14 +4,16 @@
 #include <string>
 using namespace std;
 
-Piece::Piece(bool white){
-  is_white_ = white;
-}
+// Piece::Piece(bool white): is_white_(white){
+//   is_white_ = white;
+// }
+Piece::Piece(bool white): is_white_(white){}
 
 Piece::~Piece(){}
 
 bool Piece::isValidMove(const string source_square, const string destination_square, Piece* board[8][8]){
-  vector<const char*> possible_moves;
+  // DO I need const here??
+  vector<string> possible_moves;
 
   calculatePossibleMove(source_square, board, possible_moves);
   cout << "possible_moves " << possible_moves[0] << endl;

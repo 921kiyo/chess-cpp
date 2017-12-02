@@ -33,7 +33,6 @@ string King::getSimbol(){
   }
 }
 
-// void King::calculatePossibleMove(const char* source_square, Piece* board[8][8], vector<const char*>& possible_moves){
 void King::calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   int rank = source_square.at(1) - '1';
   int file = source_square.at(0) - 'A';
