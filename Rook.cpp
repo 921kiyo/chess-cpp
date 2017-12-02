@@ -11,9 +11,6 @@
 //
 // Rook::~Rook(){}
 //
-// // bool Rook::isValidMove(){
-// //
-// // }
 // void Rook::calculatePossibleMove(const char* source_square, Piece** board, vector<const char*>& possible_moves){
 //
 // }

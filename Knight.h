@@ -13,7 +13,6 @@
 //
 // public:
 // Knight(bool white);
-// // virtual bool isValidMove();
 // virtual string getSimbol();
 //
 // virtual void calculatePossibleMove(const char* source_square, Piece** board, vector<const char*>& possible_moves);

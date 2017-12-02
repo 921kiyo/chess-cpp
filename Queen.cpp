@@ -12,21 +12,46 @@ Queen::Queen(bool white): Piece(white){
 
 Queen::~Queen(){}
 
-// bool Queen::isValidMove(){
-//
-// }
 void Queen::calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   calculateVerticalPossibleMove(source_square, board, possible_moves);
   calculateHorizontalPossibleMove(source_square, board, possible_moves);
   calculateDiagonalPossibleMove(source_square, board, possible_moves);
 }
+
+// void Queen::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], vector<string>& possible_moves){
+//   char square[3];
+//   string sq;
+//   if(board[rank][file] != NULL && is_white == board[rank][file]->getIsWhite()){
+//     break;
+//   }
+//   else if(board[rank][file] != NULL && is_white != board[rank][file]->getIsWhite()){
+//     square[0] = rank + '1';
+//     square[1] = file + 'A';
+//     square[2] = '\0';
+//     sq = square;
+//     possible_moves.push_back(sq);
+//     cout << "square " << square << endl;
+//     break;
+//   }
+//   else if(board[rank][file] == NULL){
+//      square[0] = rank + '1';
+//      square[1] = file + 'A';
+//      square[2] = '\0';
+//      sq = square;
+//      possible_moves.push_back(sq);
+//      cout << "square " << square << endl;
+//   }
+// }
+
 void Queen::calculateVerticalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   int rank = source_square.at(1) - '1';
   int file = source_square.at(0) - 'A';
   char square[3];
   string sq;
+  bool is_white = board[rank][file]->getIsWhite();
   // Check vertical lines to the top
   for(int r = rank+1; r <= RANK_8; r++){
+    // checkSquare(r, file, is_white, board, possible_moves);
     if(board[r][file] != NULL && board[rank][file]->getIsWhite() == board[r][file]->getIsWhite()){
       break;
     }

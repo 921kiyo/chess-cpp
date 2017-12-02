@@ -13,7 +13,6 @@
 //
 // public:
 // Pawn(bool white);
-// // virtual bool isValidMove();
 // virtual void calculatePossibleMove(const char* source_square, Piece** board, vector<const char*>& possible_moves);
 // virtual string getSimbol();
 // // castling();
