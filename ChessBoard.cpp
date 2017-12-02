@@ -1,5 +1,5 @@
 #include "ChessBoard.h"
-// #include "Pawn.h"
+#include "Pawn.h"
 #include "Queen.h"
 #include "King.h"
 #include "Piece.h"
@@ -51,7 +51,9 @@ ChessBoard::ChessBoard(){
   // board_[RANK_1][FILE_E] = new Queen(false);
   // board_[RANK_1][FILE_E] = new King(false);
   // board_[RANK_5][FILE_B] = new Knight(true);
-  board_[RANK_4][FILE_D] = new Knight(true);
+  board_[RANK_3][FILE_A] = new Knight(false);
+  board_[RANK_2][FILE_A] = new Pawn(true);
+
   // board_[RANK_8][FILE_H] = new King(false);
 
   // board_[RANK_8][FILE_A] = new Rook(false);
@@ -123,6 +125,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
   }
 
   Piece* piece = getPieceFromBoard(source_square);
+  // TODO Fix the error message when there is a piece in front of a pawn
   if(piece == NULL){
     cerr << "There is no piece in the square you selected" << endl;
     return;
@@ -167,6 +170,7 @@ bool ChessBoard::isWhiteTurn(){
   return is_white_turn_;
 }
 
+// TODO it is now memory leaking
 void ChessBoard::makeMove(string source_square, string destination_square){
   int source_file = source_square.at(0) - 'A';
   int source_rank = source_square.at(1) - '1';
@@ -175,6 +179,8 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   int dest_rank = destination_square.at(1) - '1';
   board_[dest_rank][dest_file] = source_piece;
   board_[source_rank][source_file] = NULL;
+  source_piece->negateIsFirstMove();
+
   printCurrentBoard();
 }
 

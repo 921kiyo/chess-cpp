@@ -7,7 +7,7 @@ using namespace std;
 // Piece::Piece(bool white): is_white_(white){
 //   is_white_ = white;
 // }
-Piece::Piece(bool white): is_white_(white){}
+Piece::Piece(bool white): is_white_(white), is_first_move_(true){}
 
 Piece::~Piece(){}
 
@@ -35,4 +35,10 @@ bool Piece::isValidMove(const string source_square, const string destination_squ
 
 bool Piece::getIsWhite(){
   return is_white_;
+}
+
+void Piece::negateIsFirstMove(){
+  if(is_first_move_){
+    is_first_move_ = false;
+  }
 }

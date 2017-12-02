@@ -9,9 +9,6 @@ using namespace std;
 // Knight::~Knight(){}
 
 Knight::Knight(bool white):Piece(white){}
-// bool Knight::isValidMove(){
-//   return true;
-// }
 
 void Knight::calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   int rank = source_square.at(1) - '1';

@@ -7,6 +7,7 @@ using namespace std;
 class Piece{
 protected:
   bool is_white_;
+  bool is_first_move_;
 public:
   Piece(bool white);
   // Can jump
@@ -15,6 +16,7 @@ public:
   virtual void calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves) = 0;
   virtual string getSimbol() = 0;
   bool getIsWhite();
+  void negateIsFirstMove();
 };
 
 #endif
