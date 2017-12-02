@@ -37,6 +37,7 @@ void King::calculatePossibleMove(const string source_square, Piece* board[8][8],
   int rank = source_square.at(1) - '1';
   int file = source_square.at(0) - 'A';
   char square[3];
+  string sq;
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
       cout << "file " << f << endl;
@@ -49,7 +50,7 @@ void King::calculatePossibleMove(const string source_square, Piece* board[8][8],
               square[0] = r + '1';
               square[1] = f + 'A';
               square[2] = '\0';
-              string sq = square;
+              sq = square;
               possible_moves.push_back(sq);
               cout << "square " << square << endl;
             }
@@ -60,7 +61,6 @@ void King::calculatePossibleMove(const string source_square, Piece* board[8][8],
       }
     }
   }
-
   //   // If the king is at a corner, you cannot go beoynd the board
 }
 

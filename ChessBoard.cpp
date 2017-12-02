@@ -1,6 +1,6 @@
 #include "ChessBoard.h"
 // #include "Pawn.h"
-// #include "Queen.h"
+#include "Queen.h"
 #include "King.h"
 #include "Piece.h"
 // #include "Rook.h"
@@ -44,7 +44,8 @@ ChessBoard::ChessBoard(){
   board_[RANK_1][FILE_C] = NULL;
   board_[RANK_1][FILE_D] = NULL;
   // board_[RANK_1][FILE_E] = new King(false);
-  board_[RANK_1][FILE_E] = NULL;
+  // board_[RANK_1][FILE_E] = NULL;
+  board_[RANK_1][FILE_E] = new Queen(false);
   board_[RANK_1][FILE_F] = NULL;
   board_[RANK_1][FILE_G] = NULL;
   board_[RANK_1][FILE_H] = new King(false);
