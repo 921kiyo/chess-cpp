@@ -34,8 +34,8 @@ void King::calculatePossibleMove(const string source_square, Piece* board[8][8],
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
             // If the square is empty or piece of different color
             if((board[r][f] == NULL) || (board[r][f] != NULL && board[rank][file]->getIsWhite() != board[r][f]->getIsWhite())){
-              square[0] = r + '1';
-              square[1] = f + 'A';
+              square[0] = f + 'A';
+              square[1] = r + '1';
               square[2] = '\0';
               sq = square;
               possible_moves.push_back(sq);

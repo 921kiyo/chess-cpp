@@ -16,16 +16,21 @@ bool Piece::isValidMove(const string source_square, const string destination_squ
   vector<string> possible_moves;
 
   calculatePossibleMove(source_square, board, possible_moves);
-  cout << "possible_moves " << possible_moves[0] << endl;
-  // If the place destination is in the possible Move, return true
-  // for(const char* i: possible_moves){
-  //   if(source_square == i)
-  // }
+  // C++11 Range-based loop
+  for(string square: possible_moves){
+    // cout << "sq " << square << endl;
+    if(destination_square == square){
+      cout << "yes" << endl;
+      return true;
+    }
+  }
+
+  return false;
+
   // Check if the move makes the king in check.
   // isKingSafe()
 
   // Or Castling
-  return true;
 }
 
 bool Piece::getIsWhite(){

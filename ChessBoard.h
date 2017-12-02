@@ -38,7 +38,8 @@ public:
   bool isWhiteTurn();
   void resetBoard();
   void printCurrentBoard();
-  void makeMove(const char* source_square, const char* destination_square);
+  // TODO add const
+  void makeMove(string source_square, string destination_square);
   // Piece* getPieceFromBoard(const char* source_square);
   Piece* getPieceFromBoard(const string source_square);
   void getKingPosition(const int king_enum, char* king_position);

@@ -28,8 +28,8 @@ bool Queen::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
     return false;
   }
   else if(board[rank][file] != NULL && is_white != board[rank][file]->getIsWhite()){
-    square[0] = rank + '1';
-    square[1] = file + 'A';
+    square[0] = file + 'A';
+    square[1] = rank + '1';
     square[2] = '\0';
     sq = square;
     possible_moves.push_back(sq);
@@ -37,8 +37,8 @@ bool Queen::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
     return false;
   }
   else if(board[rank][file] == NULL){
-     square[0] = rank + '1';
-     square[1] = file + 'A';
+     square[0] = file + 'A';
+     square[1] = rank + '1';
      square[2] = '\0';
      sq = square;
      possible_moves.push_back(sq);
@@ -75,7 +75,6 @@ void Queen::calculateHorizontalPossibleMove(const string source_square, Piece* b
       break;
     }
   }
-
   // Check horizontal lines to the left
   for(int f = file-1; f >= FILE_A; f--){
     if(!checkSquare(rank, f, is_white, board, possible_moves)){
@@ -96,7 +95,7 @@ void Queen::calculateDiagonalPossibleMove(const string source_square, Piece* boa
     }
     r++;
   }
-  // // Reset r
+
   r = rank-1;
   for(int f = file+1; f <= FILE_H; f++){
     if(!checkSquare(r, f, is_white, board, possible_moves)){
@@ -121,6 +120,7 @@ void Queen::calculateDiagonalPossibleMove(const string source_square, Piece* boa
     r--;
   }
 }
+
 bool Queen::isKingSafe(){
   return true;
 }
