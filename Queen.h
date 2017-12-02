@@ -14,7 +14,7 @@ public:
   // Can jump
   virtual ~Queen();
   virtual void calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
-  // void checkSquare(int rank, int file, bool is_white, Piece* board[8][8], vector<string>& possible_moves);
+  bool checkSquare(int rank, int file, bool is_white, Piece* board[8][8], vector<string>& possible_moves);
   void calculateVerticalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
   void calculateHorizontalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
   void calculateDiagonalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
