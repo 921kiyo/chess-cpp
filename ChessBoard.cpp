@@ -5,7 +5,7 @@
 #include "Piece.h"
 // #include "Rook.h"
 // #include "Bishop.h"
-// #include "Knight.h"
+#include "Knight.h"
 
 #include "Definitions.h"
 
@@ -50,8 +50,9 @@ ChessBoard::ChessBoard(){
 
   // board_[RANK_1][FILE_E] = new Queen(false);
   // board_[RANK_1][FILE_E] = new King(false);
-  board_[RANK_4][FILE_D] = new Queen(true);
-  board_[RANK_8][FILE_H] = new King(false);
+  // board_[RANK_5][FILE_B] = new Knight(true);
+  board_[RANK_4][FILE_D] = new Knight(true);
+  // board_[RANK_8][FILE_H] = new King(false);
 
   // board_[RANK_8][FILE_A] = new Rook(false);
   // board_[RANK_8][FILE_B] = new Knight(false);
