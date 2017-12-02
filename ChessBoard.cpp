@@ -43,10 +43,11 @@ ChessBoard::ChessBoard(){
   board_[RANK_1][FILE_B] = NULL;
   board_[RANK_1][FILE_C] = NULL;
   board_[RANK_1][FILE_D] = NULL;
-  board_[RANK_1][FILE_E] = new King(false);
+  // board_[RANK_1][FILE_E] = new King(false);
+  board_[RANK_1][FILE_E] = NULL;
   board_[RANK_1][FILE_F] = NULL;
   board_[RANK_1][FILE_G] = NULL;
-  board_[RANK_1][FILE_H] = NULL;
+  board_[RANK_1][FILE_H] = new King(false);
 
 
   // board_[RANK_8][FILE_A] = new Rook(false);
@@ -98,7 +99,6 @@ void ChessBoard::submitMove(const string source_square, const string destination
   }
 
   // Check the piece in the square (exist? and match with current turn?)
-
   // Check which turn, (white or black?)
 
   // Check the destination square is valid
@@ -119,6 +119,10 @@ void ChessBoard::submitMove(const string source_square, const string destination
   }
 
   Piece* piece = getPieceFromBoard(source_square);
+  if(piece == NULL){
+    cerr << "There is no piece in the square you selected" << endl;
+    return;
+  }
   // cout << "current piece " << piece->getSimbol() << endl;
 
   // Check the piece and check the restriction for the piece

@@ -22,7 +22,7 @@ bool Piece::isValidMove(const string source_square, const string destination_squ
   //   if(source_square == i)
   // }
   // Check if the move makes the king in check.
-  // ifKingSafe()
+  // isKingSafe()
 
   // Or Castling
   return true;
