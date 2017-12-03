@@ -274,7 +274,59 @@ void Piece::calculatePawnPossibleMove(const string source_square, Piece* board[8
   }
 }
 
+bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
+  int rank = king_position.at(1) - '1';
+  int file = king_position.at(0) - 'A';
+  bool is_white = board[rank][file]->getIsWhite();
+  // Check diagonal lines and see if there is opponent Queen or Bishop
 
-bool isKingSafe(const string king_position){
+  // TODO Change it to ternary operator
+  // if(is_white){
+  //   check
+  // }
+  // Check vertical lines to the top
 
+  bool is_blocking = false;
+  for(int r = rank+1; r <= RANK_8; r++){
+    if(!isKingSafeQueenRook(r, file, is_white, is_blocking, board)){
+      return false;
+    }
+  }
+  // Check vertical line to the bottom
+  is_blocking = false;
+  for(int r = rank-1; r >= RANK_1; r--){
+    if(!isKingSafeQueenRook(r, file, is_white, is_blocking, board)){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool Piece::isKingSafeQueenRook( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
+  // Check if white king is threaten by black Queen or Rook
+  if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
+    // Check if there is any blocking piece
+    if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
+      is_blocking = true;
+    }
+    // If no blocking, and find black queen and bishop, then white King is not safe
+    if( !is_blocking && (board[rank][file]->getSimbol() == "BQ" || board[rank][file]->getSimbol() == "BR")){
+      return false;
+    }
+  }
+
+  // TODO Super redundant here, do something to fix it!!
+  // Check if white king is threaten by black Queen or Rook
+  if(board[rank][file] != nullptr && !is_white && board[rank][file]->getIsWhite()){
+    // Check if there is any blocking piece
+    if(board[rank][file] != nullptr && !is_white && !board[rank][file]->getIsWhite()){
+      is_blocking = true;
+    }
+    // If no blocking, and find black queen and bishop, then white King is not safe
+    if( !is_blocking && (board[rank][file]->getSimbol() == "WQ" || board[rank][file]->getSimbol() == "WR")){
+      return false;
+    }
+  }
+  return true;
 }

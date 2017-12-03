@@ -15,6 +15,7 @@
 // #endif
 #include "Definitions.h"
 #include "Piece.h"
+#include "King.h"
 
 #include <string>
 #include <map>
@@ -26,6 +27,10 @@ private:
   bool is_white_turn_;
   Piece* board_[FILE_NONE][RANK_NONE];
   // Piece* alive_pieces;
+
+  // What is the difference if this was type King??
+  Piece* white_king_;
+  Piece* black_king_;
   string white_king_position_;
   string black_king_position_;
 

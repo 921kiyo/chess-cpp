@@ -17,9 +17,9 @@ void Rook::calculatePossibleMove(const string source_square, Piece* board[8][8],
 }
 string Rook::getSimbol(){
   if(is_white_){
-    return "WP";
+    return "WR";
   }
   else{
-    return "BP";
+    return "BR";
   }
 }

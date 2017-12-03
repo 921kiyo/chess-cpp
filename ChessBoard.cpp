@@ -193,12 +193,18 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   int dest_file = destination_square.at(0) - 'A';
   int dest_rank = destination_square.at(1) - '1';
   board_[dest_rank][dest_file] = source_piece;
+
+  // if(!black_king_->isKingSafe(board_[dest_rank][dest_file]->getSimbol(), board_)){
+  //   check_ = true;
+  // }
   board_[source_rank][source_file] = nullptr;
 
   if(source_piece->getSimbol() == "WK"){
+    white_king_ = source_piece;
     white_king_position_ = destination_square;
   }
   else if(source_piece->getSimbol() == "BK"){
+    black_king_ = source_piece;
     black_king_position_ = destination_square;
   }
 
