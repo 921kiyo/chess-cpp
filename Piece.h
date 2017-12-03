@@ -22,6 +22,13 @@ public:
 
   // Used for King possible moves
   void calculateAdjacentPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
+
+  // Used for Knight possible moves
+  void calculateLShapePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
+
+  // Used for Pawn possible moves
+  void calculatePawnPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
+
   virtual string getSimbol() = 0;
   bool getIsWhite();
   void negateIsFirstMove();
