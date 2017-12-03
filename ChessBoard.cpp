@@ -18,36 +18,35 @@
 using namespace std;
 
 ChessBoard::ChessBoard(){
-  // TODO change NULL to nullptr
   for(int file = FILE_A; file < FILE_NONE; file++){
     // board_[RANK_7][file] = new Pawn(false);
     // board_[RANK_2][file] = new Pawn(true);
-    board_[RANK_7][file] = NULL;
-    board_[RANK_2][file] = NULL;
+    board_[RANK_7][file] = nullptr;
+    board_[RANK_2][file] = nullptr;
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
     for(int file = FILE_A; file < FILE_NONE; file++){
-      board_[rank][file] = NULL;
+      board_[rank][file] = nullptr;
     }
   }
 
-  board_[RANK_8][FILE_A] = NULL;
-  board_[RANK_8][FILE_B] = NULL;
-  board_[RANK_8][FILE_C] = NULL;
-  board_[RANK_8][FILE_D] = NULL;
-  board_[RANK_8][FILE_E] = NULL;
-  board_[RANK_8][FILE_F] = NULL;
-  board_[RANK_8][FILE_G] = NULL;
-  board_[RANK_8][FILE_H] = NULL;
+  board_[RANK_8][FILE_A] = nullptr;
+  board_[RANK_8][FILE_B] = nullptr;
+  board_[RANK_8][FILE_C] = nullptr;
+  board_[RANK_8][FILE_D] = nullptr;
+  board_[RANK_8][FILE_E] = nullptr;
+  board_[RANK_8][FILE_F] = nullptr;
+  board_[RANK_8][FILE_G] = nullptr;
+  board_[RANK_8][FILE_H] = nullptr;
 
-  board_[RANK_1][FILE_A] = NULL;
-  board_[RANK_1][FILE_B] = NULL;
-  board_[RANK_1][FILE_C] = NULL;
-  board_[RANK_1][FILE_D] = NULL;
-  board_[RANK_1][FILE_E] = NULL;
-  board_[RANK_1][FILE_F] = NULL;
-  board_[RANK_1][FILE_G] = NULL;
-  board_[RANK_1][FILE_H] = NULL;
+  board_[RANK_1][FILE_A] = nullptr;
+  board_[RANK_1][FILE_B] = nullptr;
+  board_[RANK_1][FILE_C] = nullptr;
+  board_[RANK_1][FILE_D] = nullptr;
+  board_[RANK_1][FILE_E] = nullptr;
+  board_[RANK_1][FILE_F] = nullptr;
+  board_[RANK_1][FILE_G] = nullptr;
+  board_[RANK_1][FILE_H] = nullptr;
 
   // board_[RANK_1][FILE_E] = new Queen(false);
   // board_[RANK_1][FILE_E] = new King(false);
@@ -123,7 +122,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   Piece* piece = getPieceFromBoard(source_square);
   // TODO Fix the error message when there is a piece in front of a pawn
-  if(piece == NULL){
+  if(piece == nullptr){
     cerr << "There is no piece in the square you selected" << endl;
     return;
   }
@@ -184,7 +183,7 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   int dest_file = destination_square.at(0) - 'A';
   int dest_rank = destination_square.at(1) - '1';
   board_[dest_rank][dest_file] = source_piece;
-  board_[source_rank][source_file] = NULL;
+  board_[source_rank][source_file] = nullptr;
   source_piece->negateIsFirstMove();
   cout << "move complete " << endl;
   printCurrentBoard();
@@ -199,7 +198,7 @@ void ChessBoard::printCurrentBoard(){
     for(int rank = RANK_8; rank >= RANK_1; rank--){
       cout << endl;
       for(int file = FILE_A; file < FILE_NONE; file++){
-        if(board_[rank][file] == NULL){
+        if(board_[rank][file] == nullptr){
           cout << "-- ";
         }
         else{
