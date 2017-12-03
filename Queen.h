@@ -11,7 +11,6 @@ protected:
 
 public:
   Queen(bool white);
-  // Can jump
   virtual ~Queen();
   virtual void calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
   bool checkSquare(int rank, int file, bool is_white, Piece* board[8][8], vector<string>& possible_moves);

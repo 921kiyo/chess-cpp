@@ -10,7 +10,6 @@ protected:
   bool is_first_move_;
 public:
   Piece(bool white);
-  // Can jump
   virtual ~Piece();
   bool isValidMove(const string source_square, const string destination_square, Piece* board[8][8]);
   virtual void calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves) = 0;

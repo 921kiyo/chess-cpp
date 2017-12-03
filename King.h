@@ -16,7 +16,6 @@ King(bool white);
 virtual ~King();
 virtual string getSimbol();
 virtual void calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
-// bool isKingSafe();
 // castling();
 };
 

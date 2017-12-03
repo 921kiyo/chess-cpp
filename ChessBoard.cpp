@@ -18,6 +18,7 @@
 using namespace std;
 
 ChessBoard::ChessBoard(){
+  // TODO change NULL to nullptr
   for(int file = FILE_A; file < FILE_NONE; file++){
     // board_[RANK_7][file] = new Pawn(false);
     // board_[RANK_2][file] = new Pawn(true);

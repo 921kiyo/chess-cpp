@@ -4,9 +4,6 @@
 #include <string>
 using namespace std;
 
-// Piece::Piece(bool white): is_white_(white){
-//   is_white_ = white;
-// }
 Piece::Piece(bool white): is_white_(white), is_first_move_(true){}
 
 Piece::~Piece(){}
