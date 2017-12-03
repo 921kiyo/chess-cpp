@@ -17,15 +17,19 @@ void Knight::calculatePossibleMove(const string source_square, Piece* board[8][8
   char square[3];
   string sq;
   for(int f = file -2; f <= file + 2; f++){
-    for(int r = rank -2; r <= rank + 2; r++){
-      if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || ((abs(f - file) == 1) && (abs(r - rank) == 2))){
-        if(board[r][f] == NULL || (board[r][f] == NULL && is_white != board[r][f]->getIsWhite())){
-          square[0] = f + 'A';
-          square[1] = r + '1';
-          square[2] = '\0';
-          sq = square;
-          possible_moves.push_back(sq);
-          // cout << "square " << sq << endl;
+    if(f >= FILE_A && f <= FILE_H){
+      for(int r = rank -2; r <= rank + 2; r++){
+        if(r >= RANK_1 && r <= RANK_8){
+          if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || ((abs(f - file) == 1) && (abs(r - rank) == 2))){
+            if(board[r][f] == NULL || (board[r][f] == NULL && is_white != board[r][f]->getIsWhite())){
+              square[0] = f + 'A';
+              square[1] = r + '1';
+              square[2] = '\0';
+              sq = square;
+              possible_moves.push_back(sq);
+              cout << "square " << sq << endl;
+            }
+          }
         }
       }
     }

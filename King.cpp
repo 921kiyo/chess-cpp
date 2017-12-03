@@ -27,8 +27,6 @@ void King::calculatePossibleMove(const string source_square, Piece* board[8][8],
   string sq;
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
-      cout << "file " << f << endl;
-      cout << "rank " << r << endl;
       // not the same as source_square
       if(f != file || r != rank){
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
