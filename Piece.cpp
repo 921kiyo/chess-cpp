@@ -18,11 +18,12 @@ bool Piece::isValidMove(const string source_square, const string destination_squ
   calculatePossibleMove(source_square, board, possible_moves);
   // C++11 Range-based loop
   for(string square: possible_moves){
-    // cout << "sq " << square << endl;
+    cout << "sq " << square << endl;
     if(destination_square == square){
       cout << "yes" << endl;
       return true;
     }
+
   }
 
   return false;

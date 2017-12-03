@@ -51,8 +51,8 @@ ChessBoard::ChessBoard(){
   // board_[RANK_1][FILE_E] = new Queen(false);
   // board_[RANK_1][FILE_E] = new King(false);
   // board_[RANK_5][FILE_B] = new Knight(true);
-  board_[RANK_1][FILE_A] = new Knight(false);
-  board_[RANK_2][FILE_A] = new Pawn(true);
+  board_[RANK_1][FILE_A] = new Knight(true);
+  board_[RANK_2][FILE_A] = new Pawn(false);
 
   // board_[RANK_8][FILE_H] = new King(false);
 
@@ -87,7 +87,6 @@ ChessBoard::~ChessBoard(){
 
 void ChessBoard::submitMove(const string source_square, const string destination_square){
   // Check if the source square (A-H and 1-8) is valid or not
-
   int source_input_length = source_square.length();
   if(source_input_length != 2){
     cerr << "source input is not valid" << endl;
@@ -103,9 +102,6 @@ void ChessBoard::submitMove(const string source_square, const string destination
     cerr << "not a valid rank" << endl;
     return;
   }
-
-  // Check the piece in the square (exist? and match with current turn?)
-  // Check which turn, (white or black?)
 
   // Check the destination square is valid
   int destination_input_length = destination_square.length();
@@ -130,19 +126,28 @@ void ChessBoard::submitMove(const string source_square, const string destination
     cerr << "There is no piece in the square you selected" << endl;
     return;
   }
-  // cout << "current piece " << piece->getSimbol() << endl;
 
-  // Check the piece and check the restriction for the piece
+  // Check the piece in the square (exist? and match with current turn?)
+  // Check which turn, (white or black?)
+  if(!is_white_turn_  && piece->getIsWhite()){
+    cerr << "It is black turn, and cannot move a white piece" << endl;
+    return;
+  }
+  if(is_white_turn_  && !piece->getIsWhite()){
+    cerr << "It is white turn, and cannot move a black piece" << endl;
+    return;
+  }
 
   // Check if the move destroys an opponent piece
 
-  // Change turn
-  // (is_white_turn) ? is_white_turn = false : is_white_turn = true;
 
   if(piece->isValidMove(source_square, destination_square, board_)){
     makeMove(source_square, destination_square);
   }
   // Display the message
+
+  // Update current player (white and black)
+  (is_white_turn_) ? is_white_turn_ = false : is_white_turn_ = true;
 }
 
 Piece* ChessBoard::getPieceFromBoard(const string source_square){
@@ -180,7 +185,7 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   board_[dest_rank][dest_file] = source_piece;
   board_[source_rank][source_file] = NULL;
   source_piece->negateIsFirstMove();
-
+  cout << "move complete " << endl;
   printCurrentBoard();
 }
 

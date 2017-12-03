@@ -16,10 +16,10 @@ int main() {
     ChessBoard cb;
     cb.submitMove("A1", "B3");
     cout << endl;
-    cb.submitMove("A4", "A5");
-    cb.submitMove("A5", "A6");
-    cb.submitMove("A6", "A7");
-    cb.submitMove("A7", "A8");
+    cb.submitMove("A2", "A1");
+    // cb.submitMove("A5", "A6");
+    // cb.submitMove("A6", "A7");
+    // cb.submitMove("A7", "A8");
     cout << endl;
     //
     // cb.submitMove("D7", "D6");
