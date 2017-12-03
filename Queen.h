@@ -4,11 +4,10 @@
 #include "Piece.h"
 #include <string>
 #include <vector>
+
 using namespace std;
 
 class Queen: public Piece{
-protected:
-
 public:
   Queen(bool white);
   virtual ~Queen();

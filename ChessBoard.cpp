@@ -3,8 +3,8 @@
 #include "Queen.h"
 #include "King.h"
 #include "Piece.h"
-// #include "Rook.h"
-// #include "Bishop.h"
+#include "Rook.h"
+#include "Bishop.h"
 #include "Knight.h"
 
 #include "Definitions.h"
