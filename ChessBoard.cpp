@@ -49,9 +49,18 @@ ChessBoard::ChessBoard(){
   board_[RANK_1][FILE_H] = nullptr;
 
   // board_[RANK_1][FILE_E] = new Queen(false);
-  // board_[RANK_1][FILE_E] = new King(false);
+  char king_position[3];
+  board_[RANK_1][FILE_E] = new King(false);
+  king_position[0] = FILE_E + 'A';
+  king_position[1] = RANK_1 + '1';
+  king_position[2] = '\0';
+  black_king_position_ = king_position;
   // board_[RANK_5][FILE_B] = new Knight(true);
-  board_[RANK_1][FILE_A] = new Knight(true);
+  board_[RANK_1][FILE_A] = new King(true);
+  king_position[0] = FILE_A + 'A';
+  king_position[1] = RANK_1 + '1';
+  king_position[2] = '\0';
+  white_king_position_ = king_position;
   board_[RANK_2][FILE_A] = new Pawn(false);
 
   // board_[RANK_8][FILE_H] = new King(false);
@@ -180,10 +189,19 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   int source_file = source_square.at(0) - 'A';
   int source_rank = source_square.at(1) - '1';
   Piece* source_piece = board_[source_rank][source_file];
+
   int dest_file = destination_square.at(0) - 'A';
   int dest_rank = destination_square.at(1) - '1';
   board_[dest_rank][dest_file] = source_piece;
   board_[source_rank][source_file] = nullptr;
+
+  if(source_piece->getSimbol() == "WK"){
+    white_king_position_ = destination_square;
+  }
+  else if(source_piece->getSimbol() == "BK"){
+    black_king_position_ = destination_square;
+  }
+
   source_piece->negateIsFirstMove();
   cout << "move complete " << endl;
   printCurrentBoard();

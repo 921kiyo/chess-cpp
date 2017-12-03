@@ -40,3 +40,7 @@ void Piece::negateIsFirstMove(){
     is_first_move_ = false;
   }
 }
+
+bool isKingSafe(const string king_position){
+  
+}

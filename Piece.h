@@ -16,6 +16,7 @@ public:
   virtual string getSimbol() = 0;
   bool getIsWhite();
   void negateIsFirstMove();
+  bool isKingSafe(const string king_positions);
 };
 
 #endif
