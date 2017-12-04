@@ -303,7 +303,8 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // Check horizontal line to the right
   is_blocking = false;
   for(int f = file+1; f <= FILE_H; f++){
-    if(!isKingSafeQueenRook(rank, file, is_white, is_blocking, board)){
+    cout << "heiing" << endl;
+    if(!isKingSafeQueenRook(rank, f, is_white, is_blocking, board)){
       return false;
     }
   }
@@ -311,7 +312,7 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // Check horizontal line to the left
   is_blocking = false;
   for(int f = file -1; f >= FILE_A; f--){
-    if(!isKingSafeQueenRook(rank, file, is_white, is_blocking, board)){
+    if(!isKingSafeQueenRook(rank, f, is_white, is_blocking, board)){
       return false;
     }
   }
@@ -322,6 +323,7 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
 bool Piece::isKingSafeQueenRook( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
   // Check if white king is threaten by black Queen or Rook
   if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
+    cout << "??? " << board[rank][file]->getIsWhite() << endl;
     // Check if there is any blocking piece
     if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
       is_blocking = true;

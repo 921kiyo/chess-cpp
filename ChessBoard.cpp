@@ -50,9 +50,11 @@ ChessBoard::ChessBoard(){
 
   // board_[RANK_1][FILE_E] = new Queen(false);
   char king_position[3];
-  board_[RANK_1][FILE_E] = new King(false);
-  king_position[0] = FILE_E + 'A';
-  king_position[1] = RANK_1 + '1';
+  board_[RANK_2][FILE_B] = new Queen(false);
+
+  board_[RANK_4][FILE_D] = new King(false);
+  king_position[0] = FILE_D + 'A';
+  king_position[1] = RANK_4 + '1';
   king_position[2] = '\0';
   black_king_position_ = king_position;
   // board_[RANK_5][FILE_B] = new Knight(true);
@@ -217,24 +219,28 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   board_[source_rank][source_file] = nullptr;
 
   if(source_piece->getSimbol() == "WK"){
+    cout << "hello " << endl;
     white_king_ = source_piece;
     white_king_position_ = destination_square;
   }
   else if(source_piece->getSimbol() == "BK"){
-    black_king_ = source_square;
+    black_king_ = source_piece;
     black_king_position_ = destination_square;
 
   }
 
-  if(isWhiteTurn()){
+  if(is_white_turn_){
     // TODO Use access function
-
-    if(!white_king_->isKingSafe()){
+    cout << "white turn " << white_king_->isKingSafe(destination_square, board_) << endl;
+    if(!white_king_->isKingSafe(destination_square, board_)){
       cerr << "The move makes your king in check, therefore invalid move" << endl;
       // Should this stop the program?
     }
   }else{
-
+    if(!black_king_->isKingSafe(destination_square, board_)){
+      cerr << "The move makes your king in check, therefore invalid move" << endl;
+      // Should this stop the program?
+    }
   }
 
   source_piece->negateIsFirstMove();
