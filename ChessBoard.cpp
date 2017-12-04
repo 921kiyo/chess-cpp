@@ -184,6 +184,7 @@ bool ChessBoard::isWhiteTurn(){
   return is_white_turn_;
 }
 
+// TODO Delete these setters
 void ChessBoard::updateWhiteKingPtr(Piece* wk){
   white_king_ = wk;
 }
@@ -216,19 +217,25 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   board_[source_rank][source_file] = nullptr;
 
   if(source_piece->getSimbol() == "WK"){
-    updateWhiteKingPtr(source_piece);
-    updateWhiteKingPosition(destination_square);
+    white_king_ = source_piece;
+    white_king_position_ = destination_square;
   }
   else if(source_piece->getSimbol() == "BK"){
-    updateBlackKingPtr(source_piece);
-    updateBlackKingPosition(destination_square);
+    black_king_ = source_square;
+    black_king_position_ = destination_square;
+
   }
 
-  // if(isWhiteTurn()){
-  //   white_king_
-  // }else{
-  //
-  // }
+  if(isWhiteTurn()){
+    // TODO Use access function
+
+    if(!white_king_->isKingSafe()){
+      cerr << "The move makes your king in check, therefore invalid move" << endl;
+      // Should this stop the program?
+    }
+  }else{
+
+  }
 
   source_piece->negateIsFirstMove();
   cout << "move complete " << endl;
