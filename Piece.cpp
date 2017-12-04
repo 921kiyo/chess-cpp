@@ -300,6 +300,22 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
     }
   }
 
+  // Check horizontal line to the right
+  is_blocking = false;
+  for(int f = file+1; f <= FILE_H; f++){
+    if(!isKingSafeQueenRook(rank, file, is_white, is_blocking, board)){
+      return false;
+    }
+  }
+
+  // Check horizontal line to the left
+  is_blocking = false;
+  for(int f = file -1; f >= FILE_A; f--){
+    if(!isKingSafeQueenRook(rank, file, is_white, is_blocking, board)){
+      return false;
+    }
+  }
+
   return true;
 }
 

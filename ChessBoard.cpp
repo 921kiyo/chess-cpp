@@ -184,6 +184,22 @@ bool ChessBoard::isWhiteTurn(){
   return is_white_turn_;
 }
 
+void ChessBoard::updateWhiteKingPtr(Piece* wk){
+  white_king_ = wk;
+}
+
+void ChessBoard::updateBlackKingPtr(Piece* bk){
+  white_king_ = bk;
+}
+
+void ChessBoard::updateWhiteKingPosition(string wk){
+  white_king_position_ = wk;
+}
+
+void ChessBoard::updateBlackKingPosition(string bk){
+  black_king_position_ = bk;
+}
+
 // TODO it is now memory leaking
 void ChessBoard::makeMove(string source_square, string destination_square){
   int source_file = source_square.at(0) - 'A';
@@ -200,13 +216,19 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   board_[source_rank][source_file] = nullptr;
 
   if(source_piece->getSimbol() == "WK"){
-    white_king_ = source_piece;
-    white_king_position_ = destination_square;
+    updateWhiteKingPtr(source_piece);
+    updateWhiteKingPosition(destination_square);
   }
   else if(source_piece->getSimbol() == "BK"){
-    black_king_ = source_piece;
-    black_king_position_ = destination_square;
+    updateBlackKingPtr(source_piece);
+    updateBlackKingPosition(destination_square);
   }
+
+  // if(isWhiteTurn()){
+  //   white_king_
+  // }else{
+  //
+  // }
 
   source_piece->negateIsFirstMove();
   cout << "move complete " << endl;

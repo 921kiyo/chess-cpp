@@ -40,6 +40,10 @@ public:
   // void submitMove(const char* source_square, const char* destination_square);
   void submitMove(const string source_square, const string destination_square);
   bool isWhiteTurn();
+  void updateWhiteKingPtr(Piece* wk);
+  void updateBlackKingPtr(Piece* bk);
+  void updateWhiteKingPosition(string wk);
+  void updateBlackKingPosition(string bk);
   void resetBoard();
   void printCurrentBoard();
   // TODO add const
