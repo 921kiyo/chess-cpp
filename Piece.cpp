@@ -359,11 +359,13 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // Check if the opponent's King is threatening to attack
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
-      if(is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "BK"){
-        return false;
-      }
-      else if(!is_white && board[r][f]->getSimbol() == "WK"){
-        return false;
+      if(r >= RANK_1 && r <= RANK_8 && f >= FILE_A && f <= FILE_H){
+        if(is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "BK"){
+          return false;
+        }
+        else if(!is_white && board[r][f]->getSimbol() == "WK"){
+          return false;
+        }
       }
     }
   }
@@ -380,36 +382,54 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
       return false;
     }
   }
+  // Check if opponent knight is threatening to attack
+  for(int f = file -2; f <= file + 2; f++){
+    if(f >= FILE_A && f <= FILE_H){
+      for(int r = rank -2; r <= rank + 2; r++){
+        if(r >= RANK_1 && r <= RANK_8){
+          if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || ((abs(f - file) == 1) && (abs(r - rank) == 2))){
+            if(is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "BN"){
+              return false;
+            }
+            else if(!is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "WN"){
+              return false;
+            }
+          }
+        }
+      }
+    }
+  }
+
 
   return true;
 }
 
 // TODO Super redundant here
 bool Piece::isKingSafeQueenBishop( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
-  if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
-    // Check if there is any blocking piece
-    if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
-      is_blocking = true;
-    }
-    // If no blocking, and find black queen and bishop, then white King is not safe
-    if( !is_blocking && (board[rank][file]->getSimbol() == "BQ" || board[rank][file]->getSimbol() == "BB")){
-      return false;
-    }
-  }
-
-  // TODO Super redundant here, do something to fix it!!
-  // Check if white king is threaten by black Queen or Rook
-  if(board[rank][file] != nullptr && !is_white && board[rank][file]->getIsWhite()){
-    // Check if there is any blocking piece
-    if(board[rank][file] != nullptr && !is_white && !board[rank][file]->getIsWhite()){
-      is_blocking = true;
-    }
-    // If no blocking, and find black queen and bishop, then white King is not safe
-    if( !is_blocking && (board[rank][file]->getSimbol() == "WQ" || board[rank][file]->getSimbol() == "WB")){
-      return false;
-    }
-  }
-  return true;
+  // if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
+  //   // Check if there is any blocking piece
+  //   if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
+  //     is_blocking = true;
+  //   }
+  //   // If no blocking, and find black queen and bishop, then white King is not safe
+  //   if(!is_blocking && (board[rank][file]->getSimbol() == "BQ" || board[rank][file]->getSimbol() == "BB")){
+  //     return false;
+  //   }
+  // }
+  //
+  // // TODO Super redundant here, do something to fix it!!
+  // // Check if white king is threaten by black Queen or Rook
+  // if(board[rank][file] != nullptr && !is_white && board[rank][file]->getIsWhite()){
+  //   // Check if there is any blocking piece
+  //   if(board[rank][file] != nullptr && !is_white && !board[rank][file]->getIsWhite()){
+  //     is_blocking = true;
+  //   }
+  //   // If no blocking, and find black queen and bishop, then white King is not safe
+  //   if( !is_blocking && (board[rank][file]->getSimbol() == "WQ" || board[rank][file]->getSimbol() == "WB")){
+  //     return false;
+  //   }
+  // }
+  // return true;
 
 }
 bool Piece::isKingSafeQueenRook( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){

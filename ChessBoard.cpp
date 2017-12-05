@@ -51,9 +51,9 @@ ChessBoard::ChessBoard(){
 
   // board_[RANK_1][FILE_E] = new Queen(false);
   char king_position[3];
-  board_[RANK_4][FILE_C] = new Queen(false);
+  board_[RANK_4][FILE_B] = new Knight(false);
 
-  board_[RANK_3][FILE_B] = new Pawn(false);
+  // board_[RANK_3][FILE_B] = new Pawn(false);
 
   board_[RANK_4][FILE_D] = new King(false);
   king_position[0] = FILE_D + 'A';
