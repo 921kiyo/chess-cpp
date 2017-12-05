@@ -5,6 +5,8 @@
 using namespace std;
 
 class Piece{
+private:
+
 protected:
   bool is_white_;
   bool is_first_move_;
