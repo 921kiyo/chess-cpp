@@ -284,9 +284,46 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // if(is_white){
   //   check
   // }
-  // Check vertical lines to the top
 
+  // Check vertical lines to the top
   bool is_blocking = false;
+
+  int r = rank+1;
+  for(int f = file+1; f <= FILE_H; f++){
+    if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
+      return false;
+    }
+    r++;
+  }
+
+  is_blocking = false;
+  r = rank-1;
+  for(int f = file+1; f <= FILE_H; f++){
+    if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
+      return false;
+    }
+    r--;
+  }
+
+  is_blocking = false;
+  r = rank+1;
+  for(int f = file-1; f >= FILE_A; f--){
+    if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
+      return false;
+    }
+    r++;
+  }
+  // Reset r
+  is_blocking = false;
+  r = rank-1;
+  for(int f = file-1; f >= FILE_A; f--){
+    if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
+      return false;
+    }
+    r--;
+  }
+
+  is_blocking = false;
   for(int r = rank+1; r <= RANK_8; r++){
     if(!isKingSafeQueenRook(r, file, is_white, is_blocking, board)){
       return false;
@@ -320,6 +357,10 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   return true;
 }
 
+bool Piece::isKingSafeQueenBishop( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
+
+  return true;
+}
 bool Piece::isKingSafeQueenRook( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
   // Check if white king is threaten by black Queen or Rook
   if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
