@@ -162,11 +162,8 @@ void Piece::calculateAdjacentPossibleMove(const string source_square, Piece* boa
               square[2] = '\0';
               sq = square;
               possible_moves.push_back(sq);
-              cout << "square " << square << endl;
+              // cout << "square " << square << endl;
             }
-            // cout << "===========" << endl;
-            // cout << "file " << f << endl;
-            // cout << "rank " << r << endl;
         }
       }
     }
@@ -240,7 +237,6 @@ void Piece::calculatePawnPossibleMove(const string source_square, Piece* board[8
   }
   // Black pawn move forward down
   else if(!is_white && rank > RANK_1){
-
     if(is_first_move_ && (board[rank-1][file] == NULL) &&(board[rank-2][file] == NULL)){
       square[0] = file  + 'A';
       square[1] = rank - 2 + '1';
@@ -359,6 +355,20 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
       return false;
     }
   }
+
+  // Check if the opponent's King is threatening to attack
+  for(int f = file-1; f <= file+1; f++){
+    for(int r = rank-1; r <= rank+1; r++){
+      if(is_white && board[r][f]->getSimbol() == "BK"){
+        return false;
+      }
+      else if(!is_white && board[r][f]->getSimbol() == "WK"){
+        return false;
+      }
+    }
+  }
+
+
   return true;
 }
 
