@@ -354,7 +354,6 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // Check horizontal line to the right
   is_blocking = false;
   for(int f = file+1; f <= FILE_H; f++){
-    // cout << "heiing" << endl;
     if(!isKingSafeQueenRook(rank, f, is_white, is_blocking, board)){
       return false;
     }
@@ -372,10 +371,12 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
       if(r >= RANK_1 && r <= RANK_8 && f >= FILE_A && f <= FILE_H){
+        cout << "r is " << r << endl;
+        cout << "f is " << f << endl;
         if(is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "BK"){
           return false;
         }
-        else if(!is_white && board[r][f]->getSimbol() == "WK"){
+        else if(!is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "WK"){
           return false;
         }
       }
@@ -385,12 +386,18 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // Check if opponent pawn is threatening to attack
   // TODO double check if file range is correct
   if(is_white && rank < RANK_8 && file < FILE_H && file > FILE_A){
-    if(board[rank+1][file+1]->getSimbol() == "BP" || board[rank+1][file-1]->getSimbol() == "BP"){
+    if(board[rank+1][file+1] != nullptr && board[rank+1][file+1]->getSimbol() == "BP"){
+      return false;
+    }
+    else if (board[rank+1][file-1] != nullptr && board[rank+1][file-1]->getSimbol() == "BP"){
       return false;
     }
   }
   else if(!is_white && rank > RANK_1 && file < FILE_H && file > FILE_A){
-    if(board[rank-1][file-1]->getSimbol() == "WP" || board[rank-1][file+1]->getSimbol() == "WP"){
+    if(board[rank-1][file-1] != nullptr && board[rank-1][file-1]->getSimbol() == "WP"){
+      return false;
+    }
+    if(board[rank-1][file+1] != nullptr && board[rank-1][file+1]->getSimbol() == "WP"){
       return false;
     }
   }
@@ -411,8 +418,6 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
       }
     }
   }
-
-
   return true;
 }
 

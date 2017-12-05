@@ -51,7 +51,7 @@ ChessBoard::ChessBoard(){
 
   // board_[RANK_1][FILE_E] = new Queen(false);
   char king_position[3];
-  board_[RANK_4][FILE_B] = new Knight(false);
+  board_[RANK_5][FILE_D] = new Knight(false);
 
   // board_[RANK_3][FILE_B] = new Pawn(false);
 
@@ -234,7 +234,6 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 
   if(is_white_turn_){
     // TODO Use access function
-    cout << "white turn " << white_king_->isKingSafe(destination_square, board_) << endl;
     if(!white_king_->isKingSafe(destination_square, board_)){
       cerr << "The move makes your king in check, therefore invalid move" << endl;
       // Should this stop the program?
