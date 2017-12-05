@@ -21,6 +21,7 @@ int main() {
     // cb.submitMove("A6", "A7");
     // cb.submitMove("A7", "A8");
     cout << endl;
+    cb.submitMove("A2", "A3");
     //
     // cb.submitMove("D7", "D6");
     // cout << endl;

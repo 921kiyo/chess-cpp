@@ -13,11 +13,14 @@
 #include <string>
 #include <map>
 #include <cstring>
+#include <vector>
 #include <iomanip>
 
 using namespace std;
 
 ChessBoard::ChessBoard(){
+  is_white_in_check_ = false;
+  is_black_in_check_ = false;
   // I do not need to create all pawn
   for(int file = FILE_A; file < FILE_NONE; file++){
     // board_[RANK_7][file] = new Pawn(false);
@@ -152,8 +155,23 @@ void ChessBoard::submitMove(const string source_square, const string destination
     return;
   }
 
-  // Check if the move destroys an opponent piece
+  vector<string> possible_moves;
+  cout << "white check? " << is_white_in_check_ << endl;
+  if(is_white_turn_ && is_white_in_check_){
+    calculatePossibleMoveToSaveKing(possible_moves);
+    // After moves, check if the king is still safe
+  }
+  if(!is_white_turn_ && is_black_in_check_){
+    calculatePossibleMoveToSaveKing(possible_moves);
+  }
 
+  for(string move: possible_moves){
+    cout << "move: " << move << endl;
+  }
+
+  possible_moves.clear();
+
+  // Check if the move destroys an opponent piece
 
   if(piece->isValidMove(source_square, destination_square, board_)){
     makeMove(source_square, destination_square);
@@ -215,39 +233,64 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   int dest_file = destination_square.at(0) - 'A';
   int dest_rank = destination_square.at(1) - '1';
   board_[dest_rank][dest_file] = source_piece;
-
-  // if(!black_king_->isKingSafe(board_[dest_rank][dest_file]->getSimbol(), board_)){
-  //   check_ = true;
-  // }
   board_[source_rank][source_file] = nullptr;
 
   if(source_piece->getSimbol() == "WK"){
-    cout << "hello " << endl;
     white_king_ = source_piece;
     white_king_position_ = destination_square;
   }
   else if(source_piece->getSimbol() == "BK"){
     black_king_ = source_piece;
     black_king_position_ = destination_square;
-
   }
 
   if(is_white_turn_){
     // TODO Use access function
-    if(!white_king_->isKingSafe(destination_square, board_)){
+    if(!white_king_->isKingSafe(white_king_position_, board_)){
+      cerr << "The move makes your king in check, therefore invalid move" << endl;
+      // Undo the move
+    }
+    if(!black_king_->isKingSafe(black_king_position_, board_)){
+      cout << "back king is now in check!!" << endl;
+      is_black_in_check_ = true;
+    }
+  }else{
+
+    if(!black_king_->isKingSafe(black_king_position_, board_)){
       cerr << "The move makes your king in check, therefore invalid move" << endl;
       // Should this stop the program?
     }
-  }else{
-    if(!black_king_->isKingSafe(destination_square, board_)){
-      cerr << "The move makes your king in check, therefore invalid move" << endl;
-      // Should this stop the program?
+    if(!white_king_->isKingSafe(white_king_position_, board_)){
+      cout << "white king is now in check!!" << endl;
+      is_white_in_check_ = true;
     }
   }
 
   source_piece->negateIsFirstMove();
   cout << "move complete " << endl;
   printCurrentBoard();
+}
+
+void ChessBoard::calculatePossibleMoveToSaveKing(vector<string>&possible_moves){
+  string sq;
+  char source_square[3];
+  for(int rank = RANK_1; rank <= RANK_8; rank++){
+    for(int file = FILE_A; file <= FILE_H; file){
+      source_square[0] = file;
+      source_square[1] = rank;
+      source_square[2] = '\0';
+      sq = source_square;
+      cout << "sq " << sq << endl;
+      // Check opponent black pieces
+      if(is_white_turn_ && board_[rank][file] != nullptr && board_[rank][file]->getIsWhite()){
+        board_[rank][file]->calculatePossibleMove(sq, board_, possible_moves);
+      }
+      // Check opponent white pieces
+      if(!is_white_turn_ && board_[rank][file] != nullptr && !board_[rank][file]->getIsWhite()){
+        board_[rank][file]->calculatePossibleMove(sq, board_, possible_moves);
+      }
+    }
+  }
 }
 
 void ChessBoard::resetBoard(){

@@ -371,8 +371,6 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
       if(r >= RANK_1 && r <= RANK_8 && f >= FILE_A && f <= FILE_H){
-        cout << "r is " << r << endl;
-        cout << "f is " << f << endl;
         if(is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "BK"){
           return false;
         }
@@ -423,7 +421,6 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
 
 // TODO Super redundant here
 bool Piece::isKingSafeQueenBishop(int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
-  cout << "after " << endl;
   if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
     // Check if there is any blocking piece
     if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){

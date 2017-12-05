@@ -19,6 +19,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 using namespace std;
 
@@ -29,6 +30,8 @@ private:
   // Piece* alive_pieces;
 
   // What is the difference if this was type King??
+  bool is_white_in_check_;
+  bool is_black_in_check_;
   Piece* white_king_;
   Piece* black_king_;
   string white_king_position_;
@@ -51,6 +54,7 @@ public:
   // Piece* getPieceFromBoard(const char* source_square);
   Piece* getPieceFromBoard(const string source_square);
   void getKingPosition(const int king_enum, char* king_position);
+  void calculatePossibleMoveToSaveKing(vector<string>&possible_moves);
 };
 
 #endif
