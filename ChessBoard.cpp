@@ -18,6 +18,7 @@
 using namespace std;
 
 ChessBoard::ChessBoard(){
+  // I do not need to create all pawn
   for(int file = FILE_A; file < FILE_NONE; file++){
     // board_[RANK_7][file] = new Pawn(false);
     // board_[RANK_2][file] = new Pawn(true);
@@ -50,7 +51,7 @@ ChessBoard::ChessBoard(){
 
   // board_[RANK_1][FILE_E] = new Queen(false);
   char king_position[3];
-  board_[RANK_2][FILE_B] = new Queen(false);
+  board_[RANK_4][FILE_C] = new Queen(false);
 
   board_[RANK_4][FILE_D] = new King(false);
   king_position[0] = FILE_D + 'A';

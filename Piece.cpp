@@ -190,7 +190,7 @@ void Piece::calculateLShapePossibleMove(const string source_square, Piece* board
               square[2] = '\0';
               sq = square;
               possible_moves.push_back(sq);
-              cout << "square " << sq << endl;
+              // cout << "square " << sq << endl;
             }
           }
         }
@@ -288,14 +288,17 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // Check vertical lines to the top
   bool is_blocking = false;
 
+  // Check north east diagonal
   int r = rank+1;
   for(int f = file+1; f <= FILE_H; f++){
     if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
+      // cout << "king is in check from north east" << endl;
       return false;
     }
     r++;
   }
 
+  // Check south east diagonal
   is_blocking = false;
   r = rank-1;
   for(int f = file+1; f <= FILE_H; f++){
@@ -305,6 +308,7 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
     r--;
   }
 
+  // Check north west diagonal
   is_blocking = false;
   r = rank+1;
   for(int f = file-1; f >= FILE_A; f--){
@@ -313,7 +317,8 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
     }
     r++;
   }
-  // Reset r
+
+  // Check south west diagonal
   is_blocking = false;
   r = rank-1;
   for(int f = file-1; f >= FILE_A; f--){
@@ -323,6 +328,7 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
     r--;
   }
 
+  // Check vertical line to the top
   is_blocking = false;
   for(int r = rank+1; r <= RANK_8; r++){
     if(!isKingSafeQueenRook(r, file, is_white, is_blocking, board)){
@@ -340,7 +346,7 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // Check horizontal line to the right
   is_blocking = false;
   for(int f = file+1; f <= FILE_H; f++){
-    cout << "heiing" << endl;
+    // cout << "heiing" << endl;
     if(!isKingSafeQueenRook(rank, f, is_white, is_blocking, board)){
       return false;
     }
@@ -353,18 +359,41 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
       return false;
     }
   }
-
   return true;
 }
 
+// TODO Super redundant here
+// Do we even need to pass is_white, since it is in attribute, right??
 bool Piece::isKingSafeQueenBishop( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
+  if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
+    // Check if there is any blocking piece
+    if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
+      is_blocking = true;
+    }
+    // If no blocking, and find black queen and bishop, then white King is not safe
+    if( !is_blocking && (board[rank][file]->getSimbol() == "BQ" || board[rank][file]->getSimbol() == "BB")){
+      return false;
+    }
+  }
 
+  // TODO Super redundant here, do something to fix it!!
+  // Check if white king is threaten by black Queen or Rook
+  if(board[rank][file] != nullptr && !is_white && board[rank][file]->getIsWhite()){
+    // Check if there is any blocking piece
+    if(board[rank][file] != nullptr && !is_white && !board[rank][file]->getIsWhite()){
+      is_blocking = true;
+    }
+    // If no blocking, and find black queen and bishop, then white King is not safe
+    if( !is_blocking && (board[rank][file]->getSimbol() == "WQ" || board[rank][file]->getSimbol() == "WB")){
+      return false;
+    }
+  }
   return true;
+
 }
 bool Piece::isKingSafeQueenRook( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
   // Check if white king is threaten by black Queen or Rook
   if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
-    cout << "??? " << board[rank][file]->getIsWhite() << endl;
     // Check if there is any blocking piece
     if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
       is_blocking = true;
