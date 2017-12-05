@@ -224,11 +224,27 @@ void ChessBoard::updateBlackKingPosition(string bk){
   black_king_position_ = bk;
 }
 
+void ChessBoard::undoMove(string source_square, string destination_square){
+  int dest_file = destination_square.at(0) - 'A';
+  int dest_rank = destination_square.at(1) - '1';
+  Piece* dest_piece = board_[dest_rank][dest_file];
+
+  board_[dest_rank][dest_file] = previous_destination_square_;
+  int source_file = source_square.at(0) - 'A';
+  int source_rank = source_square.at(1) - '1';
+  board_[source_rank][source_file] = dest_piece;
+
+}
+
 // TODO it is now memory leaking
 void ChessBoard::makeMove(string source_square, string destination_square){
+  // Get piece pointer from source square
   int source_file = source_square.at(0) - 'A';
   int source_rank = source_square.at(1) - '1';
   Piece* source_piece = board_[source_rank][source_file];
+
+  // Keep it here in case we need it for undoMove
+  previous_destination_square_ = source_piece;
 
   int dest_file = destination_square.at(0) - 'A';
   int dest_rank = destination_square.at(1) - '1';
@@ -247,7 +263,8 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   if(is_white_turn_){
     // TODO Use access function
     if(!white_king_->isKingSafe(white_king_position_, board_)){
-      cerr << "The move makes your king in check, therefore invalid move" << endl;
+      cerr << "This move makes your king in check, therefore invalid move" << endl;
+
       // Undo the move
     }
     if(!black_king_->isKingSafe(black_king_position_, board_)){
@@ -275,12 +292,12 @@ void ChessBoard::calculatePossibleMoveToSaveKing(vector<string>&possible_moves){
   string sq;
   char source_square[3];
   for(int rank = RANK_1; rank <= RANK_8; rank++){
-    for(int file = FILE_A; file <= FILE_H; file){
-      source_square[0] = file;
-      source_square[1] = rank;
+    for(int file = FILE_A; file <= FILE_H; file++){
+      source_square[0] = file + 'A';
+      source_square[1] = rank + '1';
       source_square[2] = '\0';
       sq = source_square;
-      cout << "sq " << sq << endl;
+      // cout << "sq2 " << sq << endl;
       // Check opponent black pieces
       if(is_white_turn_ && board_[rank][file] != nullptr && board_[rank][file]->getIsWhite()){
         board_[rank][file]->calculatePossibleMove(sq, board_, possible_moves);
