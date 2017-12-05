@@ -359,7 +359,7 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // Check if the opponent's King is threatening to attack
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
-      if(is_white && board[r][f]->getSimbol() == "BK"){
+      if(is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "BK"){
         return false;
       }
       else if(!is_white && board[r][f]->getSimbol() == "WK"){
@@ -368,12 +368,23 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
     }
   }
 
+  // Check if opponent pawn is threatening to attack
+  // TODO double check if file range is correct
+  if(is_white && rank < RANK_8 && file < FILE_H && file > FILE_A){
+    if(board[rank+1][file+1]->getSimbol() == "BP" || board[rank+1][file-1]->getSimbol() == "BP"){
+      return false;
+    }
+  }
+  else if(!is_white && rank > RANK_1 && file < FILE_H && file > FILE_A){
+    if(board[rank-1][file-1]->getSimbol() == "WP" || board[rank-1][file+1]->getSimbol() == "WP"){
+      return false;
+    }
+  }
 
   return true;
 }
 
 // TODO Super redundant here
-// Do we even need to pass is_white, since it is in attribute, right??
 bool Piece::isKingSafeQueenBishop( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
   if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
     // Check if there is any blocking piece
