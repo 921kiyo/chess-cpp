@@ -23,10 +23,10 @@ ChessBoard::ChessBoard(){
   is_black_in_check_ = false;
   // I do not need to create all pawn
   for(int file = FILE_A; file < FILE_NONE; file++){
-    // board_[RANK_7][file] = new Pawn(false);
-    // board_[RANK_2][file] = new Pawn(true);
-    board_[RANK_7][file] = nullptr;
-    board_[RANK_2][file] = nullptr;
+    board_[RANK_7][file] = new Pawn(false);
+    board_[RANK_2][file] = new Pawn(true);
+    // board_[RANK_7][file] = nullptr;
+    // board_[RANK_2][file] = nullptr;
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
     for(int file = FILE_A; file < FILE_NONE; file++){
@@ -34,62 +34,62 @@ ChessBoard::ChessBoard(){
     }
   }
 
-  board_[RANK_8][FILE_A] = nullptr;
-  board_[RANK_8][FILE_B] = nullptr;
-  board_[RANK_8][FILE_C] = nullptr;
-  board_[RANK_8][FILE_D] = nullptr;
-  board_[RANK_8][FILE_E] = nullptr;
-  board_[RANK_8][FILE_F] = nullptr;
-  board_[RANK_8][FILE_G] = nullptr;
-  board_[RANK_8][FILE_H] = nullptr;
+  // board_[RANK_8][FILE_A] = nullptr;
+  // board_[RANK_8][FILE_B] = nullptr;
+  // board_[RANK_8][FILE_C] = nullptr;
+  // board_[RANK_8][FILE_D] = nullptr;
+  // board_[RANK_8][FILE_E] = nullptr;
+  // board_[RANK_8][FILE_F] = nullptr;
+  // board_[RANK_8][FILE_G] = nullptr;
+  // board_[RANK_8][FILE_H] = nullptr;
+  //
+  // board_[RANK_1][FILE_A] = nullptr;
+  // board_[RANK_1][FILE_B] = nullptr;
+  // board_[RANK_1][FILE_C] = nullptr;
+  // board_[RANK_1][FILE_D] = nullptr;
+  // board_[RANK_1][FILE_E] = nullptr;
+  // board_[RANK_1][FILE_F] = nullptr;
+  // board_[RANK_1][FILE_G] = nullptr;
+  // board_[RANK_1][FILE_H] = nullptr;
 
-  board_[RANK_1][FILE_A] = nullptr;
-  board_[RANK_1][FILE_B] = nullptr;
-  board_[RANK_1][FILE_C] = nullptr;
-  board_[RANK_1][FILE_D] = nullptr;
-  board_[RANK_1][FILE_E] = nullptr;
-  board_[RANK_1][FILE_F] = nullptr;
-  board_[RANK_1][FILE_G] = nullptr;
-  board_[RANK_1][FILE_H] = nullptr;
+  board_[RANK_8][FILE_A] = new Rook(false);
+  board_[RANK_8][FILE_B] = new Knight(false);
+  board_[RANK_8][FILE_C] = new Bishop(false);
+  board_[RANK_8][FILE_D] = new Queen(false);
+  board_[RANK_8][FILE_E] = new King(false);
+  board_[RANK_8][FILE_F] = new Bishop(false);
+  board_[RANK_8][FILE_G] = new Knight(false);
+  board_[RANK_8][FILE_H] = new Rook(false);
+
+  board_[RANK_1][FILE_A] = new Rook(true);
+  board_[RANK_1][FILE_B] = new Knight(true);
+  board_[RANK_1][FILE_C] = new Bishop(true);
+  board_[RANK_1][FILE_D] = new Queen(true);
+  board_[RANK_1][FILE_E] = new King(true);
+  board_[RANK_1][FILE_F] = new Bishop(true);
+  board_[RANK_1][FILE_G] = new Knight(true);
+  board_[RANK_1][FILE_H] = new Rook(true);
+
 
   // board_[RANK_1][FILE_E] = new Queen(false);
   char king_position[3];
-  board_[RANK_5][FILE_D] = new Knight(false);
+  // board_[RANK_5][FILE_D] = new Knight(false);
 
   // board_[RANK_3][FILE_B] = new Pawn(false);
 
-  board_[RANK_4][FILE_D] = new King(false);
-  king_position[0] = FILE_D + 'A';
-  king_position[1] = RANK_4 + '1';
+  // board_[RANK_4][FILE_D] = new King(false);
+  king_position[0] = FILE_E + 'A';
+  king_position[1] = RANK_8 + '1';
   king_position[2] = '\0';
   black_king_position_ = king_position;
   // board_[RANK_5][FILE_B] = new Knight(true);
-  board_[RANK_1][FILE_A] = new King(true);
-  king_position[0] = FILE_A + 'A';
+  // board_[RANK_1][FILE_A] = new King(true);
+  king_position[0] = FILE_E + 'A';
   king_position[1] = RANK_1 + '1';
   king_position[2] = '\0';
   white_king_position_ = king_position;
-  board_[RANK_2][FILE_A] = new Pawn(false);
+  // board_[RANK_2][FILE_A] = new Pawn(false);
 
-  // board_[RANK_8][FILE_H] = new King(false);
-
-  // board_[RANK_8][FILE_A] = new Rook(false);
-  // board_[RANK_8][FILE_B] = new Knight(false);
-  // board_[RANK_8][FILE_C] = new Bishop(false);
-  // board_[RANK_8][FILE_D] = new Queen(false);
-  // board_[RANK_8][FILE_E] = new King(false);
-  // board_[RANK_8][FILE_F] = new Bishop(false);
-  // board_[RANK_8][FILE_G] = new Knight(false);
-  // board_[RANK_8][FILE_H] = new Rook(false);
-  //
-  // board_[RANK_1][FILE_A] = new Rook(true);
-  // board_[RANK_1][FILE_B] = new Knight(true);
-  // board_[RANK_1][FILE_C] = new Bishop(true);
-  // board_[RANK_1][FILE_D] = new Queen(true);
-  // board_[RANK_1][FILE_E] = new King(true);
-  // board_[RANK_1][FILE_F] = new Bishop(true);
-  // board_[RANK_1][FILE_G] = new Knight(true);
-  // board_[RANK_1][FILE_H] = new Rook(true);
 
   is_white_turn_ = true;
   printCurrentBoard();
@@ -158,11 +158,15 @@ void ChessBoard::submitMove(const string source_square, const string destination
   vector<string> possible_moves;
   cout << "white check? " << is_white_in_check_ << endl;
   if(is_white_turn_ && is_white_in_check_){
-    calculatePossibleMoveToSaveKing(possible_moves);
+    // cout << "calculatePossibleMoveToSaveKing1" << endl;
+    // calculatePossibleMoveToSaveKing(possible_moves);
+    isCheckMate();
     // After moves, check if the king is still safe
   }
   if(!is_white_turn_ && is_black_in_check_){
-    calculatePossibleMoveToSaveKing(possible_moves);
+    // cout << "calculatePossibleMoveToSaveKing2" << endl;
+    isCheckMate();
+    // calculatePossibleMoveToSaveKing(possible_moves);
   }
 
   for(string move: possible_moves){
@@ -266,7 +270,10 @@ void ChessBoard::makeMove(string source_square, string destination_square){
       cerr << "This move makes your king in check, therefore invalid move" << endl;
 
       // Undo the move
+    }else{
+      is_white_in_check_ = false;
     }
+
     if(!black_king_->isKingSafe(black_king_position_, board_)){
       cout << "back king is now in check!!" << endl;
       is_black_in_check_ = true;
@@ -276,6 +283,8 @@ void ChessBoard::makeMove(string source_square, string destination_square){
     if(!black_king_->isKingSafe(black_king_position_, board_)){
       cerr << "The move makes your king in check, therefore invalid move" << endl;
       // Should this stop the program?
+    }else{
+      is_black_in_check_ = false;
     }
     if(!white_king_->isKingSafe(white_king_position_, board_)){
       cout << "white king is now in check!!" << endl;
@@ -286,6 +295,34 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   source_piece->negateIsFirstMove();
   cout << "move complete " << endl;
   printCurrentBoard();
+}
+
+bool ChessBoard::isCheckMate(){
+  // 3 things you can check
+  // 1. Check if King can move to escape from in_check
+  vector<string>possible_moves;
+  cout << "hey " << is_white_turn_ << endl;
+  if(is_white_turn_){
+
+    cout << "posi " << white_king_position_ << endl;
+    // white_king_->calculatePossibleMove(white_king_position_, board_, possible_moves);
+  }else{
+    cout << "posi " << black_king_position_ << endl;
+    cout << "black_king_position_" << black_king_position_ << endl;
+    // cout << "board_" << board_ << endl;
+
+    black_king_->calculatePossibleMove(black_king_position_, board_, possible_moves);
+  }
+
+  for(string move: possible_moves){
+    cout << "isCheckMate move: " << move << endl;
+  }
+  // 2. Check if any piece can capture the opponent's attacking piece
+
+  // 3. Check if you can interpose between the King and the attacking piece (except knight)
+
+
+  return true;
 }
 
 void ChessBoard::calculatePossibleMoveToSaveKing(vector<string>&possible_moves){

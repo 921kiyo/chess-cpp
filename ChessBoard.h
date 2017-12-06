@@ -41,6 +41,7 @@ public:
   Piece* getPieceFromBoard(const string source_square);
   void getKingPosition(const int king_enum, char* king_position);
   void calculatePossibleMoveToSaveKing(vector<string>&possible_moves);
+  bool isCheckMate();
 };
 
 #endif
