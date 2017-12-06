@@ -82,12 +82,14 @@ ChessBoard::ChessBoard(){
   king_position[1] = RANK_8 + '1';
   king_position[2] = '\0';
   black_king_position_ = king_position;
+  black_king_ = board_[RANK_8][FILE_E];
   // board_[RANK_5][FILE_B] = new Knight(true);
   // board_[RANK_1][FILE_A] = new King(true);
   king_position[0] = FILE_E + 'A';
   king_position[1] = RANK_1 + '1';
   king_position[2] = '\0';
   white_king_position_ = king_position;
+  white_king_ = board_[RANK_1][FILE_E];
   // board_[RANK_2][FILE_A] = new Pawn(false);
 
 
@@ -301,15 +303,15 @@ bool ChessBoard::isCheckMate(){
   // 3 things you can check
   // 1. Check if King can move to escape from in_check
   vector<string>possible_moves;
-  cout << "hey " << is_white_turn_ << endl;
-  if(is_white_turn_){
 
-    cout << "posi " << white_king_position_ << endl;
-    // white_king_->calculatePossibleMove(white_king_position_, board_, possible_moves);
+  if(is_white_turn_){
+    white_king_->calculatePossibleMove(white_king_position_, board_, possible_moves);
   }else{
-    cout << "posi " << black_king_position_ << endl;
-    cout << "black_king_position_" << black_king_position_ << endl;
+    // cout << "posi " << black_king_position_ << endl;
+    // cout << "black_king_position_" << black_king_position_ << endl;
+    // cout << "black_king_" <<  black_king_ << endl;
     // cout << "board_" << board_ << endl;
+    // cout << "possiblemoves " << possible_moves;
 
     black_king_->calculatePossibleMove(black_king_position_, board_, possible_moves);
   }
