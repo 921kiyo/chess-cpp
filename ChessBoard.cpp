@@ -169,17 +169,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
     return;
   }
 
-  if(destination_square.at(0) < 'A' || destination_square.at(0) > 'H'){
-    cerr << "not a valid file" << endl;
-    return;
-  }
-
-  if(destination_square.at(1) < '1' || destination_square.at(1) > '8'){
-    cerr << "not a valid rank" << endl;
-    return;
-  }
-
-  Piece* piece = getPieceFromBoard(source_square);
+  Piece* piece = getPiecePtrFromBoard(source_square);
   // TODO Fix the error message when there is a piece in front of a pawn
   if(piece == nullptr){
     cerr << "There is no piece in the square you selected" << endl;
@@ -207,8 +197,6 @@ void ChessBoard::submitMove(const string source_square, const string destination
   piece->negateIsFirstMove();
 
   vector<string> possible_moves;
-  cout << "white check? " << is_white_in_check_ << endl;
-  cout << "black check? " << is_black_in_check_ << endl;
   if(is_white_turn_ && is_white_in_check_){
     if(isCheckMate()){
       cout << "white king in checkmate..." << endl;
@@ -224,12 +212,11 @@ void ChessBoard::submitMove(const string source_square, const string destination
   }
 
   possible_moves.clear();
-
 }
 
-Piece* ChessBoard::getPieceFromBoard(const string source_square){
-  int rank = source_square.at(1) - '1';
-  int file = source_square.at(0) - 'A';
+Piece* ChessBoard::getPiecePtrFromBoard(const string source_square){
+  int rank = source_square[1] - '1';
+  int file = source_square[0] - 'A';
   return board_[rank][file];
 }
 
@@ -271,21 +258,18 @@ void ChessBoard::updateBlackKingPosition(string bk){
 
 // TODO Can I just use one makeMove? This looks a bit redundant
 void ChessBoard::undoMove(string source_square, string destination_square){
-  cout << "undoing: source_square " << source_square << endl;
-  cout << "undoing: destination_square " << destination_square << endl;
+
+  // TODO How can I replace this??
   int dest_file = destination_square.at(0) - 'A';
   int dest_rank = destination_square.at(1) - '1';
-  cout << "dest_file " << dest_file << endl;
-  cout << "dest_rank " << dest_rank << endl;
   Piece* dest_piece = board_[dest_rank][dest_file];
 
   board_[dest_rank][dest_file] = previous_destination_square_;
   previous_destination_square_ = pre_pre_dest_square_;
-  cout << "previous dest square " << previous_destination_square_ << endl;
+
   int source_file = source_square.at(0) - 'A';
   int source_rank = source_square.at(1) - '1';
   board_[source_rank][source_file] = dest_piece;
-  cout << "dest_piece " << dest_piece << endl;
 
   if(board_[source_rank][source_file]->getSimbol() == "WK"){
     white_king_ = board_[source_rank][source_file];
@@ -322,11 +306,9 @@ void ChessBoard::makeMove(string source_square, string destination_square){
     black_king_position_ = destination_square;
   }
 
-
   if(is_white_turn_){
     if(white_king_->isKingSafe(white_king_position_, board_) != ""){
       // TODO Make this more efficient
-      cout << "who is attacking? " << white_king_->isKingSafe(white_king_position_, board_) << endl;
       cerr << "This move makes your king in check, therefore invalid move" << endl;
       undoMove(source_square, destination_square);
       // Undo the move
