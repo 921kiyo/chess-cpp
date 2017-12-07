@@ -1,7 +1,7 @@
 #ifndef DEFINITION_H
 #define DEFINITION_H
 
-#include <cstdint>
+const int NUM_OF_PIECES = 12;
 
 enum FileEnum {
   FILE_A,

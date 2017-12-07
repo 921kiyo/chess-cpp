@@ -15,6 +15,7 @@ class ChessBoard {
 private:
   bool is_white_turn_;
   Piece* board_[FILE_NONE][RANK_NONE];
+  Piece* pieces_[NUM_OF_PIECES];
   bool is_white_in_check_;
   bool is_black_in_check_;
   // What is the difference if this was type King??
@@ -44,7 +45,6 @@ public:
   void makeMove(string source_square, string destination_square);
   Piece* getPieceFromBoard(const string source_square);
   void getKingPosition(const int king_enum, char* king_position);
-  void calculatePossibleMoveToSaveKing(vector<string>&possible_moves);
   bool isPossibleMoveLeft();
   bool isCheckMate();
 };

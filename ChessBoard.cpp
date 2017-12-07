@@ -22,20 +22,35 @@ ChessBoard::ChessBoard(){
   is_white_in_check_ = false;
   is_black_in_check_ = false;
 
-  // Pawn* black_pawn = new Pawn(false);
-  // // TODO What happens when you pass to board??
-  // Rook* black_rook = new Rook(false);
-  // Knight* black_knight = new Knight(false);
-  // Bishop* black_bishop = new Bishop(false);
-  // Queen* black_queen = new Queen(false);
-  // King* black_king = new King(false);
-  //
-  // Pawn* white_pawn = new Pawn(true);
-  // Rook* white_rook = new Rook(true);
-  // Knight* white_knight = new Knight(true);
-  // Bishop* white_bishop = new Bishop(true);
-  // Queen* white_queen = new Queen(true);
-  // King* white_king = new King(true);
+  Pawn* black_pawn = new Pawn(false);
+  // TODO What happens when you pass to board??
+  Rook* black_rook = new Rook(false);
+  Knight* black_knight = new Knight(false);
+  Bishop* black_bishop = new Bishop(false);
+  Queen* black_queen = new Queen(false);
+  King* black_king = new King(false);
+
+  Pawn* white_pawn = new Pawn(true);
+  Rook* white_rook = new Rook(true);
+  Knight* white_knight = new Knight(true);
+  Bishop* white_bishop = new Bishop(true);
+  Queen* white_queen = new Queen(true);
+  King* white_king = new King(true);
+
+  // TODO is there better way to do this?
+  pieces_[0] = black_pawn;
+  pieces_[1] = black_rook;
+  pieces_[2] = black_knight;
+  pieces_[3] = black_bishop;
+  pieces_[4] = black_queen;
+  pieces_[5] = black_king;
+  pieces_[6] = white_pawn;
+  pieces_[7] = white_rook;
+  pieces_[8] = white_knight;
+  pieces_[9] = white_bishop;
+  pieces_[10] = white_queen;
+  pieces_[11] = white_king;
+
 
   for(int file = FILE_A; file < FILE_NONE; file++){
     // board_[RANK_7][file] = black_pawn;
@@ -123,10 +138,9 @@ ChessBoard::ChessBoard(){
 }
 
 ChessBoard::~ChessBoard(){
-  // TODO Double check memory leak
-  // for(int i = W_pawn; i <= B_king; i++){
-  //   delete piece_map_[i];
-  // }
+  for(int i = 0; i < NUM_OF_PIECES; i++){
+    delete pieces_[i];
+  }
 }
 
 void ChessBoard::submitMove(const string source_square, const string destination_square){
@@ -280,16 +294,9 @@ void ChessBoard::undoMove(string source_square, string destination_square){
     black_king_ = board_[source_rank][source_file];
     black_king_position_ = source_square;
   }
-
-  cout << "undoing1" << endl;
-  printCurrentBoard();
-  cout << "undoing2" << endl;
 }
 
-// TODO it is now memory leaking
 void ChessBoard::makeMove(string source_square, string destination_square){
-  cout << "source_square " << source_square << endl;
-  cout << "destination_square " << destination_square << endl;
   // Get piece pointer from source square
   int source_file = source_square.at(0) - 'A';
   int source_rank = source_square.at(1) - '1';
@@ -300,7 +307,6 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   // Keep it here in case we need it for undoMove
   pre_pre_dest_square_ = previous_destination_square_;
   previous_destination_square_ = board_[dest_rank][dest_file];
-  cout << "!!!previous_destination_square_" << previous_destination_square_<< endl;
 
   board_[dest_rank][dest_file] = source_piece;
 
@@ -317,7 +323,6 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 
 
   if(is_white_turn_){
-    // TODO Use access function
     if(white_king_->isKingSafe(white_king_position_, board_) != ""){
       // TODO Make this more efficient
       cout << "who is attacking? " << white_king_->isKingSafe(white_king_position_, board_) << endl;
@@ -332,13 +337,11 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 
     if(black_king_->isKingSafe(black_king_position_, board_) != ""){
       attacking_piece_position_ = black_king_->isKingSafe(black_king_position_, board_);
-      cout << "who is attacking? " << black_king_->isKingSafe(black_king_position_, board_) << endl;
-      cout << "back king is now in check!!" << endl;
+      cout << "black king is now in check!!" << endl;
       is_black_in_check_ = true;
     }
   }else{
     if(black_king_->isKingSafe(black_king_position_, board_) != ""){
-      cout << "who is taacking ? " << black_king_->isKingSafe(black_king_position_, board_) << endl;
       cerr << "The move makes your king in check, therefore invalid move" << endl;
       undoMove(source_square, destination_square);
       // attacking_piece_position_ = ""; Do I need to do this here?
@@ -347,13 +350,11 @@ void ChessBoard::makeMove(string source_square, string destination_square){
       is_black_in_check_ = false;
     }
     if(white_king_->isKingSafe(white_king_position_, board_) != ""){
-      cout << "who is attacking? " << white_king_->isKingSafe(white_king_position_, board_) << endl;
       cout << "white king is now in check!!" << endl;
       attacking_piece_position_ = white_king_->isKingSafe(white_king_position_, board_);
       is_white_in_check_ = true;
     }
   }
-
   cout << "move complete " << endl;
   printCurrentBoard();
 }
@@ -433,30 +434,7 @@ bool ChessBoard::isCheckMate(){
   // if attacking piece is not knight
   vector<string>blocking_squares;
   // if any of my pieces can move to one of blocking_squares, return false
-
   return true;
-}
-
-void ChessBoard::calculatePossibleMoveToSaveKing(vector<string>&possible_moves){
-  string sq;
-  char source_square[3];
-  for(int rank = RANK_1; rank <= RANK_8; rank++){
-    for(int file = FILE_A; file <= FILE_H; file++){
-      source_square[0] = file + 'A';
-      source_square[1] = rank + '1';
-      source_square[2] = '\0';
-      sq = source_square;
-      // cout << "sq2 " << sq << endl;
-      // Check opponent black pieces
-      if(is_white_turn_ && board_[rank][file] != nullptr && board_[rank][file]->getIsWhite()){
-        board_[rank][file]->calculatePossibleMove(sq, board_, possible_moves);
-      }
-      // Check opponent white pieces
-      if(!is_white_turn_ && board_[rank][file] != nullptr && !board_[rank][file]->getIsWhite()){
-        board_[rank][file]->calculatePossibleMove(sq, board_, possible_moves);
-      }
-    }
-  }
 }
 
 void ChessBoard::resetBoard(){
