@@ -174,15 +174,11 @@ void ChessBoard::submitMove(const string source_square, const string destination
     return;
   }
 
-
-
   // Check if the move destroys an opponent piece
   if(piece->isValidMove(source_square, destination_square, board_)){
     makeMove(source_square, destination_square);
   }
   // Display the message
-
-
   // Update current player (white and black)
   (is_white_turn_) ? is_white_turn_ = false : is_white_turn_ = true;
   piece->negateIsFirstMove();
@@ -202,11 +198,9 @@ void ChessBoard::submitMove(const string source_square, const string destination
       cout << "black king in checkmate..." << endl;
       return;
     }
-    // calculatePossibleMoveToSaveKing(possible_moves);
   }
 
   possible_moves.clear();
-
 
 }
 
@@ -302,7 +296,6 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 
   board_[dest_rank][dest_file] = source_piece;
 
-
   board_[source_rank][source_file] = nullptr;
 
   if(source_piece->getSimbol() == "WK"){
@@ -313,6 +306,8 @@ void ChessBoard::makeMove(string source_square, string destination_square){
     black_king_ = source_piece;
     black_king_position_ = destination_square;
   }
+
+
   if(is_white_turn_){
     // TODO Use access function
     if(white_king_->isKingSafe(white_king_position_, board_) != ""){
@@ -351,9 +346,18 @@ void ChessBoard::makeMove(string source_square, string destination_square){
     }
   }
 
-
   cout << "move complete " << endl;
   printCurrentBoard();
+}
+
+bool ChessBoard::isPossibleMoveLeft(){
+  for(int rank = RANK_1; rank <  RANK_NONE; rank++){
+    for(int file = FILE_A; file < FILE_NONE; file++){
+      // if(board_[rank][file] != nullptr &&
+      // possible moves left
+    }
+  }
+  return false;
 }
 
 bool ChessBoard::isCheckMate(){
