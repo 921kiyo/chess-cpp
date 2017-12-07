@@ -187,7 +187,6 @@ void Piece::calculateLShapePossibleMove(const string source_square, Piece* board
               square[2] = '\0';
               sq = square;
               possible_moves.push_back(sq);
-              // cout << "square " << sq << endl;
             }
           }
         }
@@ -270,12 +269,14 @@ void Piece::calculatePawnPossibleMove(const string source_square, Piece* board[8
   }
 }
 
-bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
+string Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   int rank = king_position.at(1) - '1';
   int file = king_position.at(0) - 'A';
   bool is_white = board[rank][file]->getIsWhite();
-  // Check diagonal lines and see if there is opponent Queen or Bishop
 
+  // Check diagonal lines and see if there is opponent Queen or Bishop
+  char attacker[3];
+  string attacker_sq;
   // TODO Change it to ternary operator
   // if(is_white){
   //   check
@@ -291,8 +292,11 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
       break;
     }
     if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
-      // cout << "king is in check from north east" << endl;
-      return false;
+      attacker[0] = f + 'A';
+      attacker[1] = r + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
     r++;
   }
@@ -301,11 +305,16 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   is_blocking = false;
   r = rank-1;
   for(int f = file+1; f <= FILE_H; f++){
+    // TODO Do you want break here?
     if(r < RANK_1 || r > RANK_8){
       break;
     }
     if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
-      return false;
+      attacker[0] = f + 'A';
+      attacker[1] = r + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
     r--;
   }
@@ -318,7 +327,11 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
       break;
     }
     if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
-      return false;
+      attacker[0] = f + 'A';
+      attacker[1] = r + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
     r++;
   }
@@ -331,7 +344,11 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
       break;
     }
     if(!isKingSafeQueenBishop(r, f, is_white, is_blocking, board)){
-      return false;
+      attacker[0] = f + 'A';
+      attacker[1] = r + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
     r--;
   }
@@ -340,14 +357,22 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   is_blocking = false;
   for(int r = rank+1; r <= RANK_8; r++){
     if(!isKingSafeQueenRook(r, file, is_white, is_blocking, board)){
-      return false;
+      attacker[0] = file + 'A';
+      attacker[1] = r + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
   }
   // Check vertical line to the bottom
   is_blocking = false;
   for(int r = rank-1; r >= RANK_1; r--){
     if(!isKingSafeQueenRook(r, file, is_white, is_blocking, board)){
-      return false;
+      attacker[0] = file + 'A';
+      attacker[1] = r + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
   }
 
@@ -355,7 +380,11 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   is_blocking = false;
   for(int f = file+1; f <= FILE_H; f++){
     if(!isKingSafeQueenRook(rank, f, is_white, is_blocking, board)){
-      return false;
+      attacker[0] = f + 'A';
+      attacker[1] = rank + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
   }
 
@@ -363,7 +392,11 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   is_blocking = false;
   for(int f = file -1; f >= FILE_A; f--){
     if(!isKingSafeQueenRook(rank, f, is_white, is_blocking, board)){
-      return false;
+      attacker[0] = f + 'A';
+      attacker[1] = rank + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
   }
 
@@ -372,10 +405,18 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
     for(int r = rank-1; r <= rank+1; r++){
       if(r >= RANK_1 && r <= RANK_8 && f >= FILE_A && f <= FILE_H){
         if(is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "BK"){
-          return false;
+          attacker[0] = f + 'A';
+          attacker[1] = r + '1';
+          attacker[2] = '\0';
+          attacker_sq = attacker;
+          return attacker_sq;
         }
         else if(!is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "WK"){
-          return false;
+          attacker[0] = f + 'A';
+          attacker[1] = r + '1';
+          attacker[2] = '\0';
+          attacker_sq = attacker;
+          return attacker_sq;
         }
       }
     }
@@ -385,18 +426,34 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
   // TODO double check if file range is correct
   if(is_white && rank < RANK_8 && file < FILE_H && file > FILE_A){
     if(board[rank+1][file+1] != nullptr && board[rank+1][file+1]->getSimbol() == "BP"){
-      return false;
+      attacker[0] = file + 1 + 'A';
+      attacker[1] = rank + 1 + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
     else if (board[rank+1][file-1] != nullptr && board[rank+1][file-1]->getSimbol() == "BP"){
-      return false;
+      attacker[0] = file - 1 + 'A';
+      attacker[1] = rank + 1 + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
   }
   else if(!is_white && rank > RANK_1 && file < FILE_H && file > FILE_A){
     if(board[rank-1][file-1] != nullptr && board[rank-1][file-1]->getSimbol() == "WP"){
-      return false;
+      attacker[0] = file - 1 + 'A';
+      attacker[1] = rank - 1 + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
     if(board[rank-1][file+1] != nullptr && board[rank-1][file+1]->getSimbol() == "WP"){
-      return false;
+      attacker[0] = file + 1 + 'A';
+      attacker[1] = rank - 1 + '1';
+      attacker[2] = '\0';
+      attacker_sq = attacker;
+      return attacker_sq;
     }
   }
   // Check if opponent knight is threatening to attack
@@ -406,17 +463,25 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
         if(r >= RANK_1 && r <= RANK_8){
           if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || ((abs(f - file) == 1) && (abs(r - rank) == 2))){
             if(is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "BN"){
-              return false;
+              attacker[0] = f + 'A';
+              attacker[1] = r + '1';
+              attacker[2] = '\0';
+              attacker_sq = attacker;
+              return attacker_sq;
             }
             else if(!is_white && board[r][f] != nullptr && board[r][f]->getSimbol() == "WN"){
-              return false;
+              attacker[0] = f + 'A';
+              attacker[1] = r + '1';
+              attacker[2] = '\0';
+              attacker_sq = attacker;
+              return attacker_sq;
             }
           }
         }
       }
     }
   }
-  return true;
+  return "";
 }
 
 // TODO Super redundant here

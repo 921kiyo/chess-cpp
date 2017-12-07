@@ -15,13 +15,16 @@ class ChessBoard {
 private:
   bool is_white_turn_;
   Piece* board_[FILE_NONE][RANK_NONE];
-  // What is the difference if this was type King??
   bool is_white_in_check_;
   bool is_black_in_check_;
+  // What is the difference if this was type King??
   Piece* white_king_;
   Piece* black_king_;
   string white_king_position_;
   string black_king_position_;
+  string attacking_piece_position;
+  // Double check
+  string attacking_piece_position2;
   Piece* previous_destination_square_;
 
 public:

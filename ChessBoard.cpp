@@ -278,7 +278,7 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 
   if(is_white_turn_){
     // TODO Use access function
-    if(!white_king_->isKingSafe(white_king_position_, board_)){
+    if(white_king_->isKingSafe(white_king_position_, board_) != ""){
       cerr << "This move makes your king in check, therefore invalid move" << endl;
 
       // Undo the move
@@ -286,19 +286,18 @@ void ChessBoard::makeMove(string source_square, string destination_square){
       is_white_in_check_ = false;
     }
 
-    if(!black_king_->isKingSafe(black_king_position_, board_)){
+    if(black_king_->isKingSafe(black_king_position_, board_) != ""){
       cout << "back king is now in check!!" << endl;
       is_black_in_check_ = true;
     }
   }else{
-
-    if(!black_king_->isKingSafe(black_king_position_, board_)){
+    if(black_king_->isKingSafe(black_king_position_, board_) != ""){
       cerr << "The move makes your king in check, therefore invalid move" << endl;
       // Should this stop the program?
     }else{
       is_black_in_check_ = false;
     }
-    if(!white_king_->isKingSafe(white_king_position_, board_)){
+    if(white_king_->isKingSafe(white_king_position_, board_) != ""){
       cout << "white king is now in check!!" << endl;
       is_white_in_check_ = true;
     }
@@ -317,7 +316,7 @@ bool ChessBoard::isCheckMate(string source_square, string destination_square){
     // Try all possible moves for the king, and see if one of them makes the king safe (therefore not checkmate yet)
     for(string move: possible_moves){
       makeMove(white_king_position_, move);
-      if(white_king_->isKingSafe(white_king_position_, board_)){
+      if(white_king_->isKingSafe(white_king_position_, board_) == ""){
         cout << "white king is safe now" << endl;
         undoMove(source_square, destination_square);
         return false;
@@ -332,7 +331,7 @@ bool ChessBoard::isCheckMate(string source_square, string destination_square){
     // TODO Super redundant here
     for(string move: possible_moves){
       makeMove(black_king_position_, move);
-      if(black_king_->isKingSafe(black_king_position_, board_)){
+      if(black_king_->isKingSafe(black_king_position_, board_) == ""){
         cout << "black king is safe now" << endl;
         undoMove(source_square, destination_square);
         return false;
