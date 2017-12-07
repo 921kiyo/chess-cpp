@@ -162,12 +162,18 @@ void ChessBoard::submitMove(const string source_square, const string destination
   if(is_white_turn_ && is_white_in_check_){
     // cout << "calculatePossibleMoveToSaveKing1" << endl;
     // calculatePossibleMoveToSaveKing(possible_moves);
-    isCheckMate();
+    if(isCheckMate(source_square, destination_square)){
+      cout << "white king in checkmate..." << endl;
+      return;
+    }
     // After moves, check if the king is still safe
   }
   if(!is_white_turn_ && is_black_in_check_){
     // cout << "calculatePossibleMoveToSaveKing2" << endl;
-    isCheckMate();
+    if(isCheckMate(source_square, destination_square)){
+      cout << "black king in checkmate..." << endl;
+      return;
+    }
     // calculatePossibleMoveToSaveKing(possible_moves);
   }
 
@@ -178,7 +184,6 @@ void ChessBoard::submitMove(const string source_square, const string destination
   possible_moves.clear();
 
   // Check if the move destroys an opponent piece
-
   if(piece->isValidMove(source_square, destination_square, board_)){
     makeMove(source_square, destination_square);
   }
@@ -230,7 +235,9 @@ void ChessBoard::updateBlackKingPosition(string bk){
   black_king_position_ = bk;
 }
 
+// TODO Can I just use one makeMove? This looks a bit redundant
 void ChessBoard::undoMove(string source_square, string destination_square){
+
   int dest_file = destination_square.at(0) - 'A';
   int dest_rank = destination_square.at(1) - '1';
   Piece* dest_piece = board_[dest_rank][dest_file];
@@ -299,30 +306,43 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   printCurrentBoard();
 }
 
-bool ChessBoard::isCheckMate(){
-  // 3 things you can check
+bool ChessBoard::isCheckMate(string source_square, string destination_square){
   // 1. Check if King can move to escape from in_check
   vector<string>possible_moves;
-
   if(is_white_turn_){
     white_king_->calculatePossibleMove(white_king_position_, board_, possible_moves);
+    // Try all possible moves for the king, and see if one of them makes the king safe (therefore not checkmate yet)
+    for(string move: possible_moves){
+      makeMove(white_king_position_, move);
+      if(white_king_->isKingSafe(white_king_position_, board_)){
+        cout << "white king is safe now" << endl;
+        undoMove(source_square, destination_square);
+        return false;
+      }else{
+        cout << "white king not safe yet.. " << endl;
+        undoMove(source_square, destination_square);
+      }
+    }
+
   }else{
-    // cout << "posi " << black_king_position_ << endl;
-    // cout << "black_king_position_" << black_king_position_ << endl;
-    // cout << "black_king_" <<  black_king_ << endl;
-    // cout << "board_" << board_ << endl;
-    // cout << "possiblemoves " << possible_moves;
-
     black_king_->calculatePossibleMove(black_king_position_, board_, possible_moves);
+    // TODO Super redundant here
+    for(string move: possible_moves){
+      makeMove(black_king_position_, move);
+      if(black_king_->isKingSafe(black_king_position_, board_)){
+        cout << "black king is safe now" << endl;
+        undoMove(source_square, destination_square);
+        return false;
+      }else{
+        cout << "black king not safe yet.. " << endl;
+        undoMove(source_square, destination_square);
+      }
+    }
   }
 
-  for(string move: possible_moves){
-    cout << "isCheckMate move: " << move << endl;
-  }
   // 2. Check if any piece can capture the opponent's attacking piece
 
   // 3. Check if you can interpose between the King and the attacking piece (except knight)
-
 
   return true;
 }
