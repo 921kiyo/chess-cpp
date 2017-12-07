@@ -18,7 +18,7 @@ bool Piece::isValidMove(const string source_square, const string destination_squ
   for(string square: possible_moves){
     // cout << "sq " << square << endl;
     if(destination_square == square){
-      cout << "yes" << endl;
+      // cout << "yes" << endl;
       return true;
     }
 
@@ -57,7 +57,6 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
     square[2] = '\0';
     sq = square;
     possible_moves.push_back(sq);
-    // cout << "square " << square << endl;
     return false;
   }
   else if(board[rank][file] == NULL){
@@ -66,7 +65,7 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
      square[2] = '\0';
      sq = square;
      possible_moves.push_back(sq);
-     cout << "square " << square << endl;
+     // cout << "square " << square << endl;
      return true;
   }
 }
@@ -494,7 +493,6 @@ bool Piece::isKingSafeQueenBishop(int rank, int file, bool is_white, bool& is_bl
   }
   // Check if there is any blocking piece
   if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
-    cout << "blocking white HELLO" << endl;
     is_blocking = true;
   }
 

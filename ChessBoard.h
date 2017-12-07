@@ -22,9 +22,10 @@ private:
   Piece* black_king_;
   string white_king_position_;
   string black_king_position_;
-  string attacking_piece_position;
+  string attacking_piece_position_;
   // Double check
   string attacking_piece_position2;
+  Piece* pre_pre_dest_square_;
   Piece* previous_destination_square_;
 
 public:
@@ -44,7 +45,7 @@ public:
   Piece* getPieceFromBoard(const string source_square);
   void getKingPosition(const int king_enum, char* king_position);
   void calculatePossibleMoveToSaveKing(vector<string>&possible_moves);
-  bool isCheckMate(string source_square, string destination_square);
+  bool isCheckMate();
 };
 
 #endif
