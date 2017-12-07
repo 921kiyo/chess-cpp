@@ -16,7 +16,7 @@ bool Piece::isValidMove(const string source_square, const string destination_squ
   calculatePossibleMove(source_square, board, possible_moves);
   // C++11 Range-based loop
   for(string square: possible_moves){
-    cout << "sq " << square << endl;
+    // cout << "sq " << square << endl;
     if(destination_square == square){
       cout << "yes" << endl;
       return true;
@@ -57,7 +57,7 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
     square[2] = '\0';
     sq = square;
     possible_moves.push_back(sq);
-    cout << "square " << square << endl;
+    // cout << "square " << square << endl;
     return false;
   }
   else if(board[rank][file] == NULL){
@@ -422,27 +422,29 @@ bool Piece::isKingSafe(const string king_position, Piece* board[8][8]){
 // TODO Super redundant here
 bool Piece::isKingSafeQueenBishop(int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]){
   if(board[rank][file] != nullptr && is_white && !board[rank][file]->getIsWhite()){
-    // Check if there is any blocking piece
-    if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
-      is_blocking = true;
-    }
     // If no blocking, and find black queen and bishop, then white King is not safe
     if(!is_blocking && (board[rank][file]->getSimbol() == "BQ" || board[rank][file]->getSimbol() == "BB")){
       return false;
     }
   }
+  // Check if there is any blocking piece
+  if(board[rank][file] != nullptr && is_white && board[rank][file]->getIsWhite()){
+    cout << "blocking white HELLO" << endl;
+    is_blocking = true;
+  }
+
   //
   // // TODO Super redundant here, do something to fix it!!
   // Check if white king is threaten by black Queen or Rook
   if(board[rank][file] != nullptr && !is_white && board[rank][file]->getIsWhite()){
     // Check if there is any blocking piece
-    if(board[rank][file] != nullptr && !is_white && !board[rank][file]->getIsWhite()){
-      is_blocking = true;
-    }
     // If no blocking, and find black queen and bishop, then white King is not safe
     if( !is_blocking && (board[rank][file]->getSimbol() == "WQ" || board[rank][file]->getSimbol() == "WB")){
       return false;
     }
+  }
+  if(board[rank][file] != nullptr && !is_white && !board[rank][file]->getIsWhite()){
+    is_blocking = true;
   }
   return true;
 

@@ -159,6 +159,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   vector<string> possible_moves;
   cout << "white check? " << is_white_in_check_ << endl;
+  cout << "black check? " << is_black_in_check_ << endl;
   if(is_white_turn_ && is_white_in_check_){
     // cout << "calculatePossibleMoveToSaveKing1" << endl;
     // calculatePossibleMoveToSaveKing(possible_moves);
@@ -251,6 +252,8 @@ void ChessBoard::undoMove(string source_square, string destination_square){
 
 // TODO it is now memory leaking
 void ChessBoard::makeMove(string source_square, string destination_square){
+  cout << "source_square " << source_square << endl;
+  cout << "destination_square " << destination_square << endl;
   // Get piece pointer from source square
   int source_file = source_square.at(0) - 'A';
   int source_rank = source_square.at(1) - '1';
