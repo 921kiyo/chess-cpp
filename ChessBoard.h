@@ -32,6 +32,7 @@ private:
 public:
   ChessBoard();
   ~ChessBoard();
+  bool isValidSquare(const string square);
   void submitMove(const string source_square, const string destination_square);
   bool isWhiteTurn();
   void updateWhiteKingPtr(Piece* wk);

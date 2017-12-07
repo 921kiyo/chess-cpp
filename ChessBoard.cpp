@@ -143,27 +143,28 @@ ChessBoard::~ChessBoard(){
   }
 }
 
+bool ChessBoard::isValidSquare(const string square){
+  if(square.length() != 2){
+    return false;
+  }
+  else if(square[0] < 'A' || square[0] > 'H'){
+    return false;
+  }
+  else if(square[1] < '1' || square[1] > '8'){
+    return false;
+  }
+
+  return true;
+}
+
 void ChessBoard::submitMove(const string source_square, const string destination_square){
   // Check if the source square (A-H and 1-8) is valid or not
-  int source_input_length = source_square.length();
-  if(source_input_length != 2){
+  if(!isValidSquare(source_square)){
     cerr << "source input is not valid" << endl;
     return;
   }
 
-  if(source_square.at(0) < 'A' || source_square.at(0) > 'H'){
-    cerr << "not a valid file" << endl;
-    return;
-  }
-
-  if(source_square.at(1) < '1' || source_square.at(1) > '8'){
-    cerr << "not a valid rank" << endl;
-    return;
-  }
-
-  // Check the destination square is valid
-  int destination_input_length = destination_square.length();
-  if(destination_input_length != 2){
+  if(!isValidSquare(destination_square)){
     cerr << "destination input is not valid" << endl;
     return;
   }
