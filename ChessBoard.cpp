@@ -21,10 +21,25 @@ using namespace std;
 ChessBoard::ChessBoard(){
   is_white_in_check_ = false;
   is_black_in_check_ = false;
-  // I do not need to create all pawn
+
+  // Pawn* black_pawn = new Pawn(false);
+  // // TODO What happens when you pass to board??
+  // Rook* black_rook = new Rook(false);
+  // Knight* black_knight = new Knight(false);
+  // Bishop* black_bishop = new Bishop(false);
+  // Queen* black_queen = new Queen(false);
+  // King* black_king = new King(false);
+  //
+  // Pawn* white_pawn = new Pawn(true);
+  // Rook* white_rook = new Rook(true);
+  // Knight* white_knight = new Knight(true);
+  // Bishop* white_bishop = new Bishop(true);
+  // Queen* white_queen = new Queen(true);
+  // King* white_king = new King(true);
+
   for(int file = FILE_A; file < FILE_NONE; file++){
-    // board_[RANK_7][file] = new Pawn(false);
-    // board_[RANK_2][file] = new Pawn(true);
+    // board_[RANK_7][file] = black_pawn;
+    // board_[RANK_2][file] = white_pawn;
     board_[RANK_7][file] = nullptr;
     board_[RANK_2][file] = nullptr;
   }
@@ -71,32 +86,25 @@ ChessBoard::ChessBoard(){
   king_position[2] = '\0';
   white_king_position_ = king_position;
   white_king_ = board_[RANK_1][FILE_A];
-  // board_[RANK_8][FILE_A] = new Rook(false);
-  // board_[RANK_8][FILE_B] = new Knight(false);
-  // board_[RANK_8][FILE_C] = new Bishop(false);
-  // board_[RANK_8][FILE_D] = new Queen(false);
-  // board_[RANK_8][FILE_E] = new King(false);
-  // board_[RANK_8][FILE_F] = new Bishop(false);
-  // board_[RANK_8][FILE_G] = new Knight(false);
-  // board_[RANK_8][FILE_H] = new Rook(false);
+
+  // board_[RANK_8][FILE_A] = black_rook;
+  // board_[RANK_8][FILE_B] = black_knight;
+  // board_[RANK_8][FILE_C] = black_bishop;
+  // board_[RANK_8][FILE_D] = black_queen;
+  // board_[RANK_8][FILE_E] = black_king;
+  // board_[RANK_8][FILE_F] = black_bishop;
+  // board_[RANK_8][FILE_G] = black_knight;
+  // board_[RANK_8][FILE_H] = black_rook;
   //
-  // board_[RANK_1][FILE_A] = new Rook(true);
-  // board_[RANK_1][FILE_B] = new Knight(true);
-  // board_[RANK_1][FILE_C] = new Bishop(true);
-  // board_[RANK_1][FILE_D] = new Queen(true);
-  // board_[RANK_1][FILE_E] = new King(true);
-  // board_[RANK_1][FILE_F] = new Bishop(true);
-  // board_[RANK_1][FILE_G] = new Knight(true);
-  // board_[RANK_1][FILE_H] = new Rook(true);
+  // board_[RANK_1][FILE_A] = white_rook;
+  // board_[RANK_1][FILE_B] = white_knight;
+  // board_[RANK_1][FILE_C] = white_bishop;
+  // board_[RANK_1][FILE_D] = white_queen;
+  // board_[RANK_1][FILE_E] = white_king;
+  // board_[RANK_1][FILE_F] = white_bishop;
+  // board_[RANK_1][FILE_G] = white_knight;
+  // board_[RANK_1][FILE_H] = white_rook;
 
-
-  // board_[RANK_1][FILE_E] = new Queen(false);
-
-  // board_[RANK_5][FILE_D] = new Knight(false);
-
-  // board_[RANK_3][FILE_B] = new Pawn(false);
-
-  // board_[RANK_4][FILE_D] = new King(false);
   // king_position[0] = FILE_E + 'A';
   // king_position[1] = RANK_8 + '1';
   // king_position[2] = '\0';
