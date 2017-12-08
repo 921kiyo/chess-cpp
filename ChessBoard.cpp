@@ -242,36 +242,18 @@ bool ChessBoard::isWhiteTurn(){
   return is_white_turn_;
 }
 
-// TODO Delete these setters
-void ChessBoard::updateWhiteKingPtr(Piece* wk){
-  white_king_ = wk;
-}
-
-void ChessBoard::updateBlackKingPtr(Piece* bk){
-  white_king_ = bk;
-}
-
-void ChessBoard::updateWhiteKingPosition(string wk){
-  white_king_position_ = wk;
-}
-
-void ChessBoard::updateBlackKingPosition(string bk){
-  black_king_position_ = bk;
-}
-
 // TODO Can I just use one makeMove? This looks a bit redundant
 void ChessBoard::undoMove(string source_square, string destination_square){
-
   // TODO How can I replace this??
-  int dest_file = destination_square.at(0) - 'A';
-  int dest_rank = destination_square.at(1) - '1';
+  int dest_file = destination_square[0] - 'A';
+  int dest_rank = destination_square[1] - '1';
   Piece* dest_piece = board_[dest_rank][dest_file];
 
   board_[dest_rank][dest_file] = previous_destination_square_;
   previous_destination_square_ = pre_pre_dest_square_;
 
-  int source_file = source_square.at(0) - 'A';
-  int source_rank = source_square.at(1) - '1';
+  int source_file = source_square[0] - 'A';
+  int source_rank = source_square[1] - '1';
   board_[source_rank][source_file] = dest_piece;
 
   if(board_[source_rank][source_file]->getSimbol() == "WK"){
@@ -286,12 +268,12 @@ void ChessBoard::undoMove(string source_square, string destination_square){
 
 void ChessBoard::makeMove(string source_square, string destination_square){
   // Get piece pointer from source square
-  int source_file = source_square.at(0) - 'A';
-  int source_rank = source_square.at(1) - '1';
+  int source_file = source_square[0] - 'A';
+  int source_rank = source_square[1] - '1';
   Piece* source_piece = board_[source_rank][source_file];
 
-  int dest_file = destination_square.at(0) - 'A';
-  int dest_rank = destination_square.at(1) - '1';
+  int dest_file = destination_square[0] - 'A';
+  int dest_rank = destination_square[1] - '1';
   // Keep it here in case we need it for undoMove
   pre_pre_dest_square_ = previous_destination_square_;
   previous_destination_square_ = board_[dest_rank][dest_file];
