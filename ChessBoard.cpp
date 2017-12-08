@@ -160,37 +160,40 @@ bool ChessBoard::isValidSquare(const string square){
 void ChessBoard::submitMove(const string source_square, const string destination_square){
   // Check if the source square (A-H and 1-8) is valid or not
   if(!isValidSquare(source_square)){
-    cerr << "source input is not valid" << endl;
+    cout << "source input is not valid" << endl;
     return;
   }
 
   if(!isValidSquare(destination_square)){
-    cerr << "destination input is not valid" << endl;
+    cout << "destination input is not valid" << endl;
     return;
   }
 
   Piece* piece = getPiecePtrFromBoard(source_square);
   // TODO Fix the error message when there is a piece in front of a pawn
   if(piece == nullptr){
-    cerr << "There is no piece in the square you selected" << endl;
+    cout << "There is no piece in the square you selected" << endl;
     return;
   }
 
   // Check the piece in the square (exist? and match with current turn?)
   // Check which turn, (white or black?)
-  if(!is_white_turn_  && piece->getIsWhite()){
-    cerr << "It is black turn, and cannot move a white piece" << endl;
+  if(is_white_turn_  && !piece->getIsWhite()){
+    cout << "It is not White's turn to move!" << endl;
     return;
   }
-  if(is_white_turn_  && !piece->getIsWhite()){
-    cerr << "It is white turn, and cannot move a black piece" << endl;
+  if(!is_white_turn_  && piece->getIsWhite()){
+    cout << "It is not White's turn to move!" << endl;
     return;
   }
 
-  // Check if the move destroys an opponent piece
-  if(piece->isValidMove(source_square, destination_square, board_)){
-    makeMove(source_square, destination_square);
+  if(!piece->isValidMove(source_square, destination_square, board_)){
+    cout << "You cannot move the piece to " << destination_square << "!" << endl;
   }
+
+  // Check if King is safe
+
+  makeMove(source_square, destination_square);
   // Display the message
   // Update current player (white and black)
   (is_white_turn_) ? is_white_turn_ = false : is_white_turn_ = true;
@@ -309,7 +312,7 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   if(is_white_turn_){
     if(white_king_->isKingSafe(white_king_position_, board_) != ""){
       // TODO Make this more efficient
-      cerr << "This move makes your king in check, therefore invalid move" << endl;
+      cout << "This move makes your king in check, therefore invalid move" << endl;
       undoMove(source_square, destination_square);
       // Undo the move
       // attacking_piece_position_ = ""; Do I need to do this here?
@@ -325,7 +328,7 @@ void ChessBoard::makeMove(string source_square, string destination_square){
     }
   }else{
     if(black_king_->isKingSafe(black_king_position_, board_) != ""){
-      cerr << "The move makes your king in check, therefore invalid move" << endl;
+      cout << "The move makes your king in check, therefore invalid move" << endl;
       undoMove(source_square, destination_square);
       // attacking_piece_position_ = ""; Do I need to do this here?
     }else{
