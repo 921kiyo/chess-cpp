@@ -16,46 +16,24 @@
 #include <vector>
 #include <iomanip>
 
+// #include <memory>
+
 using namespace std;
 
-ChessBoard::ChessBoard(){
+ChessBoard::ChessBoard(): black_pawn_(false), black_rook_(false), \
+black_knight_(false), black_bishop_(false), black_queen_(false), \
+black_king_(false), white_pawn_(true), white_rook_(true), white_knight_(true), \
+white_bishop_(true), white_queen_(true), white_king_(true){
+
   is_white_in_check_ = false;
   is_black_in_check_ = false;
 
-  Pawn* black_pawn = new Pawn(false);
-  // TODO What happens when you pass to board??
-  Rook* black_rook = new Rook(false);
-  Knight* black_knight = new Knight(false);
-  Bishop* black_bishop = new Bishop(false);
-  Queen* black_queen = new Queen(false);
-  King* black_king = new King(false);
-
-  Pawn* white_pawn = new Pawn(true);
-  Rook* white_rook = new Rook(true);
-  Knight* white_knight = new Knight(true);
-  Bishop* white_bishop = new Bishop(true);
-  Queen* white_queen = new Queen(true);
-  King* white_king = new King(true);
-
-  // TODO is there better way to do this?
-  pieces_[0] = black_pawn;
-  pieces_[1] = black_rook;
-  pieces_[2] = black_knight;
-  pieces_[3] = black_bishop;
-  pieces_[4] = black_queen;
-  pieces_[5] = black_king;
-  pieces_[6] = white_pawn;
-  pieces_[7] = white_rook;
-  pieces_[8] = white_knight;
-  pieces_[9] = white_bishop;
-  pieces_[10] = white_queen;
-  pieces_[11] = white_king;
-
+  // shared_ptr<Pawn> black_pawn_ptr = make_shared<Pawn>(false);
 
   for(int file = FILE_A; file < FILE_NONE; file++){
-    // board_[RANK_7][file] = black_pawn;
+    board_[RANK_7][file] = &black_pawn_;
     // board_[RANK_2][file] = white_pawn;
-    board_[RANK_7][file] = nullptr;
+    // board_[RANK_7][file] = nullptr;
     board_[RANK_2][file] = nullptr;
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
@@ -83,12 +61,12 @@ ChessBoard::ChessBoard(){
   board_[RANK_1][FILE_H] = nullptr;
 
   char king_position[3];
-  board_[RANK_3][FILE_B] = new Queen(false);
-  board_[RANK_1][FILE_A] = new King(true);
-  board_[RANK_1][FILE_B] = new Pawn(true);
-  board_[RANK_1][FILE_C] = new Queen(true);
-  board_[RANK_2][FILE_H] = new Pawn(true);
-  board_[RANK_8][FILE_E] = new King(false);
+  board_[RANK_3][FILE_B] = &black_queen_;
+  board_[RANK_1][FILE_A] = &white_king_;
+  board_[RANK_1][FILE_B] = &white_pawn_;
+  board_[RANK_1][FILE_C] = &white_queen_;
+  board_[RANK_2][FILE_H] = &white_pawn_;
+  board_[RANK_8][FILE_E] = &black_king_;
   king_position[0] = FILE_E + 'A';
   king_position[1] = RANK_8 + '1';
   king_position[2] = '\0';
@@ -100,7 +78,7 @@ ChessBoard::ChessBoard(){
   king_position[1] = RANK_1 + '1';
   king_position[2] = '\0';
   white_king_position_ = king_position;
-  white_king_ = board_[RANK_1][FILE_A];
+  white_king_ptr_ = board_[RANK_1][FILE_A];
 
   // board_[RANK_8][FILE_A] = black_rook;
   // board_[RANK_8][FILE_B] = black_knight;
@@ -131,16 +109,16 @@ ChessBoard::ChessBoard(){
   // king_position[1] = RANK_1 + '1';
   // king_position[2] = '\0';
   // white_king_position_ = king_position;
-  // white_king_ = board_[RANK_1][FILE_E];
+  // white_king_ptr_ = board_[RANK_1][FILE_E];
   // board_[RANK_2][FILE_A] = new Pawn(false);
   is_white_turn_ = true;
   printCurrentBoard();
 }
 
 ChessBoard::~ChessBoard(){
-  for(int i = 0; i < NUM_OF_PIECES; i++){
-    delete pieces_[i];
-  }
+  // for(int i = 0; i < NUM_OF_PIECES; i++){
+  //   delete pieces_[i];
+  // }
 }
 
 bool ChessBoard::isValidSquare(const string square){
@@ -250,18 +228,18 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   Piece* dest_piece = board_[dest_rank][dest_file];
 
   board_[dest_rank][dest_file] = previous_destination_square_;
-  previous_destination_square_ = pre_pre_dest_square_;
+  // previous_destination_square_ = pre_pre_dest_square_;
 
   int source_file = source_square[0] - 'A';
   int source_rank = source_square[1] - '1';
   board_[source_rank][source_file] = dest_piece;
 
   if(board_[source_rank][source_file]->getSimbol() == "WK"){
-    white_king_ = board_[source_rank][source_file];
+    white_king_ptr_ = board_[source_rank][source_file];
     white_king_position_ = source_square;
   }
   else if(board_[source_rank][source_file]->getSimbol() == "BK"){
-    black_king_ = board_[source_rank][source_file];
+    black_king_ptr_ = board_[source_rank][source_file];
     black_king_position_ = source_square;
   }
 }
@@ -283,16 +261,16 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   board_[source_rank][source_file] = nullptr;
 
   if(source_piece->getSimbol() == "WK"){
-    white_king_ = source_piece;
+    white_king_ptr_ = source_piece;
     white_king_position_ = destination_square;
   }
   else if(source_piece->getSimbol() == "BK"){
-    black_king_ = source_piece;
+    black_king_ptr_ = source_piece;
     black_king_position_ = destination_square;
   }
 
   if(is_white_turn_){
-    if(white_king_->isKingSafe(white_king_position_, board_) != ""){
+    if(white_king_ptr_->isKingSafe(white_king_position_, board_) != ""){
       // TODO Make this more efficient
       cout << "This move makes your king in check, therefore invalid move" << endl;
       undoMove(source_square, destination_square);
@@ -303,13 +281,13 @@ void ChessBoard::makeMove(string source_square, string destination_square){
       is_white_in_check_ = false;
     }
 
-    if(black_king_->isKingSafe(black_king_position_, board_) != ""){
-      attacking_piece_position_ = black_king_->isKingSafe(black_king_position_, board_);
+    if(black_king_ptr_->isKingSafe(black_king_position_, board_) != ""){
+      attacking_piece_position_ = black_king_ptr_->isKingSafe(black_king_position_, board_);
       cout << "black king is now in check!!" << endl;
       is_black_in_check_ = true;
     }
   }else{
-    if(black_king_->isKingSafe(black_king_position_, board_) != ""){
+    if(black_king_ptr_->isKingSafe(black_king_position_, board_) != ""){
       cout << "The move makes your king in check, therefore invalid move" << endl;
       undoMove(source_square, destination_square);
       // attacking_piece_position_ = ""; Do I need to do this here?
@@ -317,9 +295,9 @@ void ChessBoard::makeMove(string source_square, string destination_square){
       attacking_piece_position_ = "";
       is_black_in_check_ = false;
     }
-    if(white_king_->isKingSafe(white_king_position_, board_) != ""){
+    if(white_king_ptr_->isKingSafe(white_king_position_, board_) != ""){
       cout << "white king is now in check!!" << endl;
-      attacking_piece_position_ = white_king_->isKingSafe(white_king_position_, board_);
+      attacking_piece_position_ = white_king_ptr_->isKingSafe(white_king_position_, board_);
       is_white_in_check_ = true;
     }
   }
@@ -341,12 +319,12 @@ bool ChessBoard::isCheckMate(){
   // 1. Check if King can move to escape from in_check
   vector<string>possible_moves;
   if(is_white_turn_){
-    white_king_->calculatePossibleMove(white_king_position_, board_, possible_moves);
+    white_king_ptr_->calculatePossibleMove(white_king_position_, board_, possible_moves);
     // Try all possible moves for the king, and see if one of them makes the king safe (therefore not checkmate yet)
     for(string move: possible_moves){
       makeMove(white_king_position_, move);
       cout << "what is move? " << move << endl;
-      if(white_king_->isKingSafe(white_king_position_, board_) == ""){
+      if(white_king_ptr_->isKingSafe(white_king_position_, board_) == ""){
         cout << "white king is safe now" << endl;
         undoMove(white_king_position_, move);
         return false;
@@ -357,11 +335,11 @@ bool ChessBoard::isCheckMate(){
     }
 
   }else{
-    black_king_->calculatePossibleMove(black_king_position_, board_, possible_moves);
+    black_king_ptr_->calculatePossibleMove(black_king_position_, board_, possible_moves);
     // TODO Super redundant here
     for(string move: possible_moves){
       makeMove(black_king_position_, move);
-      if(black_king_->isKingSafe(black_king_position_, board_) == ""){
+      if(black_king_ptr_->isKingSafe(black_king_position_, board_) == ""){
         cout << "black king is safe now" << endl;
         undoMove(black_king_position_, move);
         return false;
