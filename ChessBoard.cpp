@@ -34,6 +34,7 @@ ChessBoard::ChessBoard(){
   board_[RANK_1][FILE_C] = new Queen(true);
   board_[RANK_2][FILE_H] = new Pawn(true);
   board_[RANK_8][FILE_E] = new King(false);
+  board_[RANK_2][FILE_A] = new Pawn(false);
   king_position[0] = FILE_E + 'A';
   king_position[1] = RANK_8 + '1';
   king_position[2] = '\0';
@@ -108,7 +109,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   // Check if King is safe
   makeMove(source_square, destination_square);
-  // After moves, check if the king is still safe
+  // After moves, check if your own king is still safe
   if(!isKingSafe(true)){
     cout << "You cannot move the piece to " << destination_square << "!" << endl;
     undoMove(source_square, destination_square);
@@ -116,6 +117,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
   }
   if(!isKingSafe(false)){
     cout << "check!!" << endl;
+
   }
   // Display the message
   // Update current player (white and black)
@@ -166,7 +168,6 @@ bool ChessBoard::isWhiteTurn(){
   return is_white_turn_;
 }
 
-// TODO Can I just use one makeMove? This looks a bit redundant
 void ChessBoard::undoMove(string source_square, string destination_square){
   // TODO How can I replace this??
   int dest_file = destination_square[0] - 'A';
@@ -174,13 +175,14 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   Piece* dest_piece = board_[dest_rank][dest_file];
 
   board_[dest_rank][dest_file] = previous_destination_square_;
-  // previous_destination_square_ = pre_pre_dest_square_;
 
   int source_file = source_square[0] - 'A';
   int source_rank = source_square[1] - '1';
   board_[source_rank][source_file] = dest_piece;
 
   updateKingPosition(dest_piece, source_square);
+  cout << "Undo complete" << endl;
+  printCurrentBoard();
 }
 
 void ChessBoard::updateKingPosition(Piece* piece_ptr, string piece_square){
@@ -245,13 +247,15 @@ bool ChessBoard::isKingSafe(bool my_king){
         // When white_turn, opponent king  is white king
         if(is_white_turn_ && board_[rank][file] != nullptr && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, black_king_position_, board_)){
           cout << "black king in check" << endl;
-          // TODO Update attacking piece_position
-          // attacking_piece_position_ =
+          attacking_piece_position_ = sq;
+          cout << "attacking piece at " << attacking_piece_position_ << endl;
           return false;
         }
         // When black turn, my king is black king
         else if(!is_white_turn_ && board_[rank][file] != nullptr && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
           cout << "white king in check " << endl;
+          attacking_piece_position_ = sq;
+          cout << "attacking piece at " << attacking_piece_position_ << endl;
           return false;
         }
       }
