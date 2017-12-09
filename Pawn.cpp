@@ -11,7 +11,6 @@ void Pawn::calculatePossibleMove(const string source_square, Piece* board[8][8],
   calculatePawnPossibleMove(source_square, board, possible_moves);
 }
 void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
-  cout << "SOUECE " << source_square << endl;
   int rank = source_square[1] - '1';
   int file = source_square[0] - 'A';
   bool is_white = board[rank][file]->isWhite();
@@ -20,7 +19,6 @@ void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8]
   // White pawn move forward up
   if(is_white && rank < RANK_8){
     if(is_first_move_ && (board[rank+1][file] == nullptr) && (board[rank+2][file] == nullptr) ){
-      cout << "move 2 squares forward "  << endl;
       square[0] = file  + 'A';
       square[1] = rank + 2 + '1';
       square[2] = '\0';

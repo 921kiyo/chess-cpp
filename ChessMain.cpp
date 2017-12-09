@@ -8,12 +8,18 @@ using namespace std;
 
 int main() {
 
-    // cout << "===========================" << endl;
-    // cout << "Testing the Chess Engine" << endl;
-    // cout << "===========================" << endl;
-    // cout << endl;
-    //
+    cout << "===========================" << endl;
+    cout << "Testing the Chess Engine" << endl;
+    cout << "===========================" << endl;
+    cout << endl;
+
     ChessBoard cb;
+
+    cb.submitMove("H2", "H3");
+    cout << endl;
+    cb.submitMove("B3", "C3");
+    cout << endl;
+
     // cb.submitMove("H2", "H3");
     // cout << endl;
     // cb.submitMove("B3", "A3");
@@ -38,17 +44,17 @@ int main() {
     cb.resetBoard();
     cout << endl;
 
-    cb.submitMove("E2", "E4");
-    cb.submitMove("E7", "E6");
-    cout << endl;
-
-    cb.submitMove("D2", "D4");
-    cb.submitMove("D7", "D5");
-    cout << endl;
-
-    cb.submitMove("B1", "C3");
-    cb.submitMove("F8", "B4");
-    cout << endl;
+    // cb.submitMove("E2", "E4");
+    // cb.submitMove("E7", "E6");
+    // cout << endl;
+    //
+    // cb.submitMove("D2", "D4");
+    // cb.submitMove("D7", "D5");
+    // cout << endl;
+    //
+    // cb.submitMove("B1", "C3");
+    // cb.submitMove("F8", "B4");
+    // cout << endl;
 
     // cb.submitMove("F1", "D3");
     // cb.submitMove("B4", "C3");
