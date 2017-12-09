@@ -156,11 +156,11 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   // Check the piece in the square (exist? and match with current turn?)
   // Check which turn, (white or black?)
-  if(is_white_turn_  && !piece->getIsWhite()){
+  if(is_white_turn_  && !piece->isWhite()){
     cout << "It is not White's turn to move!" << endl;
     return;
   }
-  if(!is_white_turn_  && piece->getIsWhite()){
+  if(!is_white_turn_  && piece->isWhite()){
     cout << "It is not White's turn to move!" << endl;
     return;
   }
@@ -312,14 +312,14 @@ bool ChessBoard::isKingSafe(){
       sq = source_square;
       // Check if white king is safe
       if(board_[rank][file] != nullptr && is_white_turn_ && \
-        !board_[rank][file]->getIsWhite() && \
+        !board_[rank][file]->isWhite() && \
         board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
         attacking_piece_position_ = sq;
         return false;
       }
       // Check if black king is safe
       else if(board_[rank][file] != nullptr && \
-              !is_white_turn_ && board_[rank][file]->getIsWhite() && \
+              !is_white_turn_ && board_[rank][file]->isWhite() && \
               board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
               attacking_piece_position_ = sq;
               return false;

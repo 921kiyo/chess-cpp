@@ -28,11 +28,9 @@ bool Piece::isValidMove(const string source_square, const string destination_squ
 
   // Check if the move makes the king in check.
   // isKingSafe()
-
-  // Or Castling
 }
 
-bool Piece::getIsWhite(){
+bool Piece::isWhite(){
   return is_white_;
 }
 
@@ -48,10 +46,10 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
   if(rank < RANK_1 || rank > RANK_8 || file < FILE_A || file > FILE_H){
     return false;
   }
-  if(board[rank][file] != NULL && is_white == board[rank][file]->getIsWhite()){
+  if(board[rank][file] != NULL && is_white == board[rank][file]->isWhite()){
     return false;
   }
-  else if(board[rank][file] != NULL && is_white != board[rank][file]->getIsWhite()){
+  else if(board[rank][file] != NULL && is_white != board[rank][file]->isWhite()){
     square[0] = file + 'A';
     square[1] = rank + '1';
     square[2] = '\0';
@@ -65,7 +63,6 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
      square[2] = '\0';
      sq = square;
      possible_moves.push_back(sq);
-     // cout << "square " << square << endl;
      return true;
   }
 }
@@ -73,7 +70,7 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
 void Piece::calculateVerticalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   int rank = source_square.at(1) - '1';
   int file = source_square.at(0) - 'A';
-  bool is_white = board[rank][file]->getIsWhite();
+  bool is_white = board[rank][file]->isWhite();
   // Check vertical lines to the top
   for(int r = rank+1; r <= RANK_8; r++){
     if(!checkSquare(r, file, is_white, board, possible_moves)){
@@ -91,7 +88,7 @@ void Piece::calculateVerticalPossibleMove(const string source_square, Piece* boa
 void Piece::calculateHorizontalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   int rank = source_square.at(1) - '1';
   int file = source_square.at(0) - 'A';
-  bool is_white = board[rank][file]->getIsWhite();
+  bool is_white = board[rank][file]->isWhite();
   // Check horizontal lines to the right
   for(int f = file+1; f <= FILE_H; f++){
     if(!checkSquare(rank, f, is_white, board, possible_moves)){
@@ -109,7 +106,7 @@ void Piece::calculateHorizontalPossibleMove(const string source_square, Piece* b
 void Piece::calculateDiagonalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   int rank = source_square.at(1) - '1';
   int file = source_square.at(0) - 'A';
-  bool is_white = board[rank][file]->getIsWhite();
+  bool is_white = board[rank][file]->isWhite();
   // Check giagonal lines
   int r = rank+1;
   for(int f = file+1; f <= FILE_H; f++){
@@ -155,13 +152,12 @@ void Piece::calculateAdjacentPossibleMove(const string source_square, Piece* boa
       if(f != file || r != rank){
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
             // If the square is empty or piece of different color
-            if((board[r][f] == NULL) || (board[r][f] != NULL && board[rank][file]->getIsWhite() != board[r][f]->getIsWhite())){
+            if((board[r][f] == NULL) || (board[r][f] != NULL && board[rank][file]->isWhite() != board[r][f]->isWhite())){
               square[0] = f + 'A';
               square[1] = r + '1';
               square[2] = '\0';
               sq = square;
               possible_moves.push_back(sq);
-              // cout << "square " << square << endl;
             }
         }
       }
@@ -172,7 +168,7 @@ void Piece::calculateAdjacentPossibleMove(const string source_square, Piece* boa
 void Piece::calculateLShapePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   int rank = source_square.at(1) - '1';
   int file = source_square.at(0) - 'A';
-  bool is_white = board[rank][file]->getIsWhite();
+  bool is_white = board[rank][file]->isWhite();
   char square[3];
   string sq;
   for(int f = file -2; f <= file + 2; f++){
@@ -180,7 +176,7 @@ void Piece::calculateLShapePossibleMove(const string source_square, Piece* board
       for(int r = rank -2; r <= rank + 2; r++){
         if(r >= RANK_1 && r <= RANK_8){
           if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || ((abs(f - file) == 1) && (abs(r - rank) == 2))){
-            if(board[r][f] == NULL || (board[r][f] == NULL && is_white != board[r][f]->getIsWhite())){
+            if(board[r][f] == NULL || (board[r][f] == NULL && is_white != board[r][f]->isWhite())){
               square[0] = f + 'A';
               square[1] = r + '1';
               square[2] = '\0';
@@ -197,7 +193,7 @@ void Piece::calculateLShapePossibleMove(const string source_square, Piece* board
 void Piece::calculatePawnPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   int rank = source_square.at(1) - '1';
   int file = source_square.at(0) - 'A';
-  bool is_white = board[rank][file]->getIsWhite();
+  bool is_white = board[rank][file]->isWhite();
   char square[3];
   string sq;
   // White pawn move forward up
@@ -218,14 +214,14 @@ void Piece::calculatePawnPossibleMove(const string source_square, Piece* board[8
     }
 
     // If there is a black piece in the diagonal forward
-    if((file < FILE_H) && (board[rank+1][file+1] != NULL) && (!board[rank+1][file+1]->getIsWhite())){
+    if((file < FILE_H) && (board[rank+1][file+1] != NULL) && (!board[rank+1][file+1]->isWhite())){
       square[0] = file + 1  + 'A';
       square[1] = rank + 1 + '1';
       square[2] = '\0';
       sq = square;
       possible_moves.push_back(sq);
     }
-    if((file > FILE_A) && (board[rank+1][file-1] != NULL) && !board[rank+1][file-1]->getIsWhite()){
+    if((file > FILE_A) && (board[rank+1][file-1] != NULL) && !board[rank+1][file-1]->isWhite()){
       square[0] = file -1 + 'A';
       square[1] = rank + 1 + '1';
       square[2] = '\0';
@@ -251,14 +247,14 @@ void Piece::calculatePawnPossibleMove(const string source_square, Piece* board[8
     }
 
     // If there is a white piece in the diagonal forward
-    if((file > FILE_A) && (board[rank-1][file-1] != NULL) && (!board[rank-1][file-1]->getIsWhite())){
+    if((file > FILE_A) && (board[rank-1][file-1] != NULL) && (!board[rank-1][file-1]->isWhite())){
       square[0] = file - 1  + 'A';
       square[1] = rank - 1 + '1';
       square[2] = '\0';
       sq = square;
       possible_moves.push_back(sq);
     }
-    if((file < FILE_H) && (board[rank-1][file+1] != NULL) && !board[rank-1][file+1]->getIsWhite()){
+    if((file < FILE_H) && (board[rank-1][file+1] != NULL) && !board[rank-1][file+1]->isWhite()){
       square[0] = file +1 + 'A';
       square[1] = rank - 1 + '1';
       square[2] = '\0';
