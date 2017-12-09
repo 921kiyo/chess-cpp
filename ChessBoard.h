@@ -22,7 +22,6 @@ private:
   bool is_game_finished;
   Piece* board_[FILE_NONE][RANK_NONE];
 
-
   bool is_white_in_check_;
   bool is_black_in_check_;
   // What is the difference if this was type King??
@@ -30,9 +29,7 @@ private:
   Piece* black_king_ptr_;
   string white_king_position_;
   string black_king_position_;
-  string attacking_piece_position_;
   // Double check
-  string attacking_piece_position2;
   Piece* previous_destination_square_;
 
 public:
@@ -52,7 +49,6 @@ public:
   Piece* getPiecePtrFromBoard(const string source_square);
   void getKingPosition(const int king_enum, char* king_position);
   bool isPossibleMoveLeft();
-  bool isCheckMate();
 };
 
 #endif
