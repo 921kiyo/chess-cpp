@@ -234,13 +234,17 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   int source_rank = source_square[1] - '1';
   board_[source_rank][source_file] = dest_piece;
 
-  if(board_[source_rank][source_file]->getSimbol() == "WK"){
-    white_king_ptr_ = board_[source_rank][source_file];
-    white_king_position_ = source_square;
+  updateKingPosition(dest_piece, source_square);
+}
+
+void ChessBoard::updateKingPosition(Piece* piece_ptr, string piece_square){
+  if(piece_ptr->getSimbol() == "WK"){
+    white_king_ptr_ = piece_ptr;
+    white_king_position_ = piece_square;
   }
-  else if(board_[source_rank][source_file]->getSimbol() == "BK"){
-    black_king_ptr_ = board_[source_rank][source_file];
-    black_king_position_ = source_square;
+  else if(piece_ptr->getSimbol() == "BK"){
+    black_king_ptr_ = piece_ptr;
+    black_king_position_ = piece_square;
   }
 }
 
@@ -260,14 +264,7 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 
   board_[source_rank][source_file] = nullptr;
 
-  if(source_piece->getSimbol() == "WK"){
-    white_king_ptr_ = source_piece;
-    white_king_position_ = destination_square;
-  }
-  else if(source_piece->getSimbol() == "BK"){
-    black_king_ptr_ = source_piece;
-    black_king_position_ = destination_square;
-  }
+  updateKingPosition(source_piece, destination_square);
 
   if(is_white_turn_){
     if(white_king_ptr_->isKingSafe(white_king_position_, board_) != ""){
