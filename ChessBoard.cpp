@@ -12,11 +12,7 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <cstring>
 #include <vector>
-#include <iomanip>
-
-// #include <memory>
 
 using namespace std;
 
@@ -24,16 +20,11 @@ ChessBoard::ChessBoard(): black_pawn_(false), black_rook_(false), \
 black_knight_(false), black_bishop_(false), black_queen_(false), \
 black_king_(false), white_pawn_(true), white_rook_(true), white_knight_(true), \
 white_bishop_(true), white_queen_(true), white_king_(true){
-
   is_white_in_check_ = false;
   is_black_in_check_ = false;
 
-  // shared_ptr<Pawn> black_pawn_ptr = make_shared<Pawn>(false);
-
   for(int file = FILE_A; file < FILE_NONE; file++){
-    board_[RANK_7][file] = &black_pawn_;
-    // board_[RANK_2][file] = white_pawn;
-    // board_[RANK_7][file] = nullptr;
+    board_[RANK_7][file] = nullptr;
     board_[RANK_2][file] = nullptr;
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
@@ -71,46 +62,14 @@ white_bishop_(true), white_queen_(true), white_king_(true){
   king_position[1] = RANK_8 + '1';
   king_position[2] = '\0';
   black_king_position_ = king_position;
-  black_king_ = board_[RANK_8][FILE_E];
-  // board_[RANK_5][FILE_B] = new Knight(true);
-  // board_[RANK_1][FILE_A] = new King(true);
+  black_king_ptr_ = board_[RANK_8][FILE_E];
+
   king_position[0] = FILE_A + 'A';
   king_position[1] = RANK_1 + '1';
   king_position[2] = '\0';
   white_king_position_ = king_position;
   white_king_ptr_ = board_[RANK_1][FILE_A];
 
-  // board_[RANK_8][FILE_A] = black_rook;
-  // board_[RANK_8][FILE_B] = black_knight;
-  // board_[RANK_8][FILE_C] = black_bishop;
-  // board_[RANK_8][FILE_D] = black_queen;
-  // board_[RANK_8][FILE_E] = black_king;
-  // board_[RANK_8][FILE_F] = black_bishop;
-  // board_[RANK_8][FILE_G] = black_knight;
-  // board_[RANK_8][FILE_H] = black_rook;
-  //
-  // board_[RANK_1][FILE_A] = white_rook;
-  // board_[RANK_1][FILE_B] = white_knight;
-  // board_[RANK_1][FILE_C] = white_bishop;
-  // board_[RANK_1][FILE_D] = white_queen;
-  // board_[RANK_1][FILE_E] = white_king;
-  // board_[RANK_1][FILE_F] = white_bishop;
-  // board_[RANK_1][FILE_G] = white_knight;
-  // board_[RANK_1][FILE_H] = white_rook;
-
-  // king_position[0] = FILE_E + 'A';
-  // king_position[1] = RANK_8 + '1';
-  // king_position[2] = '\0';
-  // black_king_position_ = king_position;
-  // black_king_ = board_[RANK_8][FILE_E];
-  // // board_[RANK_5][FILE_B] = new Knight(true);
-  // // board_[RANK_1][FILE_A] = new King(true);
-  // king_position[0] = FILE_E + 'A';
-  // king_position[1] = RANK_1 + '1';
-  // king_position[2] = '\0';
-  // white_king_position_ = king_position;
-  // white_king_ptr_ = board_[RANK_1][FILE_E];
-  // board_[RANK_2][FILE_A] = new Pawn(false);
   is_white_turn_ = true;
   printCurrentBoard();
 }
@@ -408,6 +367,50 @@ bool ChessBoard::isCheckMate(){
 }
 
 void ChessBoard::resetBoard(){
+  is_white_in_check_ = false;
+  is_black_in_check_ = false;
+
+  for(int file = FILE_A; file < FILE_NONE; file++){
+    board_[RANK_7][file] = &black_pawn_;
+    board_[RANK_2][file] = &white_pawn_;
+  }
+  for(int rank = RANK_3; rank <= RANK_6; rank++){
+    for(int file = FILE_A; file < FILE_NONE; file++){
+      board_[rank][file] = nullptr;
+    }
+  }
+  board_[RANK_8][FILE_A] = &black_rook_;
+  board_[RANK_8][FILE_B] = &black_knight_;
+  board_[RANK_8][FILE_C] = &black_bishop_;
+  board_[RANK_8][FILE_D] = &black_queen_;
+  board_[RANK_8][FILE_E] = &black_king_;
+  board_[RANK_8][FILE_F] = &black_bishop_;
+  board_[RANK_8][FILE_G] = &black_knight_;
+  board_[RANK_8][FILE_H] = &black_rook_;
+
+  board_[RANK_1][FILE_A] = &white_rook_;
+  board_[RANK_1][FILE_B] = &white_knight_;
+  board_[RANK_1][FILE_C] = &white_bishop_;
+  board_[RANK_1][FILE_D] = &white_queen_;
+  board_[RANK_1][FILE_E] = &white_king_;
+  board_[RANK_1][FILE_F] = &white_bishop_;
+  board_[RANK_1][FILE_G] = &white_knight_;
+  board_[RANK_1][FILE_H] = &white_rook_;
+
+  char king_position[3];
+  king_position[0] = FILE_E + 'A';
+  king_position[1] = RANK_8 + '1';
+  king_position[2] = '\0';
+  black_king_position_ = king_position;
+  black_king_ptr_ = board_[RANK_8][FILE_E];
+
+  king_position[0] = FILE_E + 'A';
+  king_position[1] = RANK_1 + '1';
+  king_position[2] = '\0';
+  white_king_position_ = king_position;
+  white_king_ptr_ = board_[RANK_1][FILE_E];
+
+  is_white_turn_ = true;
 
 }
 
