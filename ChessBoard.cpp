@@ -107,8 +107,16 @@ void ChessBoard::submitMove(const string source_square, const string destination
   }
 
   // Check if King is safe
-
   makeMove(source_square, destination_square);
+  // After moves, check if the king is still safe
+  if(!isKingSafe(true)){
+    cout << "You cannot move the piece to " << destination_square << "!" << endl;
+    undoMove(source_square, destination_square);
+    // attacking_piece_position_ = ""; Do I need to do this here?
+  }
+  if(!isKingSafe(false)){
+    cout << "check!!" << endl;
+  }
   // Display the message
   // Update current player (white and black)
   (is_white_turn_) ? is_white_turn_ = false : is_white_turn_ = true;
@@ -206,18 +214,6 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   board_[source_rank][source_file] = nullptr;
 
   updateKingPosition(source_piece, destination_square);
-
-  // After moves, check if the king is still safe
-  // TODO Abstract this function
-  if(!isKingSafe(true)){
-    // TODO Make this more efficient
-    cout << "This move makes your king in check, therefore invalid move" << endl;
-    undoMove(source_square, destination_square);
-    // attacking_piece_position_ = ""; Do I need to do this here?
-  }else{
-    attacking_piece_position_ = "";
-  }
-
   cout << "move complete " << endl;
   printCurrentBoard();
 }
@@ -249,6 +245,8 @@ bool ChessBoard::isKingSafe(bool my_king){
         // When white_turn, opponent king  is white king
         if(is_white_turn_ && board_[rank][file] != nullptr && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, black_king_position_, board_)){
           cout << "black king in check" << endl;
+          // TODO Update attacking piece_position
+          // attacking_piece_position_ =
           return false;
         }
         // When black turn, my king is black king
@@ -257,41 +255,6 @@ bool ChessBoard::isKingSafe(bool my_king){
           return false;
         }
       }
-
-
-      // Check if opponent king is safe
-
-      // Check if white king is safe
-      // if(board_[rank][file] != nullptr && is_white_turn_ && \
-      //   !board_[rank][file]->isWhite() && \
-      //   board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
-      //   attacking_piece_position_ = sq;
-      //   cout << "Illigal move for white" << endl;
-      //   return false;
-      // }
-      // // Check if black king is safe
-      // else if(board_[rank][file] != nullptr && \
-      //         !is_white_turn_ && board_[rank][file]->isWhite() && \
-      //         board_[rank][file]->isValidMove(sq, black_king_position_, board_)){
-      //         attacking_piece_position_ = sq;
-      //         cout << "Illigal move for black" << endl;
-      //         return false;
-      // }
-      // else if(board_[rank][file] != nullptr && !is_white_turn_ && \
-      //   !board_[rank][file]->isWhite() && \
-      //   board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
-      //   attacking_piece_position_ = sq;
-      //   cout << "white king is in check" << endl;
-      //   is_white_in_check_ = true;
-      // }
-      // // Check if black king is safe
-      // else if(board_[rank][file] != nullptr && \
-      //         is_white_turn_ && board_[rank][file]->isWhite() && \
-      //         board_[rank][file]->isValidMove(sq, black_king_position_, board_)){
-      //         attacking_piece_position_ = sq;
-      //         cout << "black king is in check" << endl;
-      //         is_black_in_check_ = true;
-      // }
     }
   }
   return true;
