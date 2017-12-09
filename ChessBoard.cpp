@@ -46,8 +46,8 @@ ChessBoard::ChessBoard(){
   king_position[2] = '\0';
   white_king_position_ = king_position;
   white_king_ptr_ = board_[RANK_1][FILE_A];
-
   is_white_turn_ = true;
+
   printCurrentBoard();
 }
 

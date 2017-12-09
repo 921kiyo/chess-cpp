@@ -67,14 +67,14 @@ void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8]
     }
 
     // If there is a white piece in the diagonal forward
-    if((file > FILE_A) && (board[rank-1][file-1] != nullptr) && (!board[rank-1][file-1]->isWhite())){
+    if((file > FILE_A) && (board[rank-1][file-1] != nullptr) && (board[rank-1][file-1]->isWhite())){
       square[0] = file - 1  + 'A';
       square[1] = rank - 1 + '1';
       square[2] = '\0';
       sq = square;
       possible_moves.push_back(sq);
     }
-    if((file < FILE_H) && (board[rank-1][file+1] != nullptr) && !board[rank-1][file+1]->isWhite()){
+    if((file < FILE_H) && (board[rank-1][file+1] != nullptr) && board[rank-1][file+1]->isWhite()){
       square[0] = file +1 + 'A';
       square[1] = rank - 1 + '1';
       square[2] = '\0';
