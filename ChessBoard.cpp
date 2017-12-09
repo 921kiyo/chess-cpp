@@ -250,7 +250,7 @@ bool ChessBoard::isKingSafe(bool my_king){
           return false;
         }
         // When black turn, my king is black king
-        else if(!is_white_turn_ && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
+        else if(!is_white_turn_ && board_[rank][file] != nullptr && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
           cout << "white king in check " << endl;
           return false;
         }
