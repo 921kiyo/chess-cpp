@@ -20,6 +20,7 @@ ChessBoard::ChessBoard(): black_pawn_(false), black_rook_(false), \
 black_knight_(false), black_bishop_(false), black_queen_(false), \
 black_king_(false), white_pawn_(true), white_rook_(true), white_knight_(true), \
 white_bishop_(true), white_queen_(true), white_king_(true){
+  // resetBoard();
   is_white_in_check_ = false;
   is_black_in_check_ = false;
 
@@ -74,12 +75,11 @@ white_bishop_(true), white_queen_(true), white_king_(true){
   printCurrentBoard();
 }
 
+// TODO Do I even need this?
 ChessBoard::~ChessBoard(){
-  // for(int i = 0; i < NUM_OF_PIECES; i++){
-  //   delete pieces_[i];
-  // }
 }
 
+// TODO Use this more often
 bool ChessBoard::isValidSquare(const string square){
   if(square.length() != 2){
     return false;
@@ -151,6 +151,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
     }
   }
 
+  // Do I need to clean?
   possible_moves.clear();
 }
 
