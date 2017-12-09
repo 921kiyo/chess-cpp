@@ -30,13 +30,11 @@ public:
 
   // Used for Pawn possible moves
   void calculatePawnPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
-  bool isKingSafeQueenBishop( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]);
-  bool isKingSafeQueenRook( int rank, int file, bool is_white, bool& is_blocking, Piece* board[8][8]);
 
   virtual string getSimbol() = 0;
+  // TODO Should be called isWhite?
   bool getIsWhite();
   void negateIsFirstMove();
-  string isKingSafe(const string king_positions, Piece* board[8][8]);
 };
 
 #endif
