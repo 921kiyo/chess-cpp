@@ -20,19 +20,6 @@ class ChessBoard {
 private:
   bool is_white_turn_;
   Piece* board_[FILE_NONE][RANK_NONE];
-  Pawn black_pawn_;
-  Rook black_rook_;
-  Knight black_knight_;
-  Bishop black_bishop_;
-  Queen black_queen_;
-  King black_king_;
-
-  Pawn white_pawn_;
-  Rook white_rook_;
-  Knight white_knight_;
-  Bishop white_bishop_;
-  Queen white_queen_;
-  King white_king_;
 
   bool is_white_in_check_;
   bool is_black_in_check_;

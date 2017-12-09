@@ -16,60 +16,57 @@
 
 using namespace std;
 
-ChessBoard::ChessBoard(): black_pawn_(false), black_rook_(false), \
-black_knight_(false), black_bishop_(false), black_queen_(false), \
-black_king_(false), white_pawn_(true), white_rook_(true), white_knight_(true), \
-white_bishop_(true), white_queen_(true), white_king_(true){
-  // resetBoard();
-  is_white_in_check_ = false;
-  is_black_in_check_ = false;
-
-  for(int file = FILE_A; file < FILE_NONE; file++){
-    board_[RANK_7][file] = nullptr;
-    board_[RANK_2][file] = nullptr;
-  }
-  for(int rank = RANK_3; rank <= RANK_6; rank++){
-    for(int file = FILE_A; file < FILE_NONE; file++){
-      board_[rank][file] = nullptr;
-    }
-  }
-
-  board_[RANK_8][FILE_A] = nullptr;
-  board_[RANK_8][FILE_B] = nullptr;
-  board_[RANK_8][FILE_C] = nullptr;
-  board_[RANK_8][FILE_D] = nullptr;
-  board_[RANK_8][FILE_E] = nullptr;
-  board_[RANK_8][FILE_F] = nullptr;
-  board_[RANK_8][FILE_G] = nullptr;
-  board_[RANK_8][FILE_H] = nullptr;
-
-  board_[RANK_1][FILE_A] = nullptr;
-  board_[RANK_1][FILE_B] = nullptr;
-  board_[RANK_1][FILE_C] = nullptr;
-  board_[RANK_1][FILE_D] = nullptr;
-  board_[RANK_1][FILE_E] = nullptr;
-  board_[RANK_1][FILE_F] = nullptr;
-  board_[RANK_1][FILE_G] = nullptr;
-  board_[RANK_1][FILE_H] = nullptr;
-
-  char king_position[3];
-  board_[RANK_3][FILE_B] = &black_queen_;
-  board_[RANK_1][FILE_A] = &white_king_;
-  board_[RANK_1][FILE_B] = &white_pawn_;
-  board_[RANK_1][FILE_C] = &white_queen_;
-  board_[RANK_2][FILE_H] = &white_pawn_;
-  board_[RANK_8][FILE_E] = &black_king_;
-  king_position[0] = FILE_E + 'A';
-  king_position[1] = RANK_8 + '1';
-  king_position[2] = '\0';
-  black_king_position_ = king_position;
-  black_king_ptr_ = board_[RANK_8][FILE_E];
-
-  king_position[0] = FILE_A + 'A';
-  king_position[1] = RANK_1 + '1';
-  king_position[2] = '\0';
-  white_king_position_ = king_position;
-  white_king_ptr_ = board_[RANK_1][FILE_A];
+ChessBoard::ChessBoard(){
+  resetBoard();
+  // is_white_in_check_ = false;
+  // is_black_in_check_ = false;
+  //
+  // for(int file = FILE_A; file < FILE_NONE; file++){
+  //   board_[RANK_7][file] = nullptr;
+  //   board_[RANK_2][file] = nullptr;
+  // }
+  // for(int rank = RANK_3; rank <= RANK_6; rank++){
+  //   for(int file = FILE_A; file < FILE_NONE; file++){
+  //     board_[rank][file] = nullptr;
+  //   }
+  // }
+  //
+  // board_[RANK_8][FILE_A] = nullptr;
+  // board_[RANK_8][FILE_B] = nullptr;
+  // board_[RANK_8][FILE_C] = nullptr;
+  // board_[RANK_8][FILE_D] = nullptr;
+  // board_[RANK_8][FILE_E] = nullptr;
+  // board_[RANK_8][FILE_F] = nullptr;
+  // board_[RANK_8][FILE_G] = nullptr;
+  // board_[RANK_8][FILE_H] = nullptr;
+  //
+  // board_[RANK_1][FILE_A] = nullptr;
+  // board_[RANK_1][FILE_B] = nullptr;
+  // board_[RANK_1][FILE_C] = nullptr;
+  // board_[RANK_1][FILE_D] = nullptr;
+  // board_[RANK_1][FILE_E] = nullptr;
+  // board_[RANK_1][FILE_F] = nullptr;
+  // board_[RANK_1][FILE_G] = nullptr;
+  // board_[RANK_1][FILE_H] = nullptr;
+  //
+  // char king_position[3];
+  // board_[RANK_3][FILE_B] = &black_queen_;
+  // board_[RANK_1][FILE_A] = &white_king_;
+  // board_[RANK_1][FILE_B] = &white_pawn_;
+  // board_[RANK_1][FILE_C] = &white_queen_;
+  // board_[RANK_2][FILE_H] = &white_pawn_;
+  // board_[RANK_8][FILE_E] = &black_king_;
+  // king_position[0] = FILE_E + 'A';
+  // king_position[1] = RANK_8 + '1';
+  // king_position[2] = '\0';
+  // black_king_position_ = king_position;
+  // black_king_ptr_ = board_[RANK_8][FILE_E];
+  //
+  // king_position[0] = FILE_A + 'A';
+  // king_position[1] = RANK_1 + '1';
+  // king_position[2] = '\0';
+  // white_king_position_ = king_position;
+  // white_king_ptr_ = board_[RANK_1][FILE_A];
 
   is_white_turn_ = true;
   printCurrentBoard();
@@ -90,11 +87,13 @@ bool ChessBoard::isValidSquare(const string square){
   else if(square[1] < '1' || square[1] > '8'){
     return false;
   }
-
   return true;
 }
 
 void ChessBoard::submitMove(const string source_square, const string destination_square){
+  cout << "source_square " << source_square << endl;
+  cout << "destination_square " << destination_square << endl;
+  cout << "who's turn?? " << is_white_turn_ << endl;
   // Check if the source square (A-H and 1-8) is valid or not
   if(!isValidSquare(source_square)){
     cout << "source input is not valid" << endl;
@@ -126,6 +125,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   if(!piece->isValidMove(source_square, destination_square, board_)){
     cout << "You cannot move the piece to " << destination_square << "!" << endl;
+    return;
   }
 
   // Check if King is safe
@@ -372,31 +372,31 @@ void ChessBoard::resetBoard(){
   is_black_in_check_ = false;
 
   for(int file = FILE_A; file < FILE_NONE; file++){
-    board_[RANK_7][file] = &black_pawn_;
-    board_[RANK_2][file] = &white_pawn_;
+    board_[RANK_2][file] = new Pawn(true);
+    board_[RANK_7][file] = new Pawn(false);
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
     for(int file = FILE_A; file < FILE_NONE; file++){
       board_[rank][file] = nullptr;
     }
   }
-  board_[RANK_8][FILE_A] = &black_rook_;
-  board_[RANK_8][FILE_B] = &black_knight_;
-  board_[RANK_8][FILE_C] = &black_bishop_;
-  board_[RANK_8][FILE_D] = &black_queen_;
-  board_[RANK_8][FILE_E] = &black_king_;
-  board_[RANK_8][FILE_F] = &black_bishop_;
-  board_[RANK_8][FILE_G] = &black_knight_;
-  board_[RANK_8][FILE_H] = &black_rook_;
+  board_[RANK_8][FILE_A] = new Rook(false);
+  board_[RANK_8][FILE_B] = new Knight(false);
+  board_[RANK_8][FILE_C] = new Bishop(false);
+  board_[RANK_8][FILE_D] = new Queen(false);
+  board_[RANK_8][FILE_E] = new King(false);
+  board_[RANK_8][FILE_F] = new Bishop(false);
+  board_[RANK_8][FILE_G] = new Knight(false);
+  board_[RANK_8][FILE_H] = new Rook(false);
 
-  board_[RANK_1][FILE_A] = &white_rook_;
-  board_[RANK_1][FILE_B] = &white_knight_;
-  board_[RANK_1][FILE_C] = &white_bishop_;
-  board_[RANK_1][FILE_D] = &white_queen_;
-  board_[RANK_1][FILE_E] = &white_king_;
-  board_[RANK_1][FILE_F] = &white_bishop_;
-  board_[RANK_1][FILE_G] = &white_knight_;
-  board_[RANK_1][FILE_H] = &white_rook_;
+  board_[RANK_1][FILE_A] = new Rook(true);
+  board_[RANK_1][FILE_B] = new Knight(true);
+  board_[RANK_1][FILE_C] = new Bishop(true);
+  board_[RANK_1][FILE_D] = new Queen(true);
+  board_[RANK_1][FILE_E] = new King(true);
+  board_[RANK_1][FILE_F] = new Bishop(true);
+  board_[RANK_1][FILE_G] = new Knight(true);
+  board_[RANK_1][FILE_H] = new Rook(true);
 
   char king_position[3];
   king_position[0] = FILE_E + 'A';
@@ -412,7 +412,6 @@ void ChessBoard::resetBoard(){
   white_king_ptr_ = board_[RANK_1][FILE_E];
 
   is_white_turn_ = true;
-
 }
 
 void ChessBoard::printCurrentBoard(){
