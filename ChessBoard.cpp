@@ -74,6 +74,7 @@ ChessBoard::ChessBoard(){
 
 // TODO Do I even need this?
 ChessBoard::~ChessBoard(){
+  cleanBoard();
 }
 
 // TODO Use this more often
@@ -218,6 +219,9 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   int dest_rank = destination_square[1] - '1';
   // Keep it here in case we need it for undoMove
   pre_pre_dest_square_ = previous_destination_square_;
+  if(previous_destination_square_ != nullptr){
+    delete previous_destination_square_;
+  }
   previous_destination_square_ = board_[dest_rank][dest_file];
 
   board_[dest_rank][dest_file] = source_piece;
@@ -367,7 +371,18 @@ bool ChessBoard::isCheckMate(){
   return true;
 }
 
+void ChessBoard::cleanBoard(){
+  for(int rank = RANK_1; rank <= RANK_8; rank++){
+    for(int file = FILE_A; file <= FILE_H; file++){
+      if(board_[rank][file] != nullptr){
+        delete board_[rank][file];
+      }
+    }
+  }
+}
+
 void ChessBoard::resetBoard(){
+  cleanBoard();
   is_white_in_check_ = false;
   is_black_in_check_ = false;
 
