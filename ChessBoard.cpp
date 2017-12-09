@@ -17,6 +17,11 @@
 using namespace std;
 
 ChessBoard::ChessBoard(){
+  for(int rank = RANK_1; rank <= RANK_8; rank++){
+    for(int file = FILE_A; file <= FILE_H; file++){
+      board_[rank][file] = nullptr;
+    }
+  }
   resetBoard();
   // is_white_in_check_ = false;
   // is_black_in_check_ = false;
