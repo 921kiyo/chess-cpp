@@ -73,6 +73,10 @@ void ChessBoard::submitMove(const string source_square, const string destination
   cout << "source_square " << source_square << endl;
   cout << "destination_square " << destination_square << endl;
   cout << "who's turn?? " << is_white_turn_ << endl;
+  if(is_game_finished){
+    cout << "Game is finished" << endl;
+    return;
+  }
   // Check if the source square (A-H and 1-8) is valid or not
   if(!isValidSquare(source_square)){
     cout << "source input is not valid" << endl;
@@ -117,30 +121,47 @@ void ChessBoard::submitMove(const string source_square, const string destination
   }
   if(!isKingSafe(false)){
     cout << "check!!" << endl;
-
   }
-  // Display the message
+
+  if(!isPossibleMoveLeft()){
+    if(is_white_in_check_){
+      cout << "White is in checkmate" << endl;
+      is_game_finished = true;
+      return;
+    }
+    else if(is_black_in_check_){
+      cout << "Black is in checkmate" << endl;
+      is_game_finished = true;
+      return;
+    }
+    else{
+      cout << "Stalemate" << endl;
+      is_game_finished = true;
+      return;
+    }
+  }
+
   // Update current player (white and black)
   (is_white_turn_) ? is_white_turn_ = false : is_white_turn_ = true;
   piece->negateIsFirstMove();
 
-  vector<string> possible_moves;
-  if(is_white_turn_ && is_white_in_check_){
-    if(isCheckMate()){
-      cout << "white king in checkmate..." << endl;
-      return;
-    }
-
-  }
-  if(!is_white_turn_ && is_black_in_check_){
-    if(isCheckMate()){
-      cout << "black king in checkmate..." << endl;
-      return;
-    }
-  }
-
-  // Do I need to clean?
-  possible_moves.clear();
+  // vector<string> possible_moves;
+  // if(is_white_turn_ && is_white_in_check_){
+  //   if(isCheckMate()){
+  //     cout << "white king in checkmate..." << endl;
+  //     return;
+  //   }
+  //
+  // }
+  // if(!is_white_turn_ && is_black_in_check_){
+  //   if(isCheckMate()){
+  //     cout << "black king in checkmate..." << endl;
+  //     return;
+  //   }
+  // }
+  //
+  // // Do I need to clean?
+  // possible_moves.clear();
 }
 
 Piece* ChessBoard::getPiecePtrFromBoard(const string source_square){
@@ -205,7 +226,7 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   int dest_file = destination_square[0] - 'A';
   int dest_rank = destination_square[1] - '1';
   // Keep it here in case we need it for undoMove
-  pre_pre_dest_square_ = previous_destination_square_;
+  // pre_pre_dest_square_ = previous_destination_square_;
   if(previous_destination_square_ != nullptr){
     delete previous_destination_square_;
   }
@@ -265,81 +286,99 @@ bool ChessBoard::isKingSafe(bool my_king){
 }
 
 bool ChessBoard::isPossibleMoveLeft(){
+  vector<string>possible_moves;
+  char source_square[3];
+  string sq;
   for(int rank = RANK_1; rank <  RANK_NONE; rank++){
     for(int file = FILE_A; file < FILE_NONE; file++){
-      // if(board_[rank][file] != nullptr &&
-      // possible moves left
+      if(board_[rank][file] != nullptr){
+        source_square[0] = file + 'A';
+        source_square[1] = rank + '1';
+        source_square[2] = '\0';
+        sq = source_square;
+        board_[rank][file]->calculatePossibleMove(sq, board_, possible_moves);
+
+        for(string dest_square: possible_moves){
+          makeMove(source_square, dest_square);
+          // Check if your own king is still safe
+          if(!isKingSafe(true)){
+            undoMove(source_square, dest_square);
+          }else{
+            return true;
+          }
+        }
+      }
     }
   }
   return false;
 }
 
 bool ChessBoard::isCheckMate(){
-  // 1. Check if King can move to escape from in_check
-  vector<string>possible_moves;
-  if(is_white_turn_){
-    white_king_ptr_->calculatePossibleMove(white_king_position_, board_, possible_moves);
-    // Try all possible moves for the king, and see if one of them makes the king safe (therefore not checkmate yet)
-    for(string move: possible_moves){
-      makeMove(white_king_position_, move);
-      cout << "what is move? " << move << endl;
-      // if(isKingSafe()){
-      //   cout << "white king is safe now" << endl;
-      //   undoMove(white_king_position_, move);
-      //   return false;
-      // }else{
-      //   cout << "white king not safe yet.. " << endl;
-      //   undoMove(white_king_position_, move);
-      // }
-    }
-
-  }else{
-    black_king_ptr_->calculatePossibleMove(black_king_position_, board_, possible_moves);
-    // TODO Super redundant here
-    for(string move: possible_moves){
-      makeMove(black_king_position_, move);
-      // if(isKingSafe()){
-      //   cout << "black king is safe now" << endl;
-      //   undoMove(black_king_position_, move);
-      //   return false;
-      // }else{
-      //   cout << "black king not safe yet.. " << endl;
-      //   undoMove(black_king_position_, move);
-      // }
-    }
-  }
-  possible_moves.clear();
-
-  // 2. Check if any piece can capture the opponent's attacking piece
-  string sq;
-  char square[3];
-  for(int file = FILE_A; file <= FILE_H; file++){
-    for(int rank = RANK_1; rank <= RANK_8; rank ++){
-      if(board_[rank][file] != nullptr){
-        square[0] = file + 'A';
-        square[1] = rank + '1';
-        square[2] = '\0';
-        sq = square;
-
-        board_[rank][file]->calculatePossibleMove(sq, board_, possible_moves);
-        for(string move: possible_moves){
-          cout << "move " << move << endl;
-          if(attacking_piece_position_ == move){
-            cout << "someone can capture the attacker " << endl;
-            printCurrentBoard();
-            return false;
-          }
-        }
-        possible_moves.clear();
-      }
-    }
-  }
-  // 3. Check if you can interpose between the King and the attacking piece (except knight)
-
-  // if attacking piece is not knight
-  vector<string>blocking_squares;
-  // if any of my pieces can move to one of blocking_squares, return false
-  return true;
+  // // 1. Check if King can move to escape from in_check
+  // vector<string>possible_moves;
+  // if(is_white_turn_){
+  //   white_king_ptr_->calculatePossibleMove(white_king_position_, board_, possible_moves);
+  //   // Try all possible moves for the king, and see if one of them makes the king safe (therefore not checkmate yet)
+  //   for(string move: possible_moves){
+  //     makeMove(white_king_position_, move);
+  //     cout << "what is move? " << move << endl;
+  //     // if(isKingSafe()){
+  //     //   cout << "white king is safe now" << endl;
+  //     //   undoMove(white_king_position_, move);
+  //     //   return false;
+  //     // }else{
+  //     //   cout << "white king not safe yet.. " << endl;
+  //     //   undoMove(white_king_position_, move);
+  //     // }
+  //   }
+  //
+  // }else{
+  //   black_king_ptr_->calculatePossibleMove(black_king_position_, board_, possible_moves);
+  //   // TODO Super redundant here
+  //   for(string move: possible_moves){
+  //     makeMove(black_king_position_, move);
+  //     // if(isKingSafe()){
+  //     //   cout << "black king is safe now" << endl;
+  //     //   undoMove(black_king_position_, move);
+  //     //   return false;
+  //     // }else{
+  //     //   cout << "black king not safe yet.. " << endl;
+  //     //   undoMove(black_king_position_, move);
+  //     // }
+  //   }
+  // }
+  // possible_moves.clear();
+  //
+  // // 2. Check if any piece can capture the opponent's attacking piece
+  // string sq;
+  // char square[3];
+  // for(int file = FILE_A; file <= FILE_H; file++){
+  //   for(int rank = RANK_1; rank <= RANK_8; rank ++){
+  //     if(board_[rank][file] != nullptr){
+  //       square[0] = file + 'A';
+  //       square[1] = rank + '1';
+  //       square[2] = '\0';
+  //       sq = square;
+  //
+  //       board_[rank][file]->calculatePossibleMove(sq, board_, possible_moves);
+  //       for(string move: possible_moves){
+  //         cout << "move " << move << endl;
+  //         if(attacking_piece_position_ == move){
+  //           cout << "someone can capture the attacker " << endl;
+  //           printCurrentBoard();
+  //           return false;
+  //         }
+  //       }
+  //       possible_moves.clear();
+  //     }
+  //   }
+  // }
+  // // 3. Check if you can interpose between the King and the attacking piece (except knight)
+  //
+  // // if attacking piece is not knight
+  // vector<string>blocking_squares;
+  // // if any of my pieces can move to one of blocking_squares, return false
+  // return true;
 }
 
 void ChessBoard::cleanBoard(){
@@ -354,6 +393,7 @@ void ChessBoard::cleanBoard(){
 
 void ChessBoard::resetBoard(){
   cleanBoard();
+  is_game_finished = false;
   is_white_in_check_ = false;
   is_black_in_check_ = false;
 

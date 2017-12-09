@@ -19,7 +19,9 @@ using namespace std;
 class ChessBoard {
 private:
   bool is_white_turn_;
+  bool is_game_finished;
   Piece* board_[FILE_NONE][RANK_NONE];
+
 
   bool is_white_in_check_;
   bool is_black_in_check_;
@@ -31,7 +33,6 @@ private:
   string attacking_piece_position_;
   // Double check
   string attacking_piece_position2;
-  Piece* pre_pre_dest_square_;
   Piece* previous_destination_square_;
 
 public:
