@@ -11,7 +11,9 @@ class Rook:  public Piece{
 public:
   Rook(bool white);
   virtual ~Rook();
-  virtual void calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
+  virtual void calculatePossibleMove(const string source_square, \
+                                     Piece* board[8][8], \
+                                     vector<string>& possible_moves);
   virtual string getSimbol();
 };
 

@@ -15,10 +15,13 @@ public:
   Knight(bool white);
   virtual string getSimbol();
 
-  virtual void calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
-  // virtual ~Knight();
-  
-  void calculateLShapePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves);
+  virtual void calculatePossibleMove(const string source_square, \
+                                     Piece* board[8][8], \
+                                     vector<string>& possible_moves);
+
+  void calculateLShapePossibleMove(const string source_square, \
+                                   Piece* board[8][8], \
+                                   vector<string>& possible_moves);
 };
 
 

@@ -2,6 +2,7 @@
 #define DEFINITION_H
 
 const int NUM_OF_PIECES = 12;
+const int BOARD_LENGTH = 8;
 
 enum FileEnum {
   FILE_A,
