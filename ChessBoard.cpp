@@ -389,6 +389,7 @@ void ChessBoard::resetBoard(){
 
   previous_destination_square_ = nullptr;
   is_white_turn_ = true;
+  cout << "A new chess game is started!" << endl;
 }
 
 void ChessBoard::printCurrentBoard(){
