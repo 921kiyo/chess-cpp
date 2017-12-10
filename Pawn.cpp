@@ -8,7 +8,6 @@ using namespace std;
 Pawn::Pawn(bool white): Piece(white){}
 
 void Pawn::calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
-  // cout << "can you see?" << endl;
   calculatePawnPossibleMove(source_square, board, possible_moves);
 }
 void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
@@ -69,7 +68,6 @@ void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8]
       sq = square;
       possible_moves.push_back(sq);
     }
-
     // If there is a white piece in the diagonal forward
     if((file > FILE_A) && (board[rank-1][file-1] != nullptr) && (board[rank-1][file-1]->isWhite())){
       square[0] = file - 1  + 'A';

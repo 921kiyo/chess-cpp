@@ -29,7 +29,6 @@ private:
   Piece* black_king_ptr_;
   string white_king_position_;
   string black_king_position_;
-  // Double check
   Piece* previous_destination_square_;
 
 public:
