@@ -8,9 +8,11 @@ using namespace std;
 Pawn::Pawn(bool white): Piece(white){}
 
 void Pawn::calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
+  // cout << "can you see?" << endl;
   calculatePawnPossibleMove(source_square, board, possible_moves);
 }
 void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
+
   int rank = source_square[1] - '1';
   int file = source_square[0] - 'A';
   bool is_white = board[rank][file]->isWhite();
@@ -18,13 +20,6 @@ void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8]
   string sq;
   // White pawn move forward up
   if(is_white && rank < RANK_8){
-    if(is_first_move_ && (board[rank+1][file] == nullptr) && (board[rank+2][file] == nullptr) ){
-      square[0] = file  + 'A';
-      square[1] = rank + 2 + '1';
-      square[2] = '\0';
-      sq = square;
-      possible_moves.push_back(sq);
-    }
     if(board[rank+1][file] == nullptr){
       square[0] = file  + 'A';
       square[1] = rank + 1 + '1';
@@ -32,7 +27,16 @@ void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8]
       sq = square;
       possible_moves.push_back(sq);
     }
-
+    if(source_square == "E4"){
+      cout << "stop22" << endl;
+    }
+    if(is_first_move_ && (board[rank+1][file] == nullptr) && (board[rank+2][file] == nullptr) ){
+      square[0] = file  + 'A';
+      square[1] = rank + 2 + '1';
+      square[2] = '\0';
+      sq = square;
+      possible_moves.push_back(sq);
+    }
     // If there is a black piece in the diagonal forward
     if((file < FILE_H) && (board[rank+1][file+1] != nullptr) && (!board[rank+1][file+1]->isWhite())){
       square[0] = file + 1  + 'A';
