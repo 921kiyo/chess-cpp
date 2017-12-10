@@ -117,19 +117,29 @@ void ChessBoard::submitMove(const string source_square, const string destination
     cout << "You cannot move the piece to " << destination_square << "!" << endl;
     undoMove(source_square, destination_square);
   }
-  // if(!isKingSafe(false)){
-  //   cout << "check!!" << endl;
-  // }
 
+  if(!isKingSafe(false)){
+    cout << "check!!" << endl;
+    if(is_white_turn_){
+      is_black_in_check_ = true;
+    }else{
+      is_white_in_check_ = true;
+    }
+  }
   // TODO Double check if this logic is correct
   else{
     is_black_in_check_ = false;
     is_white_in_check_ = false;
   }
+  if(is_black_in_check_){
+    cout << "Black is in check" << endl;
+  }
 
   if(!isPossibleMoveLeft()){
-    // cout << "possible move left false " << endl;
+    cout << "possible move left false " << endl;
+
     if(is_white_in_check_){
+      cout << "is_white_in_check_" << is_white_in_check_ << endl;
       cout << "White is in checkmate" << endl;
       is_game_finished = true;
       return;
@@ -148,12 +158,12 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   // Update current player (white and black)
   is_white_turn_ = !(is_white_turn_);
-  if(is_white_in_check_){
-    cout << "White is in check" << endl;
-  }
-  else if(is_black_in_check_){
-    cout << "Black is in check" << endl;
-  }
+  // if(is_white_in_check_){
+  //   cout << "White is in check" << endl;
+  // }
+  // else if(is_black_in_check_){
+  //   cout << "Black is in check" << endl;
+  // }
 
   piece->negateIsFirstMove();
   printCurrentBoard();
@@ -262,12 +272,10 @@ bool ChessBoard::isKingSafe(bool my_king){
         else{
           // When white_turn, opponent king  is white king
           if(is_white_turn_ && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, black_king_position_, board_)){
-            is_black_in_check_ = true;
             return false;
           }
           // When black turn, my king is black king
           else if(!is_white_turn_ && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
-            is_white_in_check_ = true;
             return false;
           }
         }
