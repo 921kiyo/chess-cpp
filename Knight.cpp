@@ -39,12 +39,10 @@ void Knight::calculateLShapePossibleMove(const string source_square, Piece* boar
   }
 }
 
+string Knight::getString(){
+  return (is_white_)? "White's Knight": "Black's Knight";
+}
 
 string Knight::getSimbol(){
-  if(is_white_){
-    return "WN";
-  }
-  else{
-    return "BN";
-  }
+  return (is_white_)? "WN": "BN";
 }

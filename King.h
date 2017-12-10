@@ -12,17 +12,18 @@ class King: public Piece{
 private:
 
 public:
-King(bool white);
-virtual ~King();
-virtual string getSimbol();
-virtual void calculatePossibleMove(const string source_square, \
-                                   Piece* board[8][8], \
-                                   vector<string>& possible_moves);
+  King(bool white);
+  virtual ~King();
 
-void calculateAdjacentPossibleMove(const string source_square, \
-                                   Piece* board[8][8], \
-                                   vector<string>& possible_moves);
-// castling();
+  virtual void calculatePossibleMove(const string source_square, \
+                                     Piece* board[8][8], \
+                                     vector<string>& possible_moves);
+
+  void calculateAdjacentPossibleMove(const string source_square, \
+                                     Piece* board[8][8], \
+                                     vector<string>& possible_moves);
+  virtual string getString();
+  virtual string getSimbol();
 };
 
 #endif

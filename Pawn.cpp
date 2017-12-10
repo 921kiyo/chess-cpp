@@ -26,9 +26,6 @@ void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8]
       sq = square;
       possible_moves.push_back(sq);
     }
-    if(source_square == "E4"){
-      cout << "stop22" << endl;
-    }
     if(is_first_move_ && (board[rank+1][file] == nullptr) && (board[rank+2][file] == nullptr) ){
       square[0] = file  + 'A';
       square[1] = rank + 2 + '1';
@@ -86,11 +83,10 @@ void Pawn::calculatePawnPossibleMove(const string source_square, Piece* board[8]
   }
 }
 
+string Pawn::getString(){
+  return (is_white_)? "White's Pawn": "Black's Pawn";
+}
+
 string Pawn::getSimbol(){
-  if(is_white_){
-    return "WP";
-  }
-  else{
-    return "BP";
-  }
+  return (is_white_)? "WP": "BP";
 }

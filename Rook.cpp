@@ -15,11 +15,11 @@ void Rook::calculatePossibleMove(const string source_square, Piece* board[8][8],
   calculateVerticalPossibleMove(source_square, board, possible_moves);
   calculateHorizontalPossibleMove(source_square, board, possible_moves);
 }
+
+string Rook::getString(){
+  return (is_white_)? "White's Rook": "Black's Rook";
+}
+
 string Rook::getSimbol(){
-  if(is_white_){
-    return "WR";
-  }
-  else{
-    return "BR";
-  }
+  return (is_white_)? "WR": "BR";
 }

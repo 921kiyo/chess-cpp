@@ -18,7 +18,6 @@ bool Piece::isValidMove(const string source_square, const string destination_squ
 
   for(string square: possible_moves){
     if(destination_square == square){
-      // cout << "possible " << square << endl;
       return true;
     }
   }

@@ -48,7 +48,7 @@ ChessBoard::ChessBoard(){
   // white_king_ptr_ = board_[RANK_1][FILE_A];
   // is_white_turn_ = true;
 
-  printCurrentBoard();
+  // printCurrentBoard();
 }
 
 ChessBoard::~ChessBoard(){
@@ -90,9 +90,17 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   Piece* piece = getPiecePtrFromBoard(source_square);
   if(piece == nullptr){
-    cout << "There is no piece in the square you selected" << endl;
+    cout << "There is no piece at position " << source_square << endl;
     return;
   }
+
+  int rank = destination_square[1] - '1';
+  int file = destination_square[0] - 'A';
+  Piece* dest_piece = nullptr;
+  if(board_[rank][file] != nullptr){
+    dest_piece = getPiecePtrFromBoard(destination_square);
+  }
+
 
   // Check the piece in the square (exist? and match with current turn?)
   // Check which turn, (white or black?)
@@ -106,7 +114,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
   }
 
   if(!piece->isValidMove(source_square, destination_square, board_)){
-    cout << "You cannot move the piece to " << destination_square << "!" << endl;
+    cout << piece->getString() << " cannot move to " << destination_square << "!" << endl;
     return;
   }
 
@@ -114,12 +122,11 @@ void ChessBoard::submitMove(const string source_square, const string destination
   makeMove(source_square, destination_square);
   // After moves, check if your own king is still safe
   if(!isKingSafe(true)){
-    cout << "You cannot move the piece to " << destination_square << "!" << endl;
+    cout << piece->getString() << " cannot move to " << destination_square << "!" << endl;
     undoMove(source_square, destination_square);
   }
 
   if(!isKingSafe(false)){
-    cout << "check!!" << endl;
     if(is_white_turn_){
       is_black_in_check_ = true;
     }else{
@@ -131,15 +138,16 @@ void ChessBoard::submitMove(const string source_square, const string destination
     is_black_in_check_ = false;
     is_white_in_check_ = false;
   }
-  if(is_black_in_check_){
-    cout << "Black is in check" << endl;
+
+  cout << piece->getString() << " moves from " << source_square << " to " << destination_square;
+  if(dest_piece != nullptr){
+    cout << " taking " << dest_piece->getString() << endl;
   }
+  cout << endl;
 
   if(!isPossibleMoveLeft()){
-    cout << "possible move left false " << endl;
-
+    // cout << "possible move left false " << endl;
     if(is_white_in_check_){
-      cout << "is_white_in_check_" << is_white_in_check_ << endl;
       cout << "White is in checkmate" << endl;
       is_game_finished = true;
       return;
@@ -154,6 +162,13 @@ void ChessBoard::submitMove(const string source_square, const string destination
       is_game_finished = true;
       return;
     }
+  }
+
+  if(is_white_in_check_){
+    cout << "White is in check" << endl;
+  }
+  if(is_black_in_check_){
+    cout << "Black is in check" << endl;
   }
 
   // Update current player (white and black)

@@ -20,11 +20,10 @@ void Queen::calculatePossibleMove(const string source_square, \
   calculateDiagonalPossibleMove(source_square, board, possible_moves);
 }
 
+string Queen::getString(){
+  return (is_white_)? "White's Queen": "Black's Queen";
+}
+
 string Queen::getSimbol(){
-  if(is_white_){
-    return "WQ";
-  }
-  else{
-    return "BQ";
-  }
+  return (is_white_)? "WQ": "BQ";
 }

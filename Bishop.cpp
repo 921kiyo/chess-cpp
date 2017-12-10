@@ -13,11 +13,10 @@ void Bishop::calculatePossibleMove(const string source_square, Piece* board[8][8
   calculateDiagonalPossibleMove(source_square, board, possible_moves);
 }
 
+string Bishop::getString(){
+  return (is_white_)? "White's Bishop": "Black's Bishop";
+}
+
 string Bishop::getSimbol(){
-  if(is_white_){
-    return "WB";
-  }
-  else{
-    return "BB";
-  }
+  return (is_white_)? "WB": "BB";
 }

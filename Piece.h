@@ -32,6 +32,7 @@ public:
                                      Piece* board[8][8], \
                                      vector<string>& possible_moves);
 
+  virtual string getString() = 0;
   virtual string getSimbol() = 0;
   bool isWhite();
   void negateIsFirstMove();
