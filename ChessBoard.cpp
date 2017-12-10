@@ -70,9 +70,9 @@ bool ChessBoard::isValidSquare(const string square){
 }
 
 void ChessBoard::submitMove(const string source_square, const string destination_square){
-  cout << "source_square " << source_square << endl;
-  cout << "destination_square " << destination_square << endl;
-  cout << "who's turn?? " << is_white_turn_ << endl;
+  // cout << "source_square " << source_square << endl;
+  // cout << "destination_square " << destination_square << endl;
+  // cout << "who's turn?? " << is_white_turn_ << endl;
   if(is_game_finished){
     cout << "Game is finished" << endl;
     return;
@@ -158,15 +158,9 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   // Update current player (white and black)
   is_white_turn_ = !(is_white_turn_);
-  // if(is_white_in_check_){
-  //   cout << "White is in check" << endl;
-  // }
-  // else if(is_black_in_check_){
-  //   cout << "Black is in check" << endl;
-  // }
 
   piece->negateIsFirstMove();
-  printCurrentBoard();
+  // printCurrentBoard();
 }
 
 Piece* ChessBoard::getPiecePtrFromBoard(const string source_square){
@@ -208,8 +202,6 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   board_[source_rank][source_file] = dest_piece;
 
   updateKingPosition(dest_piece, source_square);
-  // cout << "Undo complete" << endl;
-  // printCurrentBoard();
 }
 
 void ChessBoard::updateKingPosition(Piece* piece_ptr, string piece_square){
@@ -244,7 +236,6 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 
   updateKingPosition(source_piece, destination_square);
   // cout << "move complete " << endl;
-  // printCurrentBoard();
 }
 
 bool ChessBoard::isKingSafe(bool my_king){
