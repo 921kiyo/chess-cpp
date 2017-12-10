@@ -141,7 +141,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   cout << piece->getString() << " moves from " << source_square << " to " << destination_square;
   if(dest_piece != nullptr){
-    cout << " taking " << dest_piece->getString() << endl;
+    cout << " taking " << dest_piece->getString();
   }
   cout << endl;
 
