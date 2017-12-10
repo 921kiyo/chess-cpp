@@ -25,7 +25,7 @@ void Knight::calculateLShapePossibleMove(const string source_square, Piece* boar
       for(int r = rank -2; r <= rank + 2; r++){
         if(r >= RANK_1 && r <= RANK_8){
           if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || ((abs(f - file) == 1) && (abs(r - rank) == 2))){
-            if(board[r][f] == NULL || (board[r][f] == NULL && is_white != board[r][f]->isWhite())){
+            if(board[r][f] == NULL || (is_white != board[r][f]->isWhite())){
               square[0] = f + 'A';
               square[1] = r + '1';
               square[2] = '\0';
