@@ -56,7 +56,7 @@ ChessBoard::~ChessBoard(){
 }
 
 // TODO Use this more often
-bool ChessBoard::isValidSquare(const string square){
+bool ChessBoard::isValidInput(const string square){
   if(square.length() != 2){
     return false;
   }
@@ -78,12 +78,12 @@ void ChessBoard::submitMove(const string source_square, const string destination
     return;
   }
   // Check if the source square (A-H and 1-8) is valid or not
-  if(!isValidSquare(source_square)){
+  if(!isValidInput(source_square)){
     cout << "source input is not valid" << endl;
     return;
   }
 
-  if(!isValidSquare(destination_square)){
+  if(!isValidInput(destination_square)){
     cout << "destination input is not valid" << endl;
     return;
   }

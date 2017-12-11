@@ -35,7 +35,7 @@ public:
   ChessBoard();
   ~ChessBoard();
   void cleanBoard();
-  bool isValidSquare(const string square);
+  bool isValidInput(const string square);
   void submitMove(const string source_square, const string destination_square);
   void resetBoard();
   void printCurrentBoard();
