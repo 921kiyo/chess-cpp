@@ -44,6 +44,7 @@ public:
   bool isNoPieceBetweenKingRook(string king_position, string rook_position);
   string getRookPosition(string destination_square);
   void checkCastling(const string source_square, const string destination_square);
+  bool isKingSafeWhileCastling(const string source_square, const string destination_square);
   bool isKingSafe(bool my_king);
   // TODO add const
   void makeMove(string source_square, string destination_square);

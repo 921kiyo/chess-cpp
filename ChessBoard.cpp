@@ -256,9 +256,10 @@ void ChessBoard::checkCastling(const string source_square, const string destinat
     // No piece between king and rook
     if(!is_white_in_check_ && rook_ptr->isFirstMove() && isNoPieceBetweenKingRook(source_square, rook_position)){
       cout << "castling for white is possible" << endl;
+      isKingSafeWhileCastling(source_square, destination_square);
     }
   }
-
+  // TODO Make it only one conditional statement
   // If black turn and simbol in the position is rook
   if(rook_ptr != nullptr && !is_white_turn_ && rook_ptr->getSimbol() == "BR"){
     // Black king is not in check
@@ -266,35 +267,54 @@ void ChessBoard::checkCastling(const string source_square, const string destinat
     // No piece between king and rook
     if(!is_black_in_check_ && rook_ptr->isFirstMove() && isNoPieceBetweenKingRook(source_square, rook_position)){
       cout << "castling for black is possible" << endl;
+      isKingSafeWhileCastling(source_square, destination_square);
     }
   }
+  // Finally, move Rook and check if Rook makes the opponent king in check
+}
 
-
-
-
-  // Check if the involved rook and king have not being moved
-  shared_ptr<Piece> rook = nullptr;
-
-    // Rook on Queen side
-    if(board_[RANK_1][FILE_A] != nullptr){
-        rook = getPiecePtrFromBoard("A1");
-    }
-    // TODO I do not want to hardcode A1....
-    if(!is_white_in_check_ && rook->isFirstMove() && isNoPieceBetweenKingRook(source_square, "A1")){
-
-    }
-    // Rook on King side
-    rook = board_[RANK_1][FILE_H];
-    if(!is_white_in_check_ && rook->isFirstMove() && isNoPieceBetweenKingRook(source_square, "H1")){
-
-    }
-
-  // The king is not currently in check
-
+bool ChessBoard::isKingSafeWhileCastling(const string source_square, const string destination_square){
   // The king does not pass through a square that is attacked by an opponent piece
   // The king does not end up in check
+  // TODO naming
+  string temp = source_square;
+  int source_file = getFileInt(source_square);
+  int rank = getRankInt(source_square);
 
-  // Finally, move Rook
+  int dest_file = getFileInt(destination_square);
+  // int dest_rank = getRankInt(destination_square);
+  string dest_square;
+
+  // King side castling
+  if(source_file - dest_file < 0){
+    for(int file = source_file+1; file <= dest_file; file++){
+        dest_square = getStringSquare(file, rank);
+        makeMove(temp, dest_square);
+        temp = dest_square;
+        if(!isKingSafe(true)){
+          cout << "King is not safe to do castling" << endl;
+          // TODO Double check if this is correct
+          undoMove(source_square, dest_square);
+          return false;
+        }
+    }
+  } // Otherwise Queen side castling
+  else{
+    for(int file = source_file-1; file >= dest_file; file--){
+        dest_square = getStringSquare(file, rank);
+        makeMove(temp, dest_square);
+        temp = dest_square;
+        if(!isKingSafe(true)){
+          cout << "King is not safe to do castling" << endl;
+          // TODO Double check if this is correct
+          undoMove(source_square, dest_square);
+          return false;
+        }
+    }
+  }
+  cout << "castling king move complete" << endl;
+  printCurrentBoard();
+  return true;
 }
 
 
