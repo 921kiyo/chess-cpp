@@ -1,6 +1,7 @@
 #include "Helper.h"
-#include "King.h"
 #include "Piece.h"
+#include "King.h"
+
 #include <iostream>
 #include <vector>
 #include <string>

@@ -1,6 +1,7 @@
-#include "Bishop.h"
 #include "Helper.h"
 #include "Piece.h"
+#include "Bishop.h"
+
 #include <iostream>
 #include <string>
 #include <memory>

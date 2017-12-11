@@ -1,6 +1,7 @@
-#include "Queen.h"
-#include "Piece.h"
 #include "Helper.h"
+#include "Piece.h"
+#include "Queen.h"
+
 #include <iostream>
 #include <string>
 #include <vector>

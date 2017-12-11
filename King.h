@@ -1,8 +1,9 @@
 #ifndef KING_H
 #define KING_H
 
-#include "Piece.h"
 #include "Helper.h"
+#include "Piece.h"
+
 #include <string>
 #include <vector>
 #include <memory>

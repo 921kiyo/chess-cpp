@@ -1,7 +1,7 @@
-
-#include "Pawn.h"
-#include "Piece.h"
 #include "Helper.h"
+#include "Piece.h"
+#include "Pawn.h"
+
 #include <iostream>
 #include <vector>
 #include <string>

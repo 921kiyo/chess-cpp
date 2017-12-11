@@ -1,5 +1,5 @@
-#include "Piece.h"
 #include "Helper.h"
+#include "Piece.h"
 
 #include <iostream>
 #include <string>

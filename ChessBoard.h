@@ -2,10 +2,10 @@
 #define CHESSBOARD_H
 
 #include "Helper.h"
+#include "Piece.h"
 #include "Pawn.h"
 #include "Queen.h"
 #include "King.h"
-#include "Piece.h"
 #include "Rook.h"
 #include "Bishop.h"
 #include "Knight.h"

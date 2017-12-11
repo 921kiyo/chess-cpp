@@ -1,13 +1,12 @@
+#include "Helper.h"
+#include "Piece.h"
 #include "ChessBoard.h"
 #include "Pawn.h"
 #include "Queen.h"
 #include "King.h"
-#include "Piece.h"
 #include "Rook.h"
 #include "Bishop.h"
 #include "Knight.h"
-
-#include "Helper.h"
 
 #include <iostream>
 #include <string>

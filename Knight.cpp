@@ -1,7 +1,7 @@
-
-#include "Knight.h"
 #include "Helper.h"
 #include "Piece.h"
+#include "Knight.h"
+
 #include <iostream>
 #include <vector>
 #include <string>

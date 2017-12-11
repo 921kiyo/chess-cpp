@@ -2,6 +2,7 @@
 #define PIECE_H
 
 #include "Helper.h"
+
 #include <string>
 #include <vector>
 #include <memory>

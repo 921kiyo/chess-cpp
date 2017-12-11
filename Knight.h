@@ -3,6 +3,7 @@
 
 #include "Piece.h"
 #include "Helper.h"
+
 #include <string>
 #include <vector>
 #include <memory>

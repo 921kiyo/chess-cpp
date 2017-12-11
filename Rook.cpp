@@ -1,6 +1,7 @@
 #include "Helper.h"
-#include "Rook.h"
 #include "Piece.h"
+#include "Rook.h"
+
 
 #include <iostream>
 #include <string>
