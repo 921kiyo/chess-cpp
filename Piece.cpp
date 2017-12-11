@@ -34,7 +34,7 @@ void Piece::negateIsFirstMove(){
   }
 }
 
-bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], vector<string>& possible_moves){
+bool Piece::isDestinationEmpty(int rank, int file, bool is_white, Piece* board[8][8], vector<string>& possible_moves){
   string sq;
   if(rank < RANK_1 || rank > RANK_8 || file < FILE_A || file > FILE_H){
     return false;
@@ -52,6 +52,7 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
      possible_moves.push_back(sq);
      return true;
   }
+  return false;
 }
 
 void Piece::calculateVerticalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
@@ -60,13 +61,13 @@ void Piece::calculateVerticalPossibleMove(const string source_square, Piece* boa
   bool is_white = board[rank][file]->isWhite();
   // Check vertical lines to the top
   for(int r = rank+1; r <= RANK_8; r++){
-    if(!checkSquare(r, file, is_white, board, possible_moves)){
+    if(!isDestinationEmpty(r, file, is_white, board, possible_moves)){
       break;
     }
   }
   // Check vertical line to the bottom
   for(int r = rank-1; r >= RANK_1; r--){
-    if(!checkSquare(r, file, is_white, board, possible_moves)){
+    if(!isDestinationEmpty(r, file, is_white, board, possible_moves)){
       break;
     }
   }
@@ -79,13 +80,13 @@ void Piece::calculateHorizontalPossibleMove(const string source_square, Piece* b
   bool is_white = board[rank][file]->isWhite();
   // Check horizontal lines to the right
   for(int f = file+1; f <= FILE_H; f++){
-    if(!checkSquare(rank, f, is_white, board, possible_moves)){
+    if(!isDestinationEmpty(rank, f, is_white, board, possible_moves)){
       break;
     }
   }
   // Check horizontal lines to the left
   for(int f = file-1; f >= FILE_A; f--){
-    if(!checkSquare(rank, f, is_white, board, possible_moves)){
+    if(!isDestinationEmpty(rank, f, is_white, board, possible_moves)){
       break;
     }
   }
@@ -98,7 +99,7 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, Piece* boa
   // Check giagonal lines
   int r = rank+1;
   for(int f = file+1; f <= FILE_H; f++){
-    if(!checkSquare(r, f, is_white, board, possible_moves)){
+    if(!isDestinationEmpty(r, f, is_white, board, possible_moves)){
       break;
     }
     r++;
@@ -106,7 +107,7 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, Piece* boa
 
   r = rank-1;
   for(int f = file+1; f <= FILE_H; f++){
-    if(!checkSquare(r, f, is_white, board, possible_moves)){
+    if(!isDestinationEmpty(r, f, is_white, board, possible_moves)){
       break;
     }
     r--;
@@ -114,7 +115,7 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, Piece* boa
 
   r = rank+1;
   for(int f = file-1; f >= FILE_A; f--){
-    if(!checkSquare(r, f, is_white, board, possible_moves)){
+    if(!isDestinationEmpty(r, f, is_white, board, possible_moves)){
       break;
     }
     r++;
@@ -122,7 +123,7 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, Piece* boa
   // Reset r
   r = rank-1;
   for(int f = file-1; f >= FILE_A; f--){
-    if(!checkSquare(r, f, is_white, board, possible_moves)){
+    if(!isDestinationEmpty(r, f, is_white, board, possible_moves)){
       break;
     }
     r--;

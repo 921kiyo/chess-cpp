@@ -11,10 +11,7 @@ TEST_FILES = $(wildcard *cpp)
 HEADER_FILES = $(wildcard *.h)
 
 # run: $(EXE)
-# 	valgrind --leak-check=full --show-leak-kinds=all  ./$(EXE) plugboards/I.pb reflectors/I.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/I.pos < input.txt > output.txt
-
-# $(EXE): ChessMain.cpp $(SRC_FILES) $(HEADER_FILES)
-# 	$(CC) $(CFLAGS) ChessMain.cpp $(SRC_FILES) -o $(EXE)
+# 	valgrind --leak-check=full --show-leak-kinds=all  ./$(EXE)
 
 $(EXE): $(SRC_FILES) $(HEADER_FILES)
 	$(CC) $(CFLAGS) $(SRC_FILES) -o $(EXE)

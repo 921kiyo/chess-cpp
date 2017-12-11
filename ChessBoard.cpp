@@ -293,6 +293,7 @@ bool ChessBoard::isPossibleMoveLeft(){
       // When the square is not null and opposite color
       if(board_[rank][file] != nullptr && (board_[rank][file]->isWhite() != is_white_turn_)){
         sq = getStringSquare(file, rank);
+        // TODO Abstract this away
         for(int r = RANK_1; r <= RANK_8; r++){
           for(int f = FILE_A; f <= FILE_H; f++){
             sq2 = getStringSquare(f, r);
