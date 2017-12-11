@@ -43,7 +43,7 @@ public:
   shared_ptr<Piece> getPiecePtrFromBoard(const string source_square);
   bool isNoPieceBetweenKingRook(string king_position, string rook_position);
   string getRookPosition(string destination_square);
-  void checkCastling(const string source_square, const string destination_square);
+  bool checkCastling(const string source_square, const string destination_square);
   void moveRookCastling(string rook_position);
   bool isKingSafeWhileCastling(const string source_square, const string destination_square);
   bool isKingSafe(bool my_king);
