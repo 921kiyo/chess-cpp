@@ -2,6 +2,7 @@
 #define BISHOP_H
 
 #include "Piece.h"
+#include "Helper.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -12,7 +13,7 @@ public:
   Bishop(bool white);
   virtual ~Bishop();
   virtual void calculatePossibleMove(const string source_square, \
-                                     shared_ptr<Piece> board[8][8], \
+                                     shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
   virtual string getString();
   virtual string getSimbol();

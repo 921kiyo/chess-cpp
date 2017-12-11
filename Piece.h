@@ -1,8 +1,11 @@
 #ifndef PIECE_H
 #define PIECE_H
+
+#include "Helper.h"
 #include <string>
 #include <vector>
 #include <memory>
+
 using namespace std;
 
 class Piece{
@@ -16,21 +19,21 @@ public:
   virtual ~Piece();
   bool isValidMove(const string source_square, \
                    const string destination_square, \
-                   shared_ptr<Piece> board[8][8]);
+                   shared_ptr<Piece> board[][BOARD_LENGTH]);
 
-  virtual void calculatePossibleMove(string source_square, shared_ptr<Piece> board[8][8], \
+  virtual void calculatePossibleMove(string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves) = 0;
 
-  bool isDestinationEmpty(int rank, int file, bool is_white, shared_ptr<Piece> board[8][8], \
+  bool isDestinationEmpty(int rank, int file, bool is_white, shared_ptr<Piece> board[][BOARD_LENGTH], \
                    vector<string>& possible_moves);
   void calculateVerticalPossibleMove(const string source_square, \
-                                     shared_ptr<Piece> board[8][8], \
+                                     shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
   void calculateHorizontalPossibleMove(const string source_square, \
-                                       shared_ptr<Piece> board[8][8], \
+                                       shared_ptr<Piece> board[][BOARD_LENGTH], \
                                        vector<string>& possible_moves);
   void calculateDiagonalPossibleMove(const string source_square, \
-                                     shared_ptr<Piece> board[8][8], \
+                                     shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
 
   virtual string getString() = 0;

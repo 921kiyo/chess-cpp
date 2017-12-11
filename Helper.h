@@ -1,12 +1,11 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-#include "Piece.h"
 #include <string>
 using namespace std;
 
 const int NUM_OF_PIECES = 12;
-// TODO use this
+
 const int BOARD_LENGTH = 8;
 
 int getFileInt(string square);

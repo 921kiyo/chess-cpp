@@ -1,4 +1,5 @@
 #include "Bishop.h"
+#include "Helper.h"
 #include "Piece.h"
 #include <iostream>
 #include <string>
@@ -10,7 +11,7 @@ Bishop::Bishop(bool white):Piece(white){
 }
 Bishop::~Bishop(){}
 
-void Bishop::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+void Bishop::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
   calculateDiagonalPossibleMove(source_square, board, possible_moves);
 }
 

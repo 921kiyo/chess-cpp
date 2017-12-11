@@ -13,7 +13,7 @@ Queen::Queen(bool white): Piece(white){
 Queen::~Queen(){}
 
 void Queen::calculatePossibleMove(const string source_square, \
-                                  shared_ptr<Piece> board[8][8], \
+                                  shared_ptr<Piece> board[][BOARD_LENGTH], \
                                   vector<string>& possible_moves){
   calculateVerticalPossibleMove(source_square, board, possible_moves);
   calculateHorizontalPossibleMove(source_square, board, possible_moves);

@@ -16,11 +16,11 @@ public:
   virtual ~King();
 
   virtual void calculatePossibleMove(const string source_square, \
-                                     shared_ptr<Piece> board[8][8], \
+                                     shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
 
   void calculateAdjacentPossibleMove(const string source_square, \
-                                     shared_ptr<Piece> board[8][8], \
+                                     shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
 
   virtual string getString();

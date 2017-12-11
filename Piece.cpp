@@ -10,7 +10,7 @@ Piece::Piece(bool white): is_white_(white), is_first_move_(true){}
 
 Piece::~Piece(){}
 
-bool Piece::isValidMove(const string source_square, const string destination_square, shared_ptr<Piece> board[8][8]){
+bool Piece::isValidMove(const string source_square, const string destination_square, shared_ptr<Piece> board[][BOARD_LENGTH]){
   // DO I need const here??
   vector<string> possible_moves;
 
@@ -39,7 +39,7 @@ bool Piece::isFirstMove(){
   return is_first_move_;
 }
 
-bool Piece::isDestinationEmpty(int rank, int file, bool is_white, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+bool Piece::isDestinationEmpty(int rank, int file, bool is_white, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
   string sq;
   if(rank < RANK_1 || rank > RANK_8 || file < FILE_A || file > FILE_H){
     return false;
@@ -60,7 +60,7 @@ bool Piece::isDestinationEmpty(int rank, int file, bool is_white, shared_ptr<Pie
   return false;
 }
 
-void Piece::calculateVerticalPossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+void Piece::calculateVerticalPossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
   int file = getFileInt(source_square);
   int rank = getRankInt(source_square);
   bool is_white = board[rank][file]->isWhite();
@@ -78,7 +78,7 @@ void Piece::calculateVerticalPossibleMove(const string source_square, shared_ptr
   }
 }
 
-void Piece::calculateHorizontalPossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+void Piece::calculateHorizontalPossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
   int file = getFileInt(source_square);
   int rank = getRankInt(source_square);
 
@@ -97,7 +97,7 @@ void Piece::calculateHorizontalPossibleMove(const string source_square, shared_p
   }
 }
 
-void Piece::calculateDiagonalPossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+void Piece::calculateDiagonalPossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
   int file = getFileInt(source_square);
   int rank = getRankInt(source_square);
   bool is_white = board[rank][file]->isWhite();

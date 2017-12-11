@@ -28,10 +28,6 @@ ChessBoard::ChessBoard(){
   // printCurrentBoard();
 }
 
-ChessBoard::~ChessBoard(){
-  cleanBoard();
-}
-
 // TODO Use this more often
 bool ChessBoard::isValidInput(const string square){
   if(square.length() != 2){

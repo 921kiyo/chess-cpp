@@ -16,11 +16,11 @@ public:
   Knight(bool white);
 
   virtual void calculatePossibleMove(const string source_square, \
-                                     shared_ptr<Piece> board[8][8], \
+                                     shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
 
   void calculateLShapePossibleMove(const string source_square, \
-                                   shared_ptr<Piece> board[8][8], \
+                                   shared_ptr<Piece> board[][BOARD_LENGTH], \
                                    vector<string>& possible_moves);
   virtual string getString();
   virtual string getSimbol();

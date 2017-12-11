@@ -12,11 +12,11 @@ King::King(bool white):Piece(white){}
 
 King::~King(){}
 
-void King::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+void King::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
   calculateAdjacentPossibleMove(source_square, board, possible_moves);
 }
 
-void King::calculateAdjacentPossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+void King::calculateAdjacentPossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
 
   int file = getFileInt(source_square);
   int rank = getRankInt(source_square);

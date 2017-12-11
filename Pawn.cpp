@@ -1,6 +1,7 @@
 
 #include "Pawn.h"
 #include "Piece.h"
+#include "Helper.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -8,10 +9,10 @@
 using namespace std;
 Pawn::Pawn(bool white): Piece(white){}
 
-void Pawn::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+void Pawn::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
   calculatePawnPossibleMove(source_square, board, possible_moves);
 }
-void Pawn::calculatePawnPossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
+void Pawn::calculatePawnPossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
 
   int rank = source_square[1] - '1';
   int file = source_square[0] - 'A';
