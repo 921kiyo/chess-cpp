@@ -98,6 +98,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
     undoMove(source_square, destination_square);
   }
 
+  // TODO Abstract away
   if(!isKingSafe(false)){
     if(is_white_turn_){
       is_black_in_check_ = true;
@@ -232,7 +233,7 @@ void ChessBoard::checkCastling(const string source_square, const string destinat
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
 
-  // Check if the king is intends to do castling
+  // Check if the king intends to do castling
   if(abs(source_file - dest_file) != 2 || abs(source_rank - dest_rank) != 0){
     return;
   }
@@ -271,6 +272,29 @@ void ChessBoard::checkCastling(const string source_square, const string destinat
     }
   }
   // Finally, move Rook and check if Rook makes the opponent king in check
+
+  moveRookCastling(rook_position);
+}
+
+void ChessBoard::moveRookCastling(string rook_position){
+  int file = getFileInt(rook_position);
+  int rank = getRankInt(rook_position);
+  string dest_square;
+  if(file == FILE_A){
+    dest_square = getStringSquare(file+3, rank);
+  }
+  else if(file == FILE_H){
+    dest_square = getStringSquare(file-2, rank);
+  }
+
+  makeMove(rook_position, dest_square);
+  if(!isKingSafe(false)){
+    if(is_white_turn_){
+      is_black_in_check_ = true;
+    }else{
+      is_white_in_check_ = true;
+    }
+  }
 }
 
 bool ChessBoard::isKingSafeWhileCastling(const string source_square, const string destination_square){
@@ -282,7 +306,6 @@ bool ChessBoard::isKingSafeWhileCastling(const string source_square, const strin
   int rank = getRankInt(source_square);
 
   int dest_file = getFileInt(destination_square);
-  // int dest_rank = getRankInt(destination_square);
   string dest_square;
 
   // King side castling
