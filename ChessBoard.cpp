@@ -39,7 +39,9 @@ bool ChessBoard::isValidInput(const string square){
   return true;
 }
 
-void ChessBoard::submitMove(const string source_square, const string destination_square){
+void ChessBoard::submitMove(const string source_square, \
+                            const string destination_square){
+  // TODO Delete this
   // cout << "source_square " << source_square << endl;
   // cout << "destination_square " << destination_square << endl;
   // cout << "who's turn?? " << is_white_turn_ << endl;
@@ -79,7 +81,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
     cout << "It is not White's turn to move!" << endl;
     return;
   }
-
+  // TODO Fix this
   if(checkCastling(source_square, destination_square)){
 
   }else{
@@ -110,7 +112,9 @@ void ChessBoard::submitMove(const string source_square, const string destination
     is_white_in_check_ = false;
   }
 
-  cout << piece->getString() << " moves from " << source_square << " to " << destination_square;
+  cout << piece->getString() << " moves from " \
+  << source_square << " to " << destination_square;
+
   if(dest_piece != nullptr){
     cout << " taking " << dest_piece->getString();
   }
@@ -145,6 +149,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
   is_white_turn_ = !(is_white_turn_);
 
   piece->negateIsFirstMove();
+  // TODO Delete this
    // printCurrentBoard();
 }
 
@@ -162,7 +167,8 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   updateKingPosition(dest_piece, source_square);
 }
 
-void ChessBoard::updateKingPosition(shared_ptr<Piece> piece_ptr, string piece_square){
+void ChessBoard::updateKingPosition(shared_ptr<Piece> piece_ptr, \
+                                    string piece_square){
   if(piece_ptr->getSimbol() == "WK"){
     white_king_ptr_ = piece_ptr;
     white_king_position_ = piece_square;
@@ -179,7 +185,8 @@ shared_ptr<Piece> ChessBoard::getPiecePtrFromBoard(const string source_square){
   return board_[rank][file];
 }
 
-bool ChessBoard::isNoPieceBetweenKingRook(string king_position, string rook_position){
+bool ChessBoard::isNoPieceBetweenKingRook(string king_position, \
+                                          string rook_position){
   int king_file = getFileInt(king_position);
   int king_rank = getRankInt(king_position);
   // Rook rank is the same as king's, so we do not need it
@@ -218,10 +225,12 @@ string ChessBoard::getRookPosition(string destination_square){
   return "";
 }
 
-bool ChessBoard::checkCastling(const string source_square, const string destination_square){
+bool ChessBoard::checkCastling(const string source_square, \
+                               const string destination_square){
 
   // If we are not moving king, exit the method
-  if(source_square != white_king_position_ && source_square != black_king_position_){
+  if(source_square != white_king_position_ && \
+     source_square != black_king_position_){
     return false;
   }
   int source_file = getFileInt(source_square);
@@ -249,7 +258,8 @@ bool ChessBoard::checkCastling(const string source_square, const string destinat
       // White king is not in check
       // Check if the rook has not been moved
       // No piece between king and rook
-      if(!is_white_in_check_ && rook_ptr->isFirstMove() && isNoPieceBetweenKingRook(source_square, rook_position)){
+      if(!is_white_in_check_ && rook_ptr->isFirstMove() && \
+         isNoPieceBetweenKingRook(source_square, rook_position)){
         cout << "castling for white is possible" << endl;
         if(!isKingSafeWhileCastling(source_square, destination_square)){
             return false;
@@ -271,7 +281,8 @@ bool ChessBoard::checkCastling(const string source_square, const string destinat
       // Black king is not in check
       // Check if the rook has not been moved
       // No piece between king and rook
-      if(!is_black_in_check_ && rook_ptr->isFirstMove() && isNoPieceBetweenKingRook(source_square, rook_position)){
+      if(!is_black_in_check_ && rook_ptr->isFirstMove() && \
+         isNoPieceBetweenKingRook(source_square, rook_position)){
         cout << "castling for black is possible" << endl;
         if(!isKingSafeWhileCastling(source_square, destination_square)){
           return false;
@@ -313,8 +324,9 @@ void ChessBoard::moveRookCastling(string rook_position){
   }
 }
 
-bool ChessBoard::isKingSafeWhileCastling(const string source_square, const string destination_square){
-  // The king does not pass through a square that is attacked by an opponent piece
+bool ChessBoard::isKingSafeWhileCastling(const string source_square, \
+                                         const string destination_square){
+  // The king does not pass through a square that is attacked by opponent pieces
   // The king does not end up in check
   int source_file = getFileInt(source_square);
   int rank = getRankInt(source_square);
@@ -362,10 +374,7 @@ bool ChessBoard::isKingSafeWhileCastling(const string source_square, const strin
   return true;
 }
 
-
 void ChessBoard::makeMove(string source_square, string destination_square){
-  // cout << "within makemove, source_square " << source_square << endl;
-  // cout << "within makemove, destination_square " << destination_square << endl;
   // Get piece pointer from source square
   int source_file = getFileInt(source_square);
   int source_rank = getRankInt(source_square);
@@ -380,9 +389,7 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 
   board_[source_rank][source_file] = nullptr;
   // These two methods are only triggered when a king moves
-  // checkCastling(source_square, destination_square);
   updateKingPosition(source_piece, destination_square);
-  // cout << "move complete " << endl;
 }
 
 bool ChessBoard::isKingSafe(bool my_king){
@@ -393,11 +400,13 @@ bool ChessBoard::isKingSafe(bool my_king){
       // Check if my king is safe
       if(board_[rank][file] != nullptr){
         if(my_king){
-          if(is_white_turn_ && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(square, white_king_position_, board_)){
+          if(is_white_turn_ && !board_[rank][file]->isWhite() && \
+             board_[rank][file]->isValidMove(square, white_king_position_, board_)){
             cout << "illigal move" << endl;
             return false;
           }
-          if(!is_white_turn_ && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(square, black_king_position_, board_)){
+          if(!is_white_turn_ && board_[rank][file]->isWhite() && \
+             board_[rank][file]->isValidMove(square, black_king_position_, board_)){
             cout << "illigal move" << endl;
             return false;
           }
@@ -405,11 +414,13 @@ bool ChessBoard::isKingSafe(bool my_king){
         // Check if opponent king is in check
         else{
           // When white_turn, opponent king  is white king
-          if(is_white_turn_ && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(square, black_king_position_, board_)){
+          if(is_white_turn_ && board_[rank][file]->isWhite() && \
+             board_[rank][file]->isValidMove(square, black_king_position_, board_)){
             return false;
           }
           // When black turn, my king is black king
-          else if(!is_white_turn_ && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(square, white_king_position_, board_)){
+          else if(!is_white_turn_ && !board_[rank][file]->isWhite() && \
+                  board_[rank][file]->isValidMove(square, white_king_position_, board_)){
             return false;
           }
         }
@@ -426,7 +437,8 @@ bool ChessBoard::isPossibleMoveLeft(){
   for(int rank = RANK_1; rank <=  RANK_8; rank++){
     for(int file = FILE_A; file <= FILE_H; file++){
       // When the square is not null and opposite color
-      if(board_[rank][file] != nullptr && (board_[rank][file]->isWhite() != is_white_turn_)){
+      if(board_[rank][file] != nullptr && \
+        (board_[rank][file]->isWhite() != is_white_turn_)){
         sq = getStringSquare(file, rank);
         // TODO Abstract this away
         for(int r = RANK_1; r <= RANK_8; r++){
