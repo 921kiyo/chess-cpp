@@ -24,7 +24,7 @@ private:
 
   bool is_white_in_check_;
   bool is_black_in_check_;
-  // What is the difference if this was type King??
+  // TODO What is the difference if this was type King??
   Piece* white_king_ptr_;
   Piece* black_king_ptr_;
   string white_king_position_;

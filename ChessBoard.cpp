@@ -146,7 +146,6 @@ void ChessBoard::submitMove(const string source_square, const string destination
   cout << endl;
 
   if(!isPossibleMoveLeft()){
-    // cout << "possible move left false " << endl;
     if(is_white_in_check_){
       cout << "White is in checkmate" << endl;
       is_game_finished = true;
@@ -171,7 +170,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
     cout << "Black is in check" << endl;
   }
 
-  // Update current player (white and black)
+  // Update the current player (white and black)
   is_white_turn_ = !(is_white_turn_);
 
   piece->negateIsFirstMove();
@@ -301,7 +300,6 @@ bool ChessBoard::isPossibleMoveLeft(){
     for(int file = FILE_A; file <= FILE_H; file++){
       // When the square is not null and opposite color
       if(board_[rank][file] != nullptr && (board_[rank][file]->isWhite() != is_white_turn_)){
-      // if(board_[rank][file] != nullptr ){
         source_square[0] = file + 'A';
         source_square[1] = rank + '1';
         source_square[2] = '\0';
@@ -319,7 +317,6 @@ bool ChessBoard::isPossibleMoveLeft(){
                 undoMove(sq, sq2);
               }else{
                 undoMove(sq, sq2);
-                // cout << "what is the possible move? " << sq << " to " << sq2 << endl;
                 return true;
               }
             }
@@ -392,6 +389,7 @@ void ChessBoard::resetBoard(){
   cout << "A new chess game is started!" << endl;
 }
 
+// TODO Delete this
 void ChessBoard::printCurrentBoard(){
   cout << "========================" << endl;
     for(int rank = RANK_8; rank >= RANK_1; rank--){
