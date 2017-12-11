@@ -39,15 +39,15 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
   if(rank < RANK_1 || rank > RANK_8 || file < FILE_A || file > FILE_H){
     return false;
   }
-  if(board[rank][file] != NULL && is_white == board[rank][file]->isWhite()){
+  if(board[rank][file] != nullptr && is_white == board[rank][file]->isWhite()){
     return false;
   }
-  else if(board[rank][file] != NULL && is_white != board[rank][file]->isWhite()){
+  else if(board[rank][file] != nullptr && is_white != board[rank][file]->isWhite()){
     sq = getStringSquare(file, rank);
     possible_moves.push_back(sq);
     return false;
   }
-  else if(board[rank][file] == NULL){
+  else if(board[rank][file] == nullptr){
      sq = getStringSquare(file, rank);
      possible_moves.push_back(sq);
      return true;

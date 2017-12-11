@@ -26,7 +26,7 @@ void King::calculateAdjacentPossibleMove(const string source_square, Piece* boar
       if(f != file || r != rank){
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
             // If the square is empty or piece of different color
-            if((board[r][f] == NULL) || (board[r][f] != NULL && board[rank][file]->isWhite() != board[r][f]->isWhite())){
+            if((board[r][f] == nullptr) || (board[r][f] != nullptr && board[rank][file]->isWhite() != board[r][f]->isWhite())){
               sq = getStringSquare(f, r);
               possible_moves.push_back(sq);
             }

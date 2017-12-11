@@ -15,8 +15,8 @@ void Knight::calculatePossibleMove(const string source_square, Piece* board[8][8
 }
 
 void Knight::calculateLShapePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
-  int rank = getFileInt(source_square);
-  int file = getRankInt(source_square);
+  int rank = getRankInt(source_square);
+  int file = getFileInt(source_square);
   bool is_white = board[rank][file]->isWhite();
   string sq;
   for(int f = file -2; f <= file + 2; f++){
@@ -24,7 +24,7 @@ void Knight::calculateLShapePossibleMove(const string source_square, Piece* boar
       for(int r = rank -2; r <= rank + 2; r++){
         if(r >= RANK_1 && r <= RANK_8){
           if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || ((abs(f - file) == 1) && (abs(r - rank) == 2))){
-            if(board[r][f] == NULL || (is_white != board[r][f]->isWhite())){
+            if(board[r][f] == nullptr || (board[r][f] != nullptr && (is_white != board[r][f]->isWhite()))){
               sq = getStringSquare(f, r);
               possible_moves.push_back(sq);
             }
