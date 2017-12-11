@@ -1,7 +1,7 @@
 #ifndef CHESSBOARD_H
 #define CHESSBOARD_H
 
-#include "Definitions.h"
+#include "Helper.h"
 #include "Pawn.h"
 #include "Queen.h"
 #include "King.h"

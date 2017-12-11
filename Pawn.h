@@ -2,7 +2,7 @@
 #define PAWN_H
 
 #include "Piece.h"
-#include "Definitions.h"
+#include "Helper.h"
 #include <string>
 #include <vector>
 

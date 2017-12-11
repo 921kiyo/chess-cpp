@@ -1,5 +1,4 @@
-
-#include "Definitions.h"
+#include "Helper.h"
 #include "King.h"
 #include "Piece.h"
 #include <iostream>

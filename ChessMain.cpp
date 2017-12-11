@@ -3,8 +3,6 @@
 using namespace std;
 
 #include "ChessBoard.h"
-// TODO Delete this
-#include "Definitions.h"
 
 int main() {
   // This should result in black in checkmate

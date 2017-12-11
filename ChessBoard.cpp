@@ -7,7 +7,7 @@
 #include "Bishop.h"
 #include "Knight.h"
 
-#include "Definitions.h"
+#include "Helper.h"
 
 #include <iostream>
 #include <string>
@@ -231,9 +231,17 @@ bool ChessBoard::isNoPieceBetweenKingRook(string king_position, string rook_posi
 }
 
 void ChessBoard::checkCastling(const string source_square, const string destination_square){
+
+  // Piece* piece = getPiecePtrFromBoard(source_square);
+  // If we are not moving king, exit the method
+  if(source_square != white_king_position_ && source_square != black_king_position_){
+    return;
+  }
+
   // Check if the involved rook and king have not being moved
   Piece* rook = nullptr;
-  if(white_king_ptr_->isFirstMove() && white_king_ptr_->isWhite()){
+  // && white_king_ptr_->isWhite()
+  if(white_king_ptr_->isFirstMove()){
     // Rook on Queen side
     if(board_[RANK_1][FILE_A] != nullptr){
         rook = getPiecePtrFromBoard("A1");
