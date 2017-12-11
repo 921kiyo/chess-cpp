@@ -12,7 +12,6 @@ using namespace std;
 class Queen: public Piece{
 public:
   Queen(bool white);
-  virtual ~Queen();
   virtual void calculatePossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);

@@ -8,14 +8,11 @@ using namespace std;
 
 Piece::Piece(bool white): is_white_(white), is_first_move_(true){}
 
-Piece::~Piece(){}
-
 bool Piece::isValidMove(const string source_square, const string destination_square, shared_ptr<Piece> board[][BOARD_LENGTH]){
   // DO I need const here??
   vector<string> possible_moves;
 
   calculatePossibleMove(source_square, board, possible_moves);
-  // C++11 Range-based loop
 
   for(string square: possible_moves){
     if(destination_square == square){

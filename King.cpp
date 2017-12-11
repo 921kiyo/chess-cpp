@@ -10,8 +10,6 @@ using namespace std;
 
 King::King(bool white):Piece(white){}
 
-King::~King(){}
-
 void King::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
   calculateAdjacentPossibleMove(source_square, board, possible_moves);
 }

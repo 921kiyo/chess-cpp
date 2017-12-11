@@ -8,8 +8,6 @@
 #include <memory>
 using namespace std;
 
-// Knight::~Knight(){}
-
 Knight::Knight(bool white):Piece(white){}
 
 void Knight::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){

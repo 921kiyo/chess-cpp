@@ -1,9 +1,9 @@
 #include "Helper.h"
+
 #include <iostream>
 #include <string>
 
 using namespace std;
-
 
 int getFileInt(string square){
   return square[0] - 'A';

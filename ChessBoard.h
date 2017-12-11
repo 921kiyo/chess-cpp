@@ -11,7 +11,6 @@
 #include "Knight.h"
 
 #include <string>
-#include <map>
 #include <vector>
 #include <memory>
 
@@ -25,7 +24,6 @@ private:
 
   bool is_white_in_check_;
   bool is_black_in_check_;
-  // TODO What is the difference if this was type King??
   shared_ptr<Piece> white_king_ptr_;
   shared_ptr<Piece> black_king_ptr_;
   string white_king_position_;

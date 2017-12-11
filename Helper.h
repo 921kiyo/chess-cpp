@@ -12,7 +12,6 @@ int getFileInt(string square);
 int getRankInt(string square);
 string getStringSquare(int file, int rank);
 
-
 enum FileEnum {
   FILE_A,
   FILE_B,

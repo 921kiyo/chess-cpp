@@ -13,7 +13,6 @@ private:
 
 public:
   King(bool white);
-  virtual ~King();
 
   virtual void calculatePossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \

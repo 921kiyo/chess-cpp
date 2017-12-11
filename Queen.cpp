@@ -10,8 +10,6 @@ using namespace std;
 Queen::Queen(bool white): Piece(white){
 }
 
-Queen::~Queen(){}
-
 void Queen::calculatePossibleMove(const string source_square, \
                                   shared_ptr<Piece> board[][BOARD_LENGTH], \
                                   vector<string>& possible_moves){

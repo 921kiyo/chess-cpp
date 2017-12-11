@@ -11,7 +11,6 @@ using namespace std;
 class Rook:  public Piece{
 public:
   Rook(bool white);
-  virtual ~Rook();
   virtual void calculatePossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);

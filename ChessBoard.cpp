@@ -11,7 +11,6 @@
 
 #include <iostream>
 #include <string>
-#include <map>
 #include <vector>
 #include <memory>
 
@@ -25,10 +24,8 @@ ChessBoard::ChessBoard(){
   }
   resetBoard();
 
-  // printCurrentBoard();
 }
 
-// TODO Use this more often
 bool ChessBoard::isValidInput(const string square){
   if(square.length() != 2){
     return false;
@@ -148,11 +145,10 @@ void ChessBoard::submitMove(const string source_square, const string destination
   is_white_turn_ = !(is_white_turn_);
 
   piece->negateIsFirstMove();
-   printCurrentBoard();
+   // printCurrentBoard();
 }
 
 void ChessBoard::undoMove(string source_square, string destination_square){
-  // TODO How can I replace this??
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
   shared_ptr<Piece> dest_piece = board_[dest_rank][dest_file];
@@ -290,10 +286,9 @@ bool ChessBoard::checkCastling(const string source_square, const string destinat
   else{
     return false;
   }
+
   // Finally, move Rook and check if Rook makes the opponent king in check
-  cout << "nealy" << endl;
   moveRookCastling(rook_position);
-  cout << "done " << endl;
   return true;
 }
 
@@ -391,7 +386,6 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 }
 
 bool ChessBoard::isKingSafe(bool my_king){
-  // TODO Change name
   string square;
   for(int rank = RANK_1; rank <= RANK_8; rank++){
     for(int file = FILE_A; file <= FILE_H; file++){
@@ -463,7 +457,6 @@ void ChessBoard::resetBoard(){
 
   for(int file = FILE_A; file < FILE_NONE; file++){
     board_[RANK_2][file] = make_shared<Pawn>(true);
-    // board_[RANK_2][file] = new Pawn(true);
     board_[RANK_7][file] = make_shared<Pawn>(false);
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
