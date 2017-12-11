@@ -37,7 +37,6 @@ public:
   void cleanBoard();
   bool isValidSquare(const string square);
   void submitMove(const string source_square, const string destination_square);
-  bool isWhiteTurn();
   void resetBoard();
   void printCurrentBoard();
   void undoMove(string source_square, string destination_square);
@@ -46,7 +45,6 @@ public:
   // TODO add const
   void makeMove(string source_square, string destination_square);
   Piece* getPiecePtrFromBoard(const string source_square);
-  void getKingPosition(const int king_enum, char* king_position);
   bool isPossibleMoveLeft();
 };
 

@@ -13,6 +13,7 @@ King::~King(){}
 
 void King::calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
   calculateAdjacentPossibleMove(source_square, board, possible_moves);
+  // checkCastling(source_square, board, possible_moves);
 }
 
 void King::calculateAdjacentPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
@@ -34,6 +35,17 @@ void King::calculateAdjacentPossibleMove(const string source_square, Piece* boar
       }
     }
   }
+}
+
+void checkCastling(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
+  // Check if both involved rook and kins have not moved
+  // Check if there is no piece between the pieces
+
+  // The king is not currently in check
+
+  // The king does not pass through a square that is attacked by an opponent piece
+
+  // The king does not end up in check
 }
 
 string King::getString(){

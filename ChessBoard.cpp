@@ -180,26 +180,6 @@ Piece* ChessBoard::getPiecePtrFromBoard(const string source_square){
   return board_[rank][file];
 }
 
-// Actually, this can also work for other pieces
-void ChessBoard::getKingPosition(const int king_enum, char* king_position){
-  // for(int rank = RANK_1; rank <  RANK_NONE; rank++){
-  //   for(int file = FILE_A; file < FILE_NONE; file++){
-  //     if(board_[rank][file] == king_enum){
-  //       king_position[0] = file + 'A';
-  //       king_position[1] = rank + '1';
-  //       king_position[2] = '\0';
-  //     }
-  //   }
-  // }
-  // return -1;
-}
-
-// TODO Do I need this?
-// Getter for is_white_turn
-bool ChessBoard::isWhiteTurn(){
-  return is_white_turn_;
-}
-
 void ChessBoard::undoMove(string source_square, string destination_square){
   // TODO How can I replace this??
   int dest_file = getFileInt(destination_square);
