@@ -42,6 +42,7 @@ public:
   void updateKingPosition(shared_ptr<Piece> piece_ptr, string piece_square);
   shared_ptr<Piece> getPiecePtrFromBoard(const string source_square);
   bool isNoPieceBetweenKingRook(string king_position, string rook_position);
+  string getRookPosition(string destination_square);
   void checkCastling(const string source_square, const string destination_square);
   bool isKingSafe(bool my_king);
   // TODO add const
