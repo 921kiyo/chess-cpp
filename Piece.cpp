@@ -35,7 +35,6 @@ void Piece::negateIsFirstMove(){
 }
 
 bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], vector<string>& possible_moves){
-  char square[3];
   string sq;
   if(rank < RANK_1 || rank > RANK_8 || file < FILE_A || file > FILE_H){
     return false;
@@ -44,26 +43,20 @@ bool Piece::checkSquare(int rank, int file, bool is_white, Piece* board[8][8], v
     return false;
   }
   else if(board[rank][file] != NULL && is_white != board[rank][file]->isWhite()){
-    square[0] = file + 'A';
-    square[1] = rank + '1';
-    square[2] = '\0';
-    sq = square;
+    sq = getStringSquare(file, rank);
     possible_moves.push_back(sq);
     return false;
   }
   else if(board[rank][file] == NULL){
-     square[0] = file + 'A';
-     square[1] = rank + '1';
-     square[2] = '\0';
-     sq = square;
+     sq = getStringSquare(file, rank);
      possible_moves.push_back(sq);
      return true;
   }
 }
 
 void Piece::calculateVerticalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
-  int rank = source_square.at(1) - '1';
-  int file = source_square.at(0) - 'A';
+  int file = getFileInt(source_square);
+  int rank = getRankInt(source_square);
   bool is_white = board[rank][file]->isWhite();
   // Check vertical lines to the top
   for(int r = rank+1; r <= RANK_8; r++){
@@ -80,8 +73,9 @@ void Piece::calculateVerticalPossibleMove(const string source_square, Piece* boa
 }
 
 void Piece::calculateHorizontalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
-  int rank = source_square.at(1) - '1';
-  int file = source_square.at(0) - 'A';
+  int file = getFileInt(source_square);
+  int rank = getRankInt(source_square);
+
   bool is_white = board[rank][file]->isWhite();
   // Check horizontal lines to the right
   for(int f = file+1; f <= FILE_H; f++){
@@ -98,8 +92,8 @@ void Piece::calculateHorizontalPossibleMove(const string source_square, Piece* b
 }
 
 void Piece::calculateDiagonalPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
-  int rank = source_square.at(1) - '1';
-  int file = source_square.at(0) - 'A';
+  int file = getFileInt(source_square);
+  int rank = getRankInt(source_square);
   bool is_white = board[rank][file]->isWhite();
   // Check giagonal lines
   int r = rank+1;

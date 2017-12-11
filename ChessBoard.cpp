@@ -101,9 +101,6 @@ void ChessBoard::submitMove(const string source_square, const string destination
     dest_piece = getPiecePtrFromBoard(destination_square);
   }
 
-
-  // Check the piece in the square (exist? and match with current turn?)
-  // Check which turn, (white or black?)
   if(is_white_turn_  && !piece->isWhite()){
     cout << "It is not White's turn to move!" << endl;
     return;
@@ -205,14 +202,14 @@ bool ChessBoard::isWhiteTurn(){
 
 void ChessBoard::undoMove(string source_square, string destination_square){
   // TODO How can I replace this??
-  int dest_file = destination_square[0] - 'A';
-  int dest_rank = destination_square[1] - '1';
+  int dest_file = getFileInt(destination_square);
+  int dest_rank = getRankInt(destination_square);
   Piece* dest_piece = board_[dest_rank][dest_file];
 
   board_[dest_rank][dest_file] = previous_destination_square_;
 
-  int source_file = source_square[0] - 'A';
-  int source_rank = source_square[1] - '1';
+  int source_file = getFileInt(source_square);
+  int source_rank = getRankInt(source_square);
   board_[source_rank][source_file] = dest_piece;
 
   updateKingPosition(dest_piece, source_square);
@@ -233,12 +230,12 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   // cout << "within makemove, source_square " << source_square << endl;
   // cout << "within makemove, destination_square " << destination_square << endl;
   // Get piece pointer from source square
-  int source_file = source_square[0] - 'A';
-  int source_rank = source_square[1] - '1';
+  int source_file = getFileInt(source_square);
+  int source_rank = getRankInt(source_square);
   Piece* source_piece = board_[source_rank][source_file];
 
-  int dest_file = destination_square[0] - 'A';
-  int dest_rank = destination_square[1] - '1';
+  int dest_file = getFileInt(destination_square);
+  int dest_rank = getRankInt(destination_square);
   // if(previous_destination_square_ != nullptr){
   //   delete previous_destination_square_;
   // }
@@ -253,22 +250,19 @@ void ChessBoard::makeMove(string source_square, string destination_square){
 }
 
 bool ChessBoard::isKingSafe(bool my_king){
-  char source_square[3];
-  string sq;
+  // TODO Change name
+  string square;
   for(int rank = RANK_1; rank <= RANK_8; rank++){
     for(int file = FILE_A; file <= FILE_H; file++){
-      source_square[0] = file + 'A';
-      source_square[1] = rank + '1';
-      source_square[2] = '\0';
-      sq = source_square;
+      square = getStringSquare(file, rank);
       // Check if my king is safe
       if(board_[rank][file] != nullptr){
         if(my_king){
-          if(is_white_turn_ && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
+          if(is_white_turn_ && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(square, white_king_position_, board_)){
             cout << "illigal move" << endl;
             return false;
           }
-          if(!is_white_turn_ && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, black_king_position_, board_)){
+          if(!is_white_turn_ && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(square, black_king_position_, board_)){
             cout << "illigal move" << endl;
             return false;
           }
@@ -276,11 +270,11 @@ bool ChessBoard::isKingSafe(bool my_king){
         // Check if opponent king is in check
         else{
           // When white_turn, opponent king  is white king
-          if(is_white_turn_ && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, black_king_position_, board_)){
+          if(is_white_turn_ && board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(square, black_king_position_, board_)){
             return false;
           }
           // When black turn, my king is black king
-          else if(!is_white_turn_ && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(sq, white_king_position_, board_)){
+          else if(!is_white_turn_ && !board_[rank][file]->isWhite() && board_[rank][file]->isValidMove(square, white_king_position_, board_)){
             return false;
           }
         }
@@ -292,24 +286,16 @@ bool ChessBoard::isKingSafe(bool my_king){
 
 bool ChessBoard::isPossibleMoveLeft(){
   vector<string>possible_moves;
-  char source_square[3];
   string sq;
-  char destination_square[3];
   string sq2;
   for(int rank = RANK_1; rank <=  RANK_8; rank++){
     for(int file = FILE_A; file <= FILE_H; file++){
       // When the square is not null and opposite color
       if(board_[rank][file] != nullptr && (board_[rank][file]->isWhite() != is_white_turn_)){
-        source_square[0] = file + 'A';
-        source_square[1] = rank + '1';
-        source_square[2] = '\0';
-        sq = source_square;
+        sq = getStringSquare(file, rank);
         for(int r = RANK_1; r <= RANK_8; r++){
           for(int f = FILE_A; f <= FILE_H; f++){
-            destination_square[0] = f + 'A';
-            destination_square[1] = r + '1';
-            destination_square[2] = '\0';
-            sq2 = destination_square;
+            sq2 = getStringSquare(f, r);
             if(board_[rank][file]->isValidMove(sq, sq2, board_)){
               makeMove(sq, sq2);
               // Check if your own king is still safe
@@ -371,17 +357,10 @@ void ChessBoard::resetBoard(){
   board_[RANK_1][FILE_G] = new Knight(true);
   board_[RANK_1][FILE_H] = new Rook(true);
 
-  char king_position[3];
-  king_position[0] = FILE_E + 'A';
-  king_position[1] = RANK_8 + '1';
-  king_position[2] = '\0';
-  black_king_position_ = king_position;
+  black_king_position_ = getStringSquare(FILE_E, RANK_8);
   black_king_ptr_ = board_[RANK_8][FILE_E];
 
-  king_position[0] = FILE_E + 'A';
-  king_position[1] = RANK_1 + '1';
-  king_position[2] = '\0';
-  white_king_position_ = king_position;
+  white_king_position_ = getStringSquare(FILE_E, RANK_1);
   white_king_ptr_ = board_[RANK_1][FILE_E];
 
   previous_destination_square_ = nullptr;

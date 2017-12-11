@@ -16,9 +16,9 @@ void King::calculatePossibleMove(const string source_square, Piece* board[8][8],
 }
 
 void King::calculateAdjacentPossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
-  int rank = source_square.at(1) - '1';
-  int file = source_square.at(0) - 'A';
-  char square[3];
+
+  int file = getFileInt(source_square);
+  int rank = getRankInt(source_square);
   string sq;
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
@@ -27,10 +27,7 @@ void King::calculateAdjacentPossibleMove(const string source_square, Piece* boar
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
             // If the square is empty or piece of different color
             if((board[r][f] == NULL) || (board[r][f] != NULL && board[rank][file]->isWhite() != board[r][f]->isWhite())){
-              square[0] = f + 'A';
-              square[1] = r + '1';
-              square[2] = '\0';
-              sq = square;
+              sq = getStringSquare(f, r);
               possible_moves.push_back(sq);
             }
         }
