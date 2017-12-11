@@ -4,17 +4,18 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <memory>
 using namespace std;
 
 // Knight::~Knight(){}
 
 Knight::Knight(bool white):Piece(white){}
 
-void Knight::calculatePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
+void Knight::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
   calculateLShapePossibleMove(source_square, board, possible_moves);
 }
 
-void Knight::calculateLShapePossibleMove(const string source_square, Piece* board[8][8], vector<string>& possible_moves){
+void Knight::calculateLShapePossibleMove(const string source_square, shared_ptr<Piece> board[8][8], vector<string>& possible_moves){
   int rank = getRankInt(source_square);
   int file = getFileInt(source_square);
   bool is_white = board[rank][file]->isWhite();

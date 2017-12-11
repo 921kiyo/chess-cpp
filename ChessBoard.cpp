@@ -13,6 +13,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <memory>
 
 using namespace std;
 
@@ -22,31 +23,7 @@ ChessBoard::ChessBoard(){
       board_[rank][file] = nullptr;
     }
   }
-
   resetBoard();
-  // is_white_in_check_ = false;
-  // is_black_in_check_ = false;
-  //
-  // char king_position[3];
-  // board_[RANK_3][FILE_B] = new Queen(false);
-  // board_[RANK_1][FILE_A] = new King(true);
-  // board_[RANK_1][FILE_B] = new Pawn(true);
-  // board_[RANK_1][FILE_C] = new Queen(true);
-  // board_[RANK_2][FILE_H] = new Pawn(true);
-  // board_[RANK_8][FILE_E] = new King(false);
-  // board_[RANK_2][FILE_A] = new Pawn(false);
-  // king_position[0] = FILE_E + 'A';
-  // king_position[1] = RANK_8 + '1';
-  // king_position[2] = '\0';
-  // black_king_position_ = king_position;
-  // black_king_ptr_ = board_[RANK_8][FILE_E];
-  //
-  // king_position[0] = FILE_A + 'A';
-  // king_position[1] = RANK_1 + '1';
-  // king_position[2] = '\0';
-  // white_king_position_ = king_position;
-  // white_king_ptr_ = board_[RANK_1][FILE_A];
-  // is_white_turn_ = true;
 
   // printCurrentBoard();
 }
@@ -88,7 +65,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
     return;
   }
 
-  Piece* piece = getPiecePtrFromBoard(source_square);
+  shared_ptr<Piece> piece = getPiecePtrFromBoard(source_square);
   if(piece == nullptr){
     cout << "There is no piece at position " << source_square << endl;
     return;
@@ -96,7 +73,7 @@ void ChessBoard::submitMove(const string source_square, const string destination
 
   int rank = destination_square[1] - '1';
   int file = destination_square[0] - 'A';
-  Piece* dest_piece = nullptr;
+  shared_ptr<Piece> dest_piece = nullptr;
   if(board_[rank][file] != nullptr){
     dest_piece = getPiecePtrFromBoard(destination_square);
   }
@@ -178,7 +155,7 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   // TODO How can I replace this??
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
-  Piece* dest_piece = board_[dest_rank][dest_file];
+  shared_ptr<Piece> dest_piece = board_[dest_rank][dest_file];
 
   board_[dest_rank][dest_file] = previous_destination_square_;
 
@@ -189,7 +166,7 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   updateKingPosition(dest_piece, source_square);
 }
 
-void ChessBoard::updateKingPosition(Piece* piece_ptr, string piece_square){
+void ChessBoard::updateKingPosition(shared_ptr<Piece> piece_ptr, string piece_square){
   if(piece_ptr->getSimbol() == "WK"){
     white_king_ptr_ = piece_ptr;
     white_king_position_ = piece_square;
@@ -200,7 +177,7 @@ void ChessBoard::updateKingPosition(Piece* piece_ptr, string piece_square){
   }
 }
 
-Piece* ChessBoard::getPiecePtrFromBoard(const string source_square){
+shared_ptr<Piece> ChessBoard::getPiecePtrFromBoard(const string source_square){
   int rank = source_square[1] - '1';
   int file = source_square[0] - 'A';
   return board_[rank][file];
@@ -232,15 +209,19 @@ bool ChessBoard::isNoPieceBetweenKingRook(string king_position, string rook_posi
 
 void ChessBoard::checkCastling(const string source_square, const string destination_square){
 
-  // Piece* piece = getPiecePtrFromBoard(source_square);
+  // shared_ptr<Piece> piece = getPiecePtrFromBoard(source_square);
   // If we are not moving king, exit the method
   if(source_square != white_king_position_ && source_square != black_king_position_){
     return;
   }
+  // If the king is moving more than 1 square on the same rank, it is probably trying castling
+  int king_file = getFileInt(source_square);
+  int king_rank = getRankInt(source_square);
 
+  // int rook_file = king_
   // Check if the involved rook and king have not being moved
-  Piece* rook = nullptr;
-  // && white_king_ptr_->isWhite()
+  shared_ptr<Piece> rook = nullptr;
+
   if(white_king_ptr_->isFirstMove()){
     // Rook on Queen side
     if(board_[RANK_1][FILE_A] != nullptr){
@@ -273,13 +254,11 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   // Get piece pointer from source square
   int source_file = getFileInt(source_square);
   int source_rank = getRankInt(source_square);
-  Piece* source_piece = board_[source_rank][source_file];
+  shared_ptr<Piece> source_piece = board_[source_rank][source_file];
 
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
-  // if(previous_destination_square_ != nullptr){
-  //   delete previous_destination_square_;
-  // }
+
   previous_destination_square_ = board_[dest_rank][dest_file];
 
   board_[dest_rank][dest_file] = source_piece;
@@ -357,48 +336,38 @@ bool ChessBoard::isPossibleMoveLeft(){
   return false;
 }
 
-void ChessBoard::cleanBoard(){
-  for(int rank = RANK_1; rank <= RANK_8; rank++){
-    for(int file = FILE_A; file <= FILE_H; file++){
-      if(board_[rank][file] != nullptr){
-        delete board_[rank][file];
-      }
-    }
-  }
-}
-
 void ChessBoard::resetBoard(){
-  cleanBoard();
   is_game_finished = false;
   is_white_in_check_ = false;
   is_black_in_check_ = false;
 
   for(int file = FILE_A; file < FILE_NONE; file++){
-    board_[RANK_2][file] = new Pawn(true);
-    board_[RANK_7][file] = new Pawn(false);
+    board_[RANK_2][file] = make_shared<Pawn>(true);
+    // board_[RANK_2][file] = new Pawn(true);
+    board_[RANK_7][file] = make_shared<Pawn>(false);
   }
   for(int rank = RANK_3; rank <= RANK_6; rank++){
     for(int file = FILE_A; file < FILE_NONE; file++){
       board_[rank][file] = nullptr;
     }
   }
-  board_[RANK_8][FILE_A] = new Rook(false);
-  board_[RANK_8][FILE_B] = new Knight(false);
-  board_[RANK_8][FILE_C] = new Bishop(false);
-  board_[RANK_8][FILE_D] = new Queen(false);
-  board_[RANK_8][FILE_E] = new King(false);
-  board_[RANK_8][FILE_F] = new Bishop(false);
-  board_[RANK_8][FILE_G] = new Knight(false);
-  board_[RANK_8][FILE_H] = new Rook(false);
+  board_[RANK_8][FILE_A] = make_shared<Rook>(false);
+  board_[RANK_8][FILE_B] = make_shared<Knight>(false);
+  board_[RANK_8][FILE_C] = make_shared<Bishop>(false);
+  board_[RANK_8][FILE_D] = make_shared<Queen>(false);
+  board_[RANK_8][FILE_E] = make_shared<King>(false);
+  board_[RANK_8][FILE_F] = make_shared<Bishop>(false);
+  board_[RANK_8][FILE_G] = make_shared<Knight>(false);
+  board_[RANK_8][FILE_H] = make_shared<Rook>(false);
 
-  board_[RANK_1][FILE_A] = new Rook(true);
-  board_[RANK_1][FILE_B] = new Knight(true);
-  board_[RANK_1][FILE_C] = new Bishop(true);
-  board_[RANK_1][FILE_D] = new Queen(true);
-  board_[RANK_1][FILE_E] = new King(true);
-  board_[RANK_1][FILE_F] = new Bishop(true);
-  board_[RANK_1][FILE_G] = new Knight(true);
-  board_[RANK_1][FILE_H] = new Rook(true);
+  board_[RANK_1][FILE_A] = make_shared<Rook>(true);
+  board_[RANK_1][FILE_B] = make_shared<Knight>(true);
+  board_[RANK_1][FILE_C] = make_shared<Bishop>(true);
+  board_[RANK_1][FILE_D] = make_shared<Queen>(true);
+  board_[RANK_1][FILE_E] = make_shared<King>(true);
+  board_[RANK_1][FILE_F] = make_shared<Bishop>(true);
+  board_[RANK_1][FILE_G] = make_shared<Knight>(true);
+  board_[RANK_1][FILE_H] = make_shared<Rook>(true);
 
   black_king_position_ = getStringSquare(FILE_E, RANK_8);
   black_king_ptr_ = board_[RANK_8][FILE_E];
