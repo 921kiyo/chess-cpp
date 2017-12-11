@@ -34,6 +34,10 @@ void Piece::negateIsFirstMove(){
   }
 }
 
+bool Piece::isFirstMove(){
+  return is_first_move_;
+}
+
 bool Piece::isDestinationEmpty(int rank, int file, bool is_white, Piece* board[8][8], vector<string>& possible_moves){
   string sq;
   if(rank < RANK_1 || rank > RANK_8 || file < FILE_A || file > FILE_H){

@@ -1,6 +1,7 @@
 #ifndef DEFINITION_H
 #define DEFINITION_H
 
+#include "Piece.h"
 #include <string>
 using namespace std;
 

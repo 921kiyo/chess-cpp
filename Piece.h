@@ -35,6 +35,7 @@ public:
   virtual string getString() = 0;
   virtual string getSimbol() = 0;
   bool isWhite();
+  bool isFirstMove();
   void negateIsFirstMove();
 };
 

@@ -41,10 +41,12 @@ public:
   void printCurrentBoard();
   void undoMove(string source_square, string destination_square);
   void updateKingPosition(Piece* piece_ptr, string piece_square);
+  Piece* getPiecePtrFromBoard(const string source_square);
+  bool isNoPieceBetweenKingRook(string king_position, string rook_position);
+  void checkCastling(const string source_square, const string destination_square);
   bool isKingSafe(bool my_king);
   // TODO add const
   void makeMove(string source_square, string destination_square);
-  Piece* getPiecePtrFromBoard(const string source_square);
   bool isPossibleMoveLeft();
 };
 

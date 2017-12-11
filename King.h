@@ -23,8 +23,6 @@ public:
                                      Piece* board[8][8], \
                                      vector<string>& possible_moves);
 
-  void checkCastling(const string source_square, Piece* board[8][8], \
-                     vector<string>& possible_moves);
   virtual string getString();
   virtual string getSimbol();
 };

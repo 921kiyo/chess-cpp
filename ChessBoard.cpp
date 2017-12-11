@@ -174,12 +174,6 @@ void ChessBoard::submitMove(const string source_square, const string destination
   // printCurrentBoard();
 }
 
-Piece* ChessBoard::getPiecePtrFromBoard(const string source_square){
-  int rank = source_square[1] - '1';
-  int file = source_square[0] - 'A';
-  return board_[rank][file];
-}
-
 void ChessBoard::undoMove(string source_square, string destination_square){
   // TODO How can I replace this??
   int dest_file = getFileInt(destination_square);
@@ -206,6 +200,65 @@ void ChessBoard::updateKingPosition(Piece* piece_ptr, string piece_square){
   }
 }
 
+Piece* ChessBoard::getPiecePtrFromBoard(const string source_square){
+  int rank = source_square[1] - '1';
+  int file = source_square[0] - 'A';
+  return board_[rank][file];
+}
+
+bool ChessBoard::isNoPieceBetweenKingRook(string king_position, string rook_position){
+  int king_file = getFileInt(king_position);
+  int king_rank = getRankInt(king_position);
+  // Rook rank is the same as king's, so we do not need it
+  int rook_file = getFileInt(rook_position);
+
+  if(king_file > rook_file){
+    for(int file = rook_file+1; file < king_file; file++){
+      if(board_[king_rank][file] != nullptr){
+        return false;
+      }
+    }
+  }
+  else{
+    for(int file = king_file+1; file < rook_file; file++){
+      if(board_[king_rank][file] != nullptr){
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+void ChessBoard::checkCastling(const string source_square, const string destination_square){
+  // Check if the involved rook and king have not being moved
+  Piece* rook = nullptr;
+  if(white_king_ptr_->isFirstMove() && white_king_ptr_->isWhite()){
+    // Rook on Queen side
+    if(board_[RANK_1][FILE_A] != nullptr){
+        rook = getPiecePtrFromBoard("A1");
+    }
+    // TODO I do not want to hardcode A1....
+    if(!is_white_in_check_ && rook->isFirstMove() && isNoPieceBetweenKingRook(source_square, "A1")){
+
+    }
+    // Rook on King side
+    rook = board_[RANK_1][FILE_H];
+    if(!is_white_in_check_ && rook->isFirstMove() && isNoPieceBetweenKingRook(source_square, "H1")){
+
+    }
+  }
+
+  // The king is not currently in check
+
+
+  // The king does not pass through a square that is attacked by an opponent piece
+  // The king does not end up in check
+
+  // Finally, move Rook
+}
+
+
 void ChessBoard::makeMove(string source_square, string destination_square){
   // cout << "within makemove, source_square " << source_square << endl;
   // cout << "within makemove, destination_square " << destination_square << endl;
@@ -224,7 +277,8 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   board_[dest_rank][dest_file] = source_piece;
 
   board_[source_rank][source_file] = nullptr;
-
+  // These two methods are only triggered when a king moves
+  // checkCastling(source_square, destination_square);
   updateKingPosition(source_piece, destination_square);
   // cout << "move complete " << endl;
 }
