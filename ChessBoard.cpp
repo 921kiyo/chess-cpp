@@ -129,6 +129,7 @@ void ChessBoard::submitMove(const string source_square, \
     return;
   }
   // Is not the move is not castling, do the nomal move
+  // If castling, move happens inside isCastling()
   if(!isCastling(source_square, destination_square)){
     if(!piece->isValidMove(source_square, destination_square, board_)){
       cout << piece->getString() << " cannot move to " << \
@@ -136,7 +137,7 @@ void ChessBoard::submitMove(const string source_square, \
       return;
     }
     makeMove(source_square, destination_square);
-    // After moves, check if your own king is still safe
+    // After moves, check if your king is still safe
     if(!isKingSafe(true)){
       cout << piece->getString() << " cannot move to " << \
       destination_square << "!" << endl;
@@ -382,9 +383,9 @@ bool ChessBoard::isCastling(const string source_square, \
      source_square != black_king_position_){
     return false;
   }
+
   int source_file = getFileInt(source_square);
   int source_rank = getRankInt(source_square);
-
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
 
@@ -398,6 +399,8 @@ bool ChessBoard::isCastling(const string source_square, \
   // Check if the rook is in that position
   shared_ptr<Piece> rook_ptr = getPiecePtrFromBoard(rook_position);
   // White King castling
+
+  // ONly difference is white_king_position_ nad white_king_ptr_
   if(source_square == white_king_position_){
     if(!white_king_ptr_->isFirstMove()){
       return false;
