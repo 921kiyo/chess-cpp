@@ -12,6 +12,8 @@ using namespace std;
 class Bishop: public Piece{
 public:
   Bishop(bool white);
+  // call calculateDiagonalPossibleMove() inside the method and
+  // update possible_moves vector
   virtual void calculatePossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);

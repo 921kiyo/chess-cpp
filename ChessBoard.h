@@ -20,7 +20,7 @@ class ChessBoard {
 private:
   bool is_white_turn_;
   bool is_game_finished;
-  shared_ptr<Piece> board_[FILE_NONE][RANK_NONE];
+  shared_ptr<Piece> board_[BOARD_LENGTH][BOARD_LENGTH];
 
   bool is_white_in_check_;
   bool is_black_in_check_;

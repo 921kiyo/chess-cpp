@@ -8,7 +8,6 @@
 using namespace std;
 
 Bishop::Bishop(bool white):Piece(white){
-
 }
 
 void Bishop::calculatePossibleMove(const string source_square, \

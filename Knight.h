@@ -15,11 +15,13 @@ private:
 
 public:
   Knight(bool white);
-
+  // call calculateLShapePossibleMove() inside the method and
+  // update possible_moves vector
   virtual void calculatePossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
-
+  // Check all possible moves given the current situation of the board
+  // and update the possible_moves vector
   void calculateLShapePossibleMove(const string source_square, \
                                    shared_ptr<Piece> board[][BOARD_LENGTH], \
                                    vector<string>& possible_moves);

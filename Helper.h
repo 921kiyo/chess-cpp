@@ -4,12 +4,13 @@
 #include <string>
 using namespace std;
 
-const int NUM_OF_PIECES = 12;
-
 const int BOARD_LENGTH = 8;
 
 int getFileInt(string square);
 int getRankInt(string square);
+
+// Get the correct string format, which is the same as submitMove string,
+// from file and rank integers.
 string getStringSquare(int file, int rank);
 
 enum FileEnum {
