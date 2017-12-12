@@ -394,59 +394,27 @@ bool ChessBoard::isCastling(const string source_square, \
     return false;
   }
 
+  shared_ptr<Piece> king_ptr = ((is_white_turn_)? white_king_ptr_ : black_king_ptr_);
+  bool in_check = (king_ptr->isWhite())? is_white_in_check_ : is_black_in_check_;
+
   // Get Rook position based on the destination of the king
   string rook_position = getRookPosition(destination_square);
-  // Check if the rook is in that position
+  // Check if the rook has not been moved
   shared_ptr<Piece> rook_ptr = getPiecePtrFromBoard(rook_position);
-  // White King castling
 
-  // ONly difference is white_king_position_ nad white_king_ptr_
-  if(source_square == white_king_position_){
-    if(!white_king_ptr_->isFirstMove()){
-      return false;
-    }
-    // If White turn and simbol in the position is rook
-    if(rook_ptr != nullptr && is_white_turn_ && rook_ptr->getSimbol() == "WR"){
-      // White king is not in check
-      // Check if the rook has not been moved
-      // No piece between king and rook
-      if(!is_white_in_check_ && rook_ptr->isFirstMove() && \
-         isNoPieceBetweenKingRook(source_square, rook_position)){
-        cout << "castling for white is possible" << endl;
-        if(!isKingSafeWhileCastling(source_square, destination_square)){
-            return false;
-        }
-      }else{
-        return false;
-      }
-    }else{
-      return false;
-    }
+  // Check if both pieces have not been moved
+  if(rook_ptr == nullptr || !rook_ptr->isFirstMove() || !king_ptr->isFirstMove()){
+    return false;
   }
-  // TODO Make it only one conditional statement
-  else if(source_square == black_king_position_){
-    if(!black_king_ptr_->isFirstMove()){
-      return false;
-    }
-    // If black turn and simbol in the position is rook
-    if(rook_ptr != nullptr && !is_white_turn_ && rook_ptr->getSimbol() == "BR"){
-      // Black king is not in check
-      // Check if the rook has not been moved
-      // No piece between king and rook
-      if(!is_black_in_check_ && rook_ptr->isFirstMove() && \
-         isNoPieceBetweenKingRook(source_square, rook_position)){
-        cout << "castling for black is possible" << endl;
-        if(!isKingSafeWhileCastling(source_square, destination_square)){
-          return false;
-        }
-      }else{
+
+  // Check if the king is not in check
+  // No piece between king and rook
+  if(!in_check && isNoPieceBetweenKingRook(source_square, rook_position)){
+    cout << "castling is possible" << endl;
+    if(!isKingSafeWhileCastling(source_square, destination_square)){
         return false;
-      }
-    }else{
-      return false;
     }
-  }
-  else{
+  }else{
     return false;
   }
 
@@ -459,9 +427,11 @@ void ChessBoard::moveRookCastling(string rook_position){
   int file = getFileInt(rook_position);
   int rank = getRankInt(rook_position);
   string dest_square;
+  // If queen side castling, rook moves 3 squares to right
   if(file == FILE_A){
     dest_square = getStringSquare(file+3, rank);
   }
+  // if king side castling, rook moves 2 squares to left
   else if(file == FILE_H){
     dest_square = getStringSquare(file-2, rank);
   }
