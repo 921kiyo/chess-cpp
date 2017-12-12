@@ -169,23 +169,10 @@ void ChessBoard::submitMove(const string source_square, \
   }
   cout << endl;
 
-  if(!isPossibleMoveLeft()){
-    if(is_white_in_check_){
-      cout << "White is in checkmate" << endl;
-      is_game_finished = true;
-      return;
-    }
-    else if(is_black_in_check_){
-      cout << "Black is in checkmate" << endl;
-      is_game_finished = true;
-      return;
-    }
-    else{
-      cout << "Stalemate" << endl;
-      is_game_finished = true;
-      return;
-    }
+  if(!canGameContinue()){
+    return;
   }
+
 
   if(is_white_in_check_){
     cout << "White is in check" << endl;
@@ -323,6 +310,27 @@ bool ChessBoard::isPossibleDestinationLeft(int source_file, int source_rank){
     }
   }
   return false;
+}
+
+bool ChessBoard::canGameContinue(){
+  if(!isPossibleMoveLeft()){
+    if(is_white_in_check_){
+      cout << "White is in checkmate" << endl;
+      is_game_finished = true;
+      return false;
+    }
+    else if(is_black_in_check_){
+      cout << "Black is in checkmate" << endl;
+      is_game_finished = true;
+      return false;
+    }
+    else{
+      cout << "Stalemate" << endl;
+      is_game_finished = true;
+      return false;
+    }
+  }
+  return true;
 }
 
 bool ChessBoard::isNoPieceBetweenKingRook(string king_position, \

@@ -53,6 +53,8 @@ public:
   // any valid move left, given that the king is safe.
   // This method is called inside isPossibleMoveLeft()
   bool isPossibleDestinationLeft(int source_file, int source_rank);
+
+  bool canGameContinue();
   // TODO Delete this
   void printCurrentBoard();
 
