@@ -65,7 +65,7 @@ public:
   // Below methods are for castling
   bool isNoPieceBetweenKingRook(string king_position, string rook_position);
   string getRookPosition(string destination_square);
-  bool checkCastling(const string source_square, const string destination_square);
+  bool isCastling(const string source_square, const string destination_square);
   void moveRookCastling(string rook_position);
   bool isKingSafeWhileCastling(const string source_square, const string destination_square);
 };

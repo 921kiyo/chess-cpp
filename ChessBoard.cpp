@@ -128,10 +128,8 @@ void ChessBoard::submitMove(const string source_square, \
     cout << "It is not White's turn to move!" << endl;
     return;
   }
-  // TODO Fix this
-  if(checkCastling(source_square, destination_square)){
-
-  }else{
+  // Is not the move is not castling, do the nomal move
+  if(!isCastling(source_square, destination_square)){
     if(!piece->isValidMove(source_square, destination_square, board_)){
       cout << piece->getString() << " cannot move to " << \
       destination_square << "!" << endl;
@@ -149,7 +147,7 @@ void ChessBoard::submitMove(const string source_square, \
 
   checkKingStatus();
 
-  // print message for the move
+  // Message for the move
   cout << piece->getString() << " moves from " \
   << source_square << " to " << destination_square;
   if(dest_piece != nullptr){
@@ -161,7 +159,7 @@ void ChessBoard::submitMove(const string source_square, \
     return;
   }
 
-  // print message when either king is in check
+  // print message
   if(is_white_in_check_){
     cout << "White is in check" << endl;
   }
@@ -376,7 +374,7 @@ string ChessBoard::getRookPosition(string destination_square){
   return "";
 }
 
-bool ChessBoard::checkCastling(const string source_square, \
+bool ChessBoard::isCastling(const string source_square, \
                                const string destination_square){
 
   // If we are not moving king, exit the method
