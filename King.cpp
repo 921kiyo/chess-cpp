@@ -11,11 +11,15 @@ using namespace std;
 
 King::King(bool white):Piece(white){}
 
-void King::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
+void King::calculatePossibleMove(const string source_square, \
+                                 shared_ptr<Piece> board[][BOARD_LENGTH], \
+                                 vector<string>& possible_moves){
   calculateAdjacentPossibleMove(source_square, board, possible_moves);
 }
 
-void King::calculateAdjacentPossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
+void King::calculateAdjacentPossibleMove(const string source_square, \
+                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
+                                      vector<string>& possible_moves){
 
   int file = getFileInt(source_square);
   int rank = getRankInt(source_square);
@@ -26,7 +30,8 @@ void King::calculateAdjacentPossibleMove(const string source_square, shared_ptr<
       if(f != file || r != rank){
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
             // If the square is empty or piece of different color
-            if((board[r][f] == nullptr) || (board[r][f] != nullptr && board[rank][file]->isWhite() != board[r][f]->isWhite())){
+            if((board[r][f] == nullptr) || (board[r][f] != nullptr && \
+                board[rank][file]->isWhite() != board[r][f]->isWhite())){
               sq = getStringSquare(f, r);
               possible_moves.push_back(sq);
             }

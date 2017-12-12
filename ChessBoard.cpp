@@ -65,8 +65,8 @@ void ChessBoard::submitMove(const string source_square, \
     return;
   }
 
-  int rank = destination_square[1] - '1';
-  int file = destination_square[0] - 'A';
+  int file = getFileInt(destination_square);
+  int rank = getRankInt(destination_square);
   shared_ptr<Piece> dest_piece = nullptr;
   if(board_[rank][file] != nullptr){
     dest_piece = getPiecePtrFromBoard(destination_square);
@@ -181,8 +181,8 @@ void ChessBoard::updateKingPosition(shared_ptr<Piece> piece_ptr, \
 }
 
 shared_ptr<Piece> ChessBoard::getPiecePtrFromBoard(const string source_square){
-  int rank = source_square[1] - '1';
-  int file = source_square[0] - 'A';
+  int rank = getRankInt(source_square);
+  int file = getFileInt(source_square);
   return board_[rank][file];
 }
 
