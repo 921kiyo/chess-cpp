@@ -411,11 +411,18 @@ bool ChessBoard::isCastling(const string source_square, \
   // No piece between king and rook
   if(!in_check && isNoPieceBetweenKingRook(source_square, rook_position)){
     cout << "castling is possible" << endl;
-    if(!isKingSafeWhileCastling(source_square, destination_square)){
+    // King side castling
+    if(source_file - dest_file < 0){
+      if(!isKingSafeWhileCastling(source_square, destination_square, 1, 2)){
         return false;
+      }
     }
-  }else{
-    return false;
+    // Queen side castling
+    else{
+      if(!isKingSafeWhileCastling(source_square, destination_square, -1, -2)){
+        return false;
+      }
+    }
   }
 
   // Finally, move Rook and check if Rook makes the opponent king in check
@@ -447,16 +454,13 @@ void ChessBoard::moveRookCastling(string rook_position){
 }
 
 bool ChessBoard::isKingSafeWhileCastling(const string source_square, \
-                                         const string destination_square){
+                                         const string destination_square, int x, int y){
   // The king does not pass through a square that is attacked by opponent pieces
   // The king does not end up in check
   int source_file = getFileInt(source_square);
   int rank = getRankInt(source_square);
-  int dest_file = getFileInt(destination_square);
   string dest_square;
-  // King side castling
-  if(source_file - dest_file < 0){
-    dest_square = getStringSquare(source_file+1, rank);
+    dest_square = getStringSquare(source_file+x, rank);
     makeMove(source_square, dest_square);
     if(!isKingSafe(true)){
       cout << "King is not safe to do castling" << endl;
@@ -465,32 +469,13 @@ bool ChessBoard::isKingSafeWhileCastling(const string source_square, \
     }{
       undoMove(source_square, dest_square);
     }
-    dest_square = getStringSquare(source_file+2, rank);
+    dest_square = getStringSquare(source_file+y, rank);
     makeMove(source_square, dest_square);
     if(!isKingSafe(true)){
       cout << "King is not safe to do castling" << endl;
       undoMove(source_square, dest_square);
       return false;
     }
-  }  // Otherwise Queen side castling
-  else{
-    dest_square = getStringSquare(source_file-1, rank);
-    makeMove(source_square, dest_square);
-    if(!isKingSafe(true)){
-      cout << "King is not safe to do castling" << endl;
-      undoMove(source_square, dest_square);
-      return false;
-    }{
-      undoMove(source_square, dest_square);
-    }
-    dest_square = getStringSquare(source_file-2, rank);
-    makeMove(source_square, dest_square);
-    if(!isKingSafe(true)){
-      cout << "King is not safe to do castling" << endl;
-      undoMove(source_square, dest_square);
-      return false;
-    }
-  }
 
   cout << "castling king move complete" << endl;
   return true;

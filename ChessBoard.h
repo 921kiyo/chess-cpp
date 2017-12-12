@@ -67,7 +67,8 @@ public:
   string getRookPosition(string destination_square);
   bool isCastling(const string source_square, const string destination_square);
   void moveRookCastling(string rook_position);
-  bool isKingSafeWhileCastling(const string source_square, const string destination_square);
+  bool isKingSafeWhileCastling(const string source_square, \
+                               const string destination_square, int x, int y);
 };
 
 #endif
