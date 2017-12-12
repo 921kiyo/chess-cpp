@@ -9,13 +9,14 @@
 using namespace std;
 
 class Rook:  public Piece{
-public:
-  Rook(bool white);
+protected:
   // call calculateVerticalPossibleMove() and calculateHorizontalPossibleMove()
   // inside the method and update possible_moves vector
   virtual void calculatePossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
+public:
+  Rook(bool white);
   virtual string getString();
   virtual string getSimbol();
 };

@@ -11,10 +11,7 @@
 using namespace std;
 
 class Knight: public Piece{
-private:
-
-public:
-  Knight(bool white);
+protected:
   // call calculateLShapePossibleMove() inside the method and
   // update possible_moves vector
   virtual void calculatePossibleMove(const string source_square, \
@@ -25,6 +22,8 @@ public:
   void calculateLShapePossibleMove(const string source_square, \
                                    shared_ptr<Piece> board[][BOARD_LENGTH], \
                                    vector<string>& possible_moves);
+public:
+  Knight(bool white);
   virtual string getString();
   virtual string getSimbol();
 };

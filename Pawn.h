@@ -9,10 +9,7 @@
 using namespace std;
 
 class Pawn: public Piece{
-private:
-
-public:
-  Pawn(bool white);
+protected:
   // call calculatePawnPossibleMove() inside the method and
   // update possible_moves vector
   virtual void calculatePossibleMove(const string source_square, \
@@ -23,6 +20,9 @@ public:
   void calculatePawnPossibleMove(const string source_square, \
                                  shared_ptr<Piece> board[][BOARD_LENGTH], \
                                  vector<string>& possible_moves);
+public:
+  Pawn(bool white);
+
   virtual string getString();
   virtual string getSimbol();
 };

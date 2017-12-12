@@ -11,10 +11,6 @@ using namespace std;
 
 class King: public Piece{
 private:
-
-public:
-  King(bool white);
-
   // call calculatePawnPossibleMove() inside the method and
   // update possible_moves vector
   virtual void calculatePossibleMove(const string source_square, \
@@ -26,7 +22,8 @@ public:
   void calculateAdjacentPossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
-
+public:
+  King(bool white);
   virtual string getString();
   virtual string getSimbol();
 };

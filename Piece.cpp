@@ -23,20 +23,6 @@ bool Piece::isValidMove(const string source_square, \
   return false;
 }
 
-bool Piece::isWhite(){
-  return is_white_;
-}
-
-void Piece::negateIsFirstMove(){
-  if(is_first_move_){
-    is_first_move_ = false;
-  }
-}
-
-bool Piece::isFirstMove(){
-  return is_first_move_;
-}
-
 bool Piece::isDestinationEmpty(int rank, int file, bool is_white, \
                                shared_ptr<Piece> board[][BOARD_LENGTH], \
                                vector<string>& possible_moves){
@@ -138,5 +124,19 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, \
       break;
     }
     r--;
+  }
+}
+
+bool Piece::isWhite(){
+  return is_white_;
+}
+
+bool Piece::isFirstMove(){
+  return is_first_move_;
+}
+
+void Piece::negateIsFirstMove(){
+  if(is_first_move_){
+    is_first_move_ = false;
   }
 }

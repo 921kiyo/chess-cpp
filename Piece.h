@@ -10,17 +10,12 @@
 using namespace std;
 
 class Piece{
-private:
-
 protected:
   bool is_white_;
   bool is_first_move_;
-public:
-  Piece(bool white);
-  bool isValidMove(const string source_square, \
-                   const string destination_square, \
-                   shared_ptr<Piece> board[][BOARD_LENGTH]);
 
+  // calculate all possible moves given the current position
+  // of pieces for each piece
   virtual void calculatePossibleMove(string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves) = 0;
@@ -37,12 +32,21 @@ public:
   void calculateDiagonalPossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves);
+public:
+  Piece(bool white);
+  // Call calculatePossibleMove() and check if destination_square is
+  // in the possible move vector. If so, return true. Otherwise, return false.
+  bool isValidMove(const string source_square, \
+                   const string destination_square, \
+                   shared_ptr<Piece> board[][BOARD_LENGTH]);
 
-  virtual string getString() = 0;
-  virtual string getSimbol() = 0;
+
+
   bool isWhite();
   bool isFirstMove();
   void negateIsFirstMove();
+  virtual string getString() = 0;
+  virtual string getSimbol() = 0;
 };
 
 #endif
