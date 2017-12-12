@@ -10,11 +10,15 @@ using namespace std;
 
 Knight::Knight(bool white):Piece(white){}
 
-void Knight::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
+void Knight::calculatePossibleMove(const string source_square, \
+                                   shared_ptr<Piece> board[][BOARD_LENGTH],
+                                   vector<string>& possible_moves){
   calculateLShapePossibleMove(source_square, board, possible_moves);
 }
 
-void Knight::calculateLShapePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
+void Knight::calculateLShapePossibleMove(const string source_square, \
+                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
+                                      vector<string>& possible_moves){
   int rank = getRankInt(source_square);
   int file = getFileInt(source_square);
   bool is_white = board[rank][file]->isWhite();
@@ -23,8 +27,11 @@ void Knight::calculateLShapePossibleMove(const string source_square, shared_ptr<
     if(f >= FILE_A && f <= FILE_H){
       for(int r = rank -2; r <= rank + 2; r++){
         if(r >= RANK_1 && r <= RANK_8){
-          if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || ((abs(f - file) == 1) && (abs(r - rank) == 2))){
-            if(board[r][f] == nullptr || (board[r][f] != nullptr && (is_white != board[r][f]->isWhite()))){
+          if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || \
+             ((abs(f - file) == 1) && (abs(r - rank) == 2))){
+            if(board[r][f] == nullptr || \
+              (board[r][f] != nullptr && \
+              (is_white != board[r][f]->isWhite()))){
               sq = getStringSquare(f, r);
               possible_moves.push_back(sq);
             }

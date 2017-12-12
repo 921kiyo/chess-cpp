@@ -9,10 +9,14 @@
 using namespace std;
 Pawn::Pawn(bool white): Piece(white){}
 
-void Pawn::calculatePossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
+void Pawn::calculatePossibleMove(const string source_square, \
+                                 shared_ptr<Piece> board[][BOARD_LENGTH], \
+                                 vector<string>& possible_moves){
   calculatePawnPossibleMove(source_square, board, possible_moves);
 }
-void Pawn::calculatePawnPossibleMove(const string source_square, shared_ptr<Piece> board[][BOARD_LENGTH], vector<string>& possible_moves){
+void Pawn::calculatePawnPossibleMove(const string source_square, \
+                                     shared_ptr<Piece> board[][BOARD_LENGTH], \
+                                     vector<string>& possible_moves){
 
   int rank = source_square[1] - '1';
   int file = source_square[0] - 'A';
@@ -24,7 +28,8 @@ void Pawn::calculatePawnPossibleMove(const string source_square, shared_ptr<Piec
       sq = getStringSquare(file, rank+1);
       possible_moves.push_back(sq);
     }
-    if(is_first_move_ && (board[rank+1][file] == nullptr) && (board[rank+2][file] == nullptr) ){
+    if(is_first_move_ && (board[rank+1][file] == nullptr) && \
+                         (board[rank+2][file] == nullptr) ){
       sq = getStringSquare(file, rank+2);
       possible_moves.push_back(sq);
     }

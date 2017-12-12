@@ -85,13 +85,15 @@ void ChessBoard::submitMove(const string source_square, \
 
   }else{
     if(!piece->isValidMove(source_square, destination_square, board_)){
-      cout << piece->getString() << " cannot move to " << destination_square << "!" << endl;
+      cout << piece->getString() << " cannot move to " << \
+      destination_square << "!" << endl;
       return;
     }
     makeMove(source_square, destination_square);
     // After moves, check if your own king is still safe
     if(!isKingSafe(true)){
-      cout << piece->getString() << " cannot move to " << destination_square << "!" << endl;
+      cout << piece->getString() << " cannot move to " << \
+      destination_square << "!" << endl;
       undoMove(source_square, destination_square);
       return;
     }
@@ -400,11 +402,13 @@ bool ChessBoard::isKingSafe(bool my_king){
       if(board_[rank][file] != nullptr){
         if(my_king){
           if(is_white_turn_ && !board_[rank][file]->isWhite() && \
-             board_[rank][file]->isValidMove(square, white_king_position_, board_)){
+             board_[rank][file]->isValidMove(square, white_king_position_, \
+             board_)){
             return false;
           }
           if(!is_white_turn_ && board_[rank][file]->isWhite() && \
-             board_[rank][file]->isValidMove(square, black_king_position_, board_)){
+             board_[rank][file]->isValidMove(square, black_king_position_, \
+             board_)){
             return false;
           }
         }
@@ -412,12 +416,14 @@ bool ChessBoard::isKingSafe(bool my_king){
         else{
           // When white_turn, opponent king  is white king
           if(is_white_turn_ && board_[rank][file]->isWhite() && \
-             board_[rank][file]->isValidMove(square, black_king_position_, board_)){
+             board_[rank][file]->isValidMove(square, black_king_position_, \
+             board_)){
             return false;
           }
           // When black turn, my king is black king
           else if(!is_white_turn_ && !board_[rank][file]->isWhite() && \
-                  board_[rank][file]->isValidMove(square, white_king_position_, board_)){
+                  board_[rank][file]->isValidMove(square, white_king_position_, \
+                  board_)){
             return false;
           }
         }
