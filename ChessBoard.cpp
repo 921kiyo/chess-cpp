@@ -22,7 +22,49 @@ ChessBoard::ChessBoard(){
     }
   }
   resetBoard();
+}
 
+void ChessBoard::resetBoard(){
+  is_game_finished = false;
+  is_white_in_check_ = false;
+  is_black_in_check_ = false;
+
+  for(int file = FILE_A; file < FILE_NONE; file++){
+    board_[RANK_2][file] = make_shared<Pawn>(true);
+    board_[RANK_7][file] = make_shared<Pawn>(false);
+  }
+  for(int rank = RANK_3; rank <= RANK_6; rank++){
+    for(int file = FILE_A; file < FILE_NONE; file++){
+      board_[rank][file] = nullptr;
+    }
+  }
+  board_[RANK_8][FILE_A] = make_shared<Rook>(false);
+  board_[RANK_8][FILE_B] = make_shared<Knight>(false);
+  board_[RANK_8][FILE_C] = make_shared<Bishop>(false);
+  board_[RANK_8][FILE_D] = make_shared<Queen>(false);
+  board_[RANK_8][FILE_E] = make_shared<King>(false);
+  board_[RANK_8][FILE_F] = make_shared<Bishop>(false);
+  board_[RANK_8][FILE_G] = make_shared<Knight>(false);
+  board_[RANK_8][FILE_H] = make_shared<Rook>(false);
+
+  board_[RANK_1][FILE_A] = make_shared<Rook>(true);
+  board_[RANK_1][FILE_B] = make_shared<Knight>(true);
+  board_[RANK_1][FILE_C] = make_shared<Bishop>(true);
+  board_[RANK_1][FILE_D] = make_shared<Queen>(true);
+  board_[RANK_1][FILE_E] = make_shared<King>(true);
+  board_[RANK_1][FILE_F] = make_shared<Bishop>(true);
+  board_[RANK_1][FILE_G] = make_shared<Knight>(true);
+  board_[RANK_1][FILE_H] = make_shared<Rook>(true);
+
+  black_king_position_ = getStringSquare(FILE_E, RANK_8);
+  black_king_ptr_ = board_[RANK_8][FILE_E];
+
+  white_king_position_ = getStringSquare(FILE_E, RANK_1);
+  white_king_ptr_ = board_[RANK_1][FILE_E];
+
+  previous_destination_square_ = nullptr;
+  is_white_turn_ = true;
+  cout << "A new chess game is started!" << endl;
 }
 
 bool ChessBoard::isValidInput(const string square){
@@ -36,6 +78,12 @@ bool ChessBoard::isValidInput(const string square){
     return false;
   }
   return true;
+}
+
+shared_ptr<Piece> ChessBoard::getPiecePtrFromBoard(const string source_square){
+  int rank = getRankInt(source_square);
+  int file = getFileInt(source_square);
+  return board_[rank][file];
 }
 
 void ChessBoard::submitMove(const string source_square, \
@@ -154,6 +202,24 @@ void ChessBoard::submitMove(const string source_square, \
    // printCurrentBoard();
 }
 
+void ChessBoard::makeMove(string source_square, string destination_square){
+  // Get piece pointer from source square
+  int source_file = getFileInt(source_square);
+  int source_rank = getRankInt(source_square);
+  shared_ptr<Piece> source_piece = board_[source_rank][source_file];
+
+  int dest_file = getFileInt(destination_square);
+  int dest_rank = getRankInt(destination_square);
+
+  previous_destination_square_ = board_[dest_rank][dest_file];
+
+  board_[dest_rank][dest_file] = source_piece;
+
+  board_[source_rank][source_file] = nullptr;
+  // These two methods are only triggered when a king moves
+  updateKingPosition(source_piece, destination_square);
+}
+
 void ChessBoard::undoMove(string source_square, string destination_square){
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
@@ -168,6 +234,46 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   updateKingPosition(dest_piece, source_square);
 }
 
+bool ChessBoard::isKingSafe(bool my_king){
+  string square;
+  for(int rank = RANK_1; rank <= RANK_8; rank++){
+    for(int file = FILE_A; file <= FILE_H; file++){
+      square = getStringSquare(file, rank);
+      // Check if my king is safe
+      if(board_[rank][file] != nullptr){
+        if(my_king){
+          if(is_white_turn_ && !board_[rank][file]->isWhite() && \
+             board_[rank][file]->isValidMove(square, white_king_position_, \
+             board_)){
+            return false;
+          }
+          if(!is_white_turn_ && board_[rank][file]->isWhite() && \
+             board_[rank][file]->isValidMove(square, black_king_position_, \
+             board_)){
+            return false;
+          }
+        }
+        // Check if opponent king is in check
+        else{
+          // When white_turn, opponent king  is white king
+          if(is_white_turn_ && board_[rank][file]->isWhite() && \
+             board_[rank][file]->isValidMove(square, black_king_position_, \
+             board_)){
+            return false;
+          }
+          // When black turn, my king is black king
+          else if(!is_white_turn_ && !board_[rank][file]->isWhite() && \
+                  board_[rank][file]->isValidMove(square, white_king_position_, \
+                  board_)){
+            return false;
+          }
+        }
+      }
+    }
+  }
+  return true;
+}
+
 void ChessBoard::updateKingPosition(shared_ptr<Piece> piece_ptr, \
                                     string piece_square){
   if(piece_ptr->getSimbol() == "WK"){
@@ -180,10 +286,43 @@ void ChessBoard::updateKingPosition(shared_ptr<Piece> piece_ptr, \
   }
 }
 
-shared_ptr<Piece> ChessBoard::getPiecePtrFromBoard(const string source_square){
-  int rank = getRankInt(source_square);
-  int file = getFileInt(source_square);
-  return board_[rank][file];
+bool ChessBoard::isPossibleMoveLeft(){
+  // Loop through the entire board
+  for(int rank = RANK_1; rank <=  RANK_8; rank++){
+    for(int file = FILE_A; file <= FILE_H; file++){
+      // When the square is not empty and has a piece of different color,
+      // check if it can move anywhere given that the king is safe.
+      if(board_[rank][file] != nullptr && \
+        (board_[rank][file]->isWhite() != is_white_turn_)){
+          if(isPossibleDestinationLeft(file, rank)){
+            return true;
+          }
+      }
+    }
+  }
+  return false;
+}
+
+bool ChessBoard::isPossibleDestinationLeft(int source_file, int source_rank){
+  string source_square = getStringSquare(source_file, source_rank);
+  string dest_square;
+  for(int dest_rank = RANK_1; dest_rank <= RANK_8; dest_rank++){
+    for(int dest_file = FILE_A; dest_file <= FILE_H; dest_file++){
+      dest_square = getStringSquare(dest_file, dest_rank);
+      // If valid move, call makeMove and see if the king is still safe.
+      if(board_[source_rank][source_file]->isValidMove(source_square, \
+                                                       dest_square, board_)){
+        makeMove(source_square, dest_square);
+        if(!isKingSafe(false)){
+          undoMove(source_square, dest_square);
+        }else{
+          undoMove(source_square, dest_square);
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
 bool ChessBoard::isNoPieceBetweenKingRook(string king_position, \
@@ -373,139 +512,6 @@ bool ChessBoard::isKingSafeWhileCastling(const string source_square, \
 
   cout << "castling king move complete" << endl;
   return true;
-}
-
-void ChessBoard::makeMove(string source_square, string destination_square){
-  // Get piece pointer from source square
-  int source_file = getFileInt(source_square);
-  int source_rank = getRankInt(source_square);
-  shared_ptr<Piece> source_piece = board_[source_rank][source_file];
-
-  int dest_file = getFileInt(destination_square);
-  int dest_rank = getRankInt(destination_square);
-
-  previous_destination_square_ = board_[dest_rank][dest_file];
-
-  board_[dest_rank][dest_file] = source_piece;
-
-  board_[source_rank][source_file] = nullptr;
-  // These two methods are only triggered when a king moves
-  updateKingPosition(source_piece, destination_square);
-}
-
-bool ChessBoard::isKingSafe(bool my_king){
-  string square;
-  for(int rank = RANK_1; rank <= RANK_8; rank++){
-    for(int file = FILE_A; file <= FILE_H; file++){
-      square = getStringSquare(file, rank);
-      // Check if my king is safe
-      if(board_[rank][file] != nullptr){
-        if(my_king){
-          if(is_white_turn_ && !board_[rank][file]->isWhite() && \
-             board_[rank][file]->isValidMove(square, white_king_position_, \
-             board_)){
-            return false;
-          }
-          if(!is_white_turn_ && board_[rank][file]->isWhite() && \
-             board_[rank][file]->isValidMove(square, black_king_position_, \
-             board_)){
-            return false;
-          }
-        }
-        // Check if opponent king is in check
-        else{
-          // When white_turn, opponent king  is white king
-          if(is_white_turn_ && board_[rank][file]->isWhite() && \
-             board_[rank][file]->isValidMove(square, black_king_position_, \
-             board_)){
-            return false;
-          }
-          // When black turn, my king is black king
-          else if(!is_white_turn_ && !board_[rank][file]->isWhite() && \
-                  board_[rank][file]->isValidMove(square, white_king_position_, \
-                  board_)){
-            return false;
-          }
-        }
-      }
-    }
-  }
-  return true;
-}
-
-bool ChessBoard::isPossibleMoveLeft(){
-  vector<string>possible_moves;
-  string sq;
-  string sq2;
-  for(int rank = RANK_1; rank <=  RANK_8; rank++){
-    for(int file = FILE_A; file <= FILE_H; file++){
-      // When the square is not null and opposite color
-      if(board_[rank][file] != nullptr && \
-        (board_[rank][file]->isWhite() != is_white_turn_)){
-        sq = getStringSquare(file, rank);
-        // TODO Abstract this away
-        for(int r = RANK_1; r <= RANK_8; r++){
-          for(int f = FILE_A; f <= FILE_H; f++){
-            sq2 = getStringSquare(f, r);
-            if(board_[rank][file]->isValidMove(sq, sq2, board_)){
-              makeMove(sq, sq2);
-              // Check if your own king is still safe
-              if(!isKingSafe(false)){
-                undoMove(sq, sq2);
-              }else{
-                undoMove(sq, sq2);
-                return true;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  return false;
-}
-
-void ChessBoard::resetBoard(){
-  is_game_finished = false;
-  is_white_in_check_ = false;
-  is_black_in_check_ = false;
-
-  for(int file = FILE_A; file < FILE_NONE; file++){
-    board_[RANK_2][file] = make_shared<Pawn>(true);
-    board_[RANK_7][file] = make_shared<Pawn>(false);
-  }
-  for(int rank = RANK_3; rank <= RANK_6; rank++){
-    for(int file = FILE_A; file < FILE_NONE; file++){
-      board_[rank][file] = nullptr;
-    }
-  }
-  board_[RANK_8][FILE_A] = make_shared<Rook>(false);
-  board_[RANK_8][FILE_B] = make_shared<Knight>(false);
-  board_[RANK_8][FILE_C] = make_shared<Bishop>(false);
-  board_[RANK_8][FILE_D] = make_shared<Queen>(false);
-  board_[RANK_8][FILE_E] = make_shared<King>(false);
-  board_[RANK_8][FILE_F] = make_shared<Bishop>(false);
-  board_[RANK_8][FILE_G] = make_shared<Knight>(false);
-  board_[RANK_8][FILE_H] = make_shared<Rook>(false);
-
-  board_[RANK_1][FILE_A] = make_shared<Rook>(true);
-  board_[RANK_1][FILE_B] = make_shared<Knight>(true);
-  board_[RANK_1][FILE_C] = make_shared<Bishop>(true);
-  board_[RANK_1][FILE_D] = make_shared<Queen>(true);
-  board_[RANK_1][FILE_E] = make_shared<King>(true);
-  board_[RANK_1][FILE_F] = make_shared<Bishop>(true);
-  board_[RANK_1][FILE_G] = make_shared<Knight>(true);
-  board_[RANK_1][FILE_H] = make_shared<Rook>(true);
-
-  black_king_position_ = getStringSquare(FILE_E, RANK_8);
-  black_king_ptr_ = board_[RANK_8][FILE_E];
-
-  white_king_position_ = getStringSquare(FILE_E, RANK_1);
-  white_king_ptr_ = board_[RANK_1][FILE_E];
-
-  previous_destination_square_ = nullptr;
-  is_white_turn_ = true;
-  cout << "A new chess game is started!" << endl;
 }
 
 // TODO Delete this
