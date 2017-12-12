@@ -44,7 +44,11 @@ public:
   // TODO add const
   void makeMove(string source_square, string destination_square);
   void undoMove(string source_square, string destination_square);
+  // Check if opponent king is in check and update status
   void checkKingStatus();
+  // return true if King is safe. Argument my_king determines whether
+  // you want to check your own king (my_king=true)
+  // or opponent king (my_king=false). If in check, return falase
   bool isKingSafe(bool my_king);
   // Update kings position and pointer if the piece you moved is a king
   void updateKingPosition(shared_ptr<Piece> piece_ptr, string piece_square);
@@ -62,13 +66,21 @@ public:
   // TODO Delete this
   void printCurrentBoard();
 
-  // Below methods are for castling
+  // Below methods are used for castling
+
   bool isNoPieceBetweenKingRook(string king_position, string rook_position);
+  // Helper method to get Rook position based on
+  // King's castling destination square
   string getRookPosition(string destination_square);
+  // Execute the castling move for King and Rook after check all the conditions
   bool isCastling(const string source_square, const string destination_square);
+  // Move rook in castling
   void moveRookCastling(string rook_position);
+  // Move King while check if the king does not pass through a square
+  // that is attacked by opponent pieces
   bool isKingSafeWhileCastling(const string source_square, \
-                               const string destination_square, int x, int y);
+                               const string destination_square, \
+                               int first, int second);
 };
 
 #endif

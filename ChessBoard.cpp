@@ -144,9 +144,11 @@ void ChessBoard::submitMove(const string source_square, \
       undoMove(source_square, destination_square);
       return;
     }
+
+    checkKingStatus();
   }
 
-  checkKingStatus();
+
 
   // Message for the move
   cout << piece->getString() << " moves from " \
@@ -342,6 +344,7 @@ bool ChessBoard::isNoPieceBetweenKingRook(string king_position, \
   // Rook rank is the same as king's, so we do not need it
   int rook_file = getFileInt(rook_position);
 
+  // Queen side castling
   if(king_file > rook_file){
     for(int file = rook_file+1; file < king_file; file++){
       if(board_[king_rank][file] != nullptr){
@@ -349,6 +352,7 @@ bool ChessBoard::isNoPieceBetweenKingRook(string king_position, \
       }
     }
   }
+  // King side castling
   else{
     for(int file = king_file+1; file < rook_file; file++){
       if(board_[king_rank][file] != nullptr){
@@ -394,23 +398,24 @@ bool ChessBoard::isCastling(const string source_square, \
     return false;
   }
 
-  shared_ptr<Piece> king_ptr = ((is_white_turn_)? white_king_ptr_ : black_king_ptr_);
-  bool in_check = (king_ptr->isWhite())? is_white_in_check_ : is_black_in_check_;
+  shared_ptr<Piece> king_ptr = ((is_white_turn_)? \
+  white_king_ptr_ : black_king_ptr_);
+  bool in_check = (king_ptr->isWhite())? \
+  is_white_in_check_ : is_black_in_check_;
 
   // Get Rook position based on the destination of the king
   string rook_position = getRookPosition(destination_square);
-  // Check if the rook has not been moved
   shared_ptr<Piece> rook_ptr = getPiecePtrFromBoard(rook_position);
 
   // Check if both pieces have not been moved
-  if(rook_ptr == nullptr || !rook_ptr->isFirstMove() || !king_ptr->isFirstMove()){
+  if(rook_ptr == nullptr || !rook_ptr->isFirstMove() || \
+     !king_ptr->isFirstMove()){
     return false;
   }
 
   // Check if the king is not in check
-  // No piece between king and rook
+  // and no piece between king and rook
   if(!in_check && isNoPieceBetweenKingRook(source_square, rook_position)){
-    cout << "castling is possible" << endl;
     // King side castling
     if(source_file - dest_file < 0){
       if(!isKingSafeWhileCastling(source_square, destination_square, 1, 2)){
@@ -444,40 +449,32 @@ void ChessBoard::moveRookCastling(string rook_position){
   }
 
   makeMove(rook_position, dest_square);
-  if(!isKingSafe(false)){
-    if(is_white_turn_){
-      is_black_in_check_ = true;
-    }else{
-      is_white_in_check_ = true;
-    }
-  }
+  checkKingStatus();
 }
 
 bool ChessBoard::isKingSafeWhileCastling(const string source_square, \
-                                         const string destination_square, int x, int y){
-  // The king does not pass through a square that is attacked by opponent pieces
-  // The king does not end up in check
+                                         const string destination_square, \
+                                         int first, int second){
   int source_file = getFileInt(source_square);
   int rank = getRankInt(source_square);
   string dest_square;
-    dest_square = getStringSquare(source_file+x, rank);
-    makeMove(source_square, dest_square);
-    if(!isKingSafe(true)){
-      cout << "King is not safe to do castling" << endl;
-      undoMove(source_square, dest_square);
-      return false;
-    }{
-      undoMove(source_square, dest_square);
-    }
-    dest_square = getStringSquare(source_file+y, rank);
-    makeMove(source_square, dest_square);
-    if(!isKingSafe(true)){
-      cout << "King is not safe to do castling" << endl;
-      undoMove(source_square, dest_square);
-      return false;
-    }
-
-  cout << "castling king move complete" << endl;
+  // Check if the king does not pass through a square
+  // that is attacked by opponent piecee
+  dest_square = getStringSquare(source_file+first, rank);
+  makeMove(source_square, dest_square);
+  if(!isKingSafe(true)){
+    undoMove(source_square, dest_square);
+    return false;
+  }{
+    undoMove(source_square, dest_square);
+  }
+  // Check if the king does not end up in check
+  dest_square = getStringSquare(source_file+second, rank);
+  makeMove(source_square, dest_square);
+  if(!isKingSafe(true)){
+    undoMove(source_square, dest_square);
+    return false;
+  }
   return true;
 }
 
