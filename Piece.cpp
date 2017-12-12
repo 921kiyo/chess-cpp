@@ -100,7 +100,7 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, \
   int file = getFileInt(source_square);
   int rank = getRankInt(source_square);
   bool is_white = board[rank][file]->isWhite();
-  // Check giagonal lines
+  // Check giagonal lines (north east)
   int r = rank+1;
   for(int f = file+1; f <= FILE_H; f++){
     if(!canMoveForward(r, f, is_white, board, possible_moves)){
@@ -109,6 +109,7 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, \
     r++;
   }
 
+  // Check giagonal lines (south east)
   r = rank-1;
   for(int f = file+1; f <= FILE_H; f++){
     if(!canMoveForward(r, f, is_white, board, possible_moves)){
@@ -117,6 +118,7 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, \
     r--;
   }
 
+  // Check giagonal lines (north west)
   r = rank+1;
   for(int f = file-1; f >= FILE_A; f--){
     if(!canMoveForward(r, f, is_white, board, possible_moves)){
@@ -124,6 +126,8 @@ void Piece::calculateDiagonalPossibleMove(const string source_square, \
     }
     r++;
   }
+
+  // Check giagonal lines (south west)
   r = rank-1;
   for(int f = file-1; f >= FILE_A; f--){
     if(!canMoveForward(r, f, is_white, board, possible_moves)){
