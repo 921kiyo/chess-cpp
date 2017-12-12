@@ -475,21 +475,3 @@ bool ChessBoard::isKingSafeWhileCastling(const string source_square, \
   }
   return true;
 }
-
-// TODO Delete this
-void ChessBoard::printCurrentBoard(){
-  cout << "========================" << endl;
-    for(int rank = RANK_8; rank >= RANK_1; rank--){
-      cout << endl;
-      for(int file = FILE_A; file < FILE_NONE; file++){
-        if(board_[rank][file] == nullptr){
-          cout << "-- ";
-        }
-        else{
-          cout << board_[rank][file]->getSimbol() << " ";
-        }
-      }
-    }
-    cout << endl;
-    cout << "========================" << endl;
-}

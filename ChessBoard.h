@@ -62,8 +62,6 @@ public:
   // Check if either king is in checkmate or stalemate.
   // If so, the game cannot continue unless reset
   bool canGameContinue();
-  // TODO Delete this
-  void printCurrentBoard();
 
   // Below methods are used for castling
 

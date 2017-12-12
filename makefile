@@ -8,9 +8,6 @@ SRC_FILES = $(wildcard *.cpp)
 
 HEADER_FILES = $(wildcard *.h)
 
-# run: $(EXE)
-# 	valgrind --leak-check=full --show-leak-kinds=all  ./$(EXE)
-
 $(EXE): $(SRC_FILES) $(HEADER_FILES)
 	$(CC) $(CFLAGS) $(SRC_FILES) -o $(EXE)
 
