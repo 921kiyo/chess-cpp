@@ -88,28 +88,24 @@ shared_ptr<Piece> ChessBoard::getPiecePtrFromBoard(const string source_square){
 
 void ChessBoard::submitMove(const string source_square, \
                             const string destination_square){
-  // TODO Delete this
-  // cout << "source_square " << source_square << endl;
-  // cout << "destination_square " << destination_square << endl;
-  // cout << "who's turn?? " << is_white_turn_ << endl;
   if(is_game_finished){
-    cout << "Game is finished" << endl;
+    cerr << "Game is finished" << endl;
     return;
   }
   // Check if the source square (A-H and 1-8) is valid or not
   if(!isValidInput(source_square)){
-    cout << "source input is not valid" << endl;
+    cerr << "source input is not valid" << endl;
     return;
   }
 
   if(!isValidInput(destination_square)){
-    cout << "destination input is not valid" << endl;
+    cerr << "destination input is not valid" << endl;
     return;
   }
 
   shared_ptr<Piece> piece = getPiecePtrFromBoard(source_square);
   if(piece == nullptr){
-    cout << "There is no piece at position " << source_square << endl;
+    cerr << "There is no piece at position " << source_square << endl;
     return;
   }
 
@@ -121,25 +117,25 @@ void ChessBoard::submitMove(const string source_square, \
   }
 
   if(is_white_turn_  && !piece->isWhite()){
-    cout << "It is not White's turn to move!" << endl;
+    cerr << "It is not White's turn to move!" << endl;
     return;
   }
   if(!is_white_turn_  && piece->isWhite()){
-    cout << "It is not White's turn to move!" << endl;
+    cerr << "It is not White's turn to move!" << endl;
     return;
   }
   // Is not the move is not castling, do the nomal move
   // If castling, move happens inside isCastling()
   if(!isCastling(source_square, destination_square)){
     if(!piece->isValidMove(source_square, destination_square, board_)){
-      cout << piece->getString() << " cannot move to " << \
+      cerr << piece->getString() << " cannot move to " << \
       destination_square << "!" << endl;
       return;
     }
     makeMove(source_square, destination_square);
     // After moves, check if your king is still safe
     if(!isKingSafe(true)){
-      cout << piece->getString() << " cannot move to " << \
+      cerr << piece->getString() << " cannot move to " << \
       destination_square << "!" << endl;
       undoMove(source_square, destination_square);
       return;
@@ -218,7 +214,6 @@ void ChessBoard::checkKingStatus(){
       is_white_in_check_ = true;
     }
   }
-  // TODO Double check if this logic is correct
   else{
     is_black_in_check_ = false;
     is_white_in_check_ = false;
