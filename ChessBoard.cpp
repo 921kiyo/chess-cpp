@@ -111,6 +111,8 @@ void ChessBoard::submitMove(const string source_square, \
 
   int file = getFileInt(destination_square);
   int rank = getRankInt(destination_square);
+
+  // dest_piece is used to print message when a piece captures an opponent piece
   shared_ptr<Piece> dest_piece = nullptr;
   if(board_[rank][file] != nullptr){
     dest_piece = getPiecePtrFromBoard(destination_square);
@@ -124,8 +126,8 @@ void ChessBoard::submitMove(const string source_square, \
     cerr << "It is not White's turn to move!" << endl;
     return;
   }
-  // Is not the move is not castling, do the nomal move
-  // If castling, move happens inside isCastling()
+  // If the move is not castling, do the nomal move.
+  // If castling, castling move happens inside isCastling()
   if(!isCastling(source_square, destination_square)){
     if(!piece->isValidMove(source_square, destination_square, board_)){
       cerr << piece->getString() << " cannot move to " << \
@@ -140,11 +142,8 @@ void ChessBoard::submitMove(const string source_square, \
       undoMove(source_square, destination_square);
       return;
     }
-
     checkKingStatus();
   }
-
-
 
   // Message for the move
   cout << piece->getString() << " moves from " \
@@ -158,7 +157,7 @@ void ChessBoard::submitMove(const string source_square, \
     return;
   }
 
-  // print message
+  // print message when in_check
   if(is_white_in_check_){
     cout << "White is in check" << endl;
   }
@@ -170,8 +169,6 @@ void ChessBoard::submitMove(const string source_square, \
   is_white_turn_ = !(is_white_turn_);
 
   piece->negateIsFirstMove();
-  // TODO Delete this
-   // printCurrentBoard();
 }
 
 void ChessBoard::makeMove(const string source_square, const string destination_square){
@@ -183,13 +180,12 @@ void ChessBoard::makeMove(const string source_square, const string destination_s
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
 
-  // Keep a pointer in the destination square so that we can back track
+  // Keep a pointer in the destination square so that we can reverse the move
   // when undoMove is called
   previous_destination_square_ = board_[dest_rank][dest_file];
 
-  // Move the pointer
+  // Update the pointer in the board
   board_[dest_rank][dest_file] = source_piece;
-  // Add null to the source square
   board_[source_rank][source_file] = nullptr;
   // This method is only triggered when a king moves
   updateKingPosition(source_piece, destination_square);
@@ -231,11 +227,15 @@ bool ChessBoard::isKingSafe(bool my_king){
       // Check if my king is safe
       if(board_[rank][file] != nullptr){
         if(my_king){
+          // Check if any black piece can capture white king
+          // If there is a valid move, the king is not safe
           if(is_white_turn_ && !board_[rank][file]->isWhite() && \
              board_[rank][file]->isValidMove(square, white_king_position_, \
              board_)){
             return false;
           }
+          // Check if any white piece can capture black king
+          // If there is a valid move, the king is not safe
           if(!is_white_turn_ && board_[rank][file]->isWhite() && \
              board_[rank][file]->isValidMove(square, black_king_position_, \
              board_)){
@@ -244,7 +244,6 @@ bool ChessBoard::isKingSafe(bool my_king){
         }
         // Check if opponent king is in check
         else{
-          // When white_turn, opponent king  is white king
           if(is_white_turn_ && board_[rank][file]->isWhite() && \
              board_[rank][file]->isValidMove(square, black_king_position_, \
              board_)){
@@ -401,7 +400,7 @@ bool ChessBoard::isCastling(const string source_square, \
   bool in_check = (king_ptr->isWhite())? \
   is_white_in_check_ : is_black_in_check_;
 
-  // Get Rook position based on the destination of the king
+  // Get Rook position and pointer based on the destination of the king
   string rook_position = getRookPosition(destination_square);
   shared_ptr<Piece> rook_ptr = getPiecePtrFromBoard(rook_position);
 
@@ -428,7 +427,7 @@ bool ChessBoard::isCastling(const string source_square, \
     }
   }
 
-  // Finally, move Rook and check if Rook makes the opponent king in check
+  // Finally, move Rook
   moveRookCastling(rook_position);
   return true;
 }
@@ -447,6 +446,7 @@ void ChessBoard::moveRookCastling(string rook_position){
   }
 
   makeMove(rook_position, dest_square);
+  // Check if the Rook move makes the opponent king in check
   checkKingStatus();
 }
 
