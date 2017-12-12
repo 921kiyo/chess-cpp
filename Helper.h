@@ -2,11 +2,14 @@
 #define HELPER_H
 
 #include <string>
+
 using namespace std;
 
 const int BOARD_LENGTH = 8;
 
+// Get an integer value for file
 int getFileInt(string square);
+// Get an integer value for rank
 int getRankInt(string square);
 
 // Get the correct string format, which is the same as submitMove string,

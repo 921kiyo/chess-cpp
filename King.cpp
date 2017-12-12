@@ -24,12 +24,14 @@ void King::calculateAdjacentPossibleMove(const string source_square, \
   int file = getFileInt(source_square);
   int rank = getRankInt(source_square);
   string sq;
+  // Loop through all adjacent squares
   for(int f = file-1; f <= file+1; f++){
     for(int r = rank-1; r <= rank+1; r++){
-      // not the same as source_square
+      // except the current position of the king
       if(f != file || r != rank){
         if(r <= RANK_8 && r >= RANK_1 && f <= FILE_H && f >= FILE_A){
-            // If the square is empty or piece of different color
+            // If the square is empty or
+            // piece of different color king can capture, it can move
             if((board[r][f] == nullptr) || (board[r][f] != nullptr && \
                 board[rank][file]->isWhite() != board[r][f]->isWhite())){
               sq = getStringSquare(f, r);

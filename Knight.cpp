@@ -23,10 +23,17 @@ void Knight::calculateLShapePossibleMove(const string source_square, \
   int file = getFileInt(source_square);
   bool is_white = board[rank][file]->isWhite();
   string sq;
+  // Loop through all squares two squares away from the knight's position
   for(int f = file -2; f <= file + 2; f++){
     if(f >= FILE_A && f <= FILE_H){
       for(int r = rank -2; r <= rank + 2; r++){
         if(r >= RANK_1 && r <= RANK_8){
+          // If the following squares are empty or has opponent's piece,
+          // then the knight can move
+          // 1. A square that is two squares away horizontally and
+          // one square vertically
+          // 2. A square that is two squares away vertically and
+          // one square horizontally
           if(((abs(f - file) == 2) && (abs(r - rank) == 1)) || \
              ((abs(f - file) == 1) && (abs(r - rank) == 2))){
             if(board[r][f] == nullptr || \
