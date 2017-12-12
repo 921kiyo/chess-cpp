@@ -174,7 +174,7 @@ void ChessBoard::submitMove(const string source_square, \
    // printCurrentBoard();
 }
 
-void ChessBoard::makeMove(string source_square, string destination_square){
+void ChessBoard::makeMove(const string source_square, const string destination_square){
   // Get piece pointer from source square
   int source_file = getFileInt(source_square);
   int source_rank = getRankInt(source_square);
@@ -183,16 +183,19 @@ void ChessBoard::makeMove(string source_square, string destination_square){
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
 
+  // Keep a pointer in the destination square so that we can back track
+  // when undoMove is called
   previous_destination_square_ = board_[dest_rank][dest_file];
 
+  // Move the pointer
   board_[dest_rank][dest_file] = source_piece;
-
+  // Add null to the source square
   board_[source_rank][source_file] = nullptr;
-  // These two methods are only triggered when a king moves
+  // This method is only triggered when a king moves
   updateKingPosition(source_piece, destination_square);
 }
 
-void ChessBoard::undoMove(string source_square, string destination_square){
+void ChessBoard::undoMove(const string source_square, const string destination_square){
   int dest_file = getFileInt(destination_square);
   int dest_rank = getRankInt(destination_square);
   shared_ptr<Piece> dest_piece = board_[dest_rank][dest_file];
@@ -261,7 +264,7 @@ bool ChessBoard::isKingSafe(bool my_king){
 }
 
 void ChessBoard::updateKingPosition(shared_ptr<Piece> piece_ptr, \
-                                    string piece_square){
+                                    const string piece_square){
   if(piece_ptr->getSimbol() == "WK"){
     white_king_ptr_ = piece_ptr;
     white_king_position_ = piece_square;
@@ -332,8 +335,8 @@ bool ChessBoard::canGameContinue(){
   return true;
 }
 
-bool ChessBoard::isNoPieceBetweenKingRook(string king_position, \
-                                          string rook_position){
+bool ChessBoard::isNoPieceBetweenKingRook(const string king_position, \
+                                          const string rook_position){
   int king_file = getFileInt(king_position);
   int king_rank = getRankInt(king_position);
   // Rook rank is the same as king's, so we do not need it
@@ -358,7 +361,7 @@ bool ChessBoard::isNoPieceBetweenKingRook(string king_position, \
   return true;
 }
 
-string ChessBoard::getRookPosition(string destination_square){
+string ChessBoard::getRookPosition(const string destination_square){
   if(destination_square == "C1"){
     return "A1";
   }

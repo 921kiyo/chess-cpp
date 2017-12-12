@@ -41,9 +41,8 @@ public:
   // Check inputs are valid, and execute makeMove(), swap the player's turn
   // Also check if the game is in check, checkmate or stalemate
   void submitMove(const string source_square, const string destination_square);
-  // TODO add const
-  void makeMove(string source_square, string destination_square);
-  void undoMove(string source_square, string destination_square);
+  void makeMove(const string source_square, const string destination_square);
+  void undoMove(const string source_square, const string destination_square);
   // Check if opponent king is in check and update status
   void checkKingStatus();
   // return true if King is safe. Argument my_king determines whether
@@ -51,7 +50,7 @@ public:
   // or opponent king (my_king=false). If in check, return falase
   bool isKingSafe(bool my_king);
   // Update kings position and pointer if the piece you moved is a king
-  void updateKingPosition(shared_ptr<Piece> piece_ptr, string piece_square);
+  void updateKingPosition(shared_ptr<Piece> piece_ptr, const string piece_square);
 
   // Check all the pieces in the board, and see if there is any valid move left
   bool isPossibleMoveLeft();
@@ -68,10 +67,11 @@ public:
 
   // Below methods are used for castling
 
-  bool isNoPieceBetweenKingRook(string king_position, string rook_position);
+  bool isNoPieceBetweenKingRook(const string king_position, \
+                                const string rook_position);
   // Helper method to get Rook position based on
   // King's castling destination square
-  string getRookPosition(string destination_square);
+  string getRookPosition(const string destination_square);
   // Execute the castling move for King and Rook after check all the conditions
   bool isCastling(const string source_square, const string destination_square);
   // Move rook in castling

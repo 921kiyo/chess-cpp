@@ -16,7 +16,7 @@ protected:
 
   // calculate all possible moves given the current position
   // of pieces for each piece
-  virtual void calculatePossibleMove(string source_square, \
+  virtual void calculatePossibleMove(const string source_square, \
                                      shared_ptr<Piece> board[][BOARD_LENGTH], \
                                      vector<string>& possible_moves) = 0;
 

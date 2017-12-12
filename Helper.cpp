@@ -5,10 +5,10 @@
 
 using namespace std;
 
-int getFileInt(string square){
+int getFileInt(const string square){
   return square[0] - 'A';
 }
-int getRankInt(string square){
+int getRankInt(const string square){
   return square[1] - '1';
 }
 

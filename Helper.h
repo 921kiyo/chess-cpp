@@ -8,9 +8,9 @@ using namespace std;
 const int BOARD_LENGTH = 8;
 
 // Get an integer value for file
-int getFileInt(string square);
+int getFileInt(const string square);
 // Get an integer value for rank
-int getRankInt(string square);
+int getRankInt(const string square);
 
 // Get the correct string format, which is the same as submitMove string,
 // from file and rank integers.
