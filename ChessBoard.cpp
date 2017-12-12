@@ -147,23 +147,11 @@ void ChessBoard::submitMove(const string source_square, \
     }
   }
 
-  // TODO Abstract away
-  if(!isKingSafe(false)){
-    if(is_white_turn_){
-      is_black_in_check_ = true;
-    }else{
-      is_white_in_check_ = true;
-    }
-  }
-  // TODO Double check if this logic is correct
-  else{
-    is_black_in_check_ = false;
-    is_white_in_check_ = false;
-  }
+  checkKingStatus();
 
+  // print message for the move
   cout << piece->getString() << " moves from " \
   << source_square << " to " << destination_square;
-
   if(dest_piece != nullptr){
     cout << " taking " << dest_piece->getString();
   }
@@ -173,7 +161,7 @@ void ChessBoard::submitMove(const string source_square, \
     return;
   }
 
-
+  // print message when either king is in check
   if(is_white_in_check_){
     cout << "White is in check" << endl;
   }
@@ -219,6 +207,21 @@ void ChessBoard::undoMove(string source_square, string destination_square){
   board_[source_rank][source_file] = dest_piece;
 
   updateKingPosition(dest_piece, source_square);
+}
+
+void ChessBoard::checkKingStatus(){
+  if(!isKingSafe(false)){
+    if(is_white_turn_){
+      is_black_in_check_ = true;
+    }else{
+      is_white_in_check_ = true;
+    }
+  }
+  // TODO Double check if this logic is correct
+  else{
+    is_black_in_check_ = false;
+    is_white_in_check_ = false;
+  }
 }
 
 bool ChessBoard::isKingSafe(bool my_king){

@@ -38,11 +38,13 @@ public:
   bool isValidInput(const string square);
   // Helper method to get an pointer from the board
   shared_ptr<Piece> getPiecePtrFromBoard(const string source_square);
-
+  // Check inputs are valid, and execute makeMove(), swap the player's turn
+  // Also check if the game is in check, checkmate or stalemate
   void submitMove(const string source_square, const string destination_square);
   // TODO add const
   void makeMove(string source_square, string destination_square);
   void undoMove(string source_square, string destination_square);
+  void checkKingStatus();
   bool isKingSafe(bool my_king);
   // Update kings position and pointer if the piece you moved is a king
   void updateKingPosition(shared_ptr<Piece> piece_ptr, string piece_square);
@@ -54,6 +56,8 @@ public:
   // This method is called inside isPossibleMoveLeft()
   bool isPossibleDestinationLeft(int source_file, int source_rank);
 
+  // Check if either king is in checkmate or stalemate.
+  // If so, the game cannot continue unless reset
   bool canGameContinue();
   // TODO Delete this
   void printCurrentBoard();
